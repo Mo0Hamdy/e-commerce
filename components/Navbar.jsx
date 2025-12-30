@@ -7,7 +7,6 @@ import Fade from "@mui/material/Fade";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import Snackbar from "@mui/material/Snackbar";
 import { useTheme } from "@mui/material/styles";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -15,7 +14,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { Height } from "@mui/icons-material";
 // const ITEM_HEIGHT = 48;
 // const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -36,8 +34,10 @@ function getStyles(name, personName, theme) {
 }
 
 export default function Navbar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
+  const [personName, setPersonName] = useState([]);
   const handleClickAnchor = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -45,22 +45,11 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleClick = (newState) => () => {
-    setState({ ...newState, open: true });
+  const handleClick = () => {
+    setOpen(open ? false : true);
   };
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
-  const [state, setState] = React.useState({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-  });
-  const { vertical, horizontal, open } = state;
 
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
 
   const handleChange = (event) => {
     const {
@@ -89,8 +78,8 @@ export default function Navbar() {
 
   return (
     <div className="fixed w-full navbar">
-      <div className="container m-auto bg-white flex justify-between items-center rounded-full">
-        <div className="block md:hidden ms-1">
+      <div className="relative container m-auto bg-white flex justify-between items-center rounded-full">
+        <div className="block md:hidden ms-2">
           <button
             onClick={handleClickAnchor}
             className="me-5 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest"
@@ -115,17 +104,17 @@ export default function Navbar() {
             <MenuItem onClick={handleCloseAnchor}>Categories</MenuItem>
           </Menu>
         </div>
-        <ul className="hidden md:flex text-black items-center ms-1">
-          <li className="me-5 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest ">
+        <ul className="hidden md:flex text-black items-center ms-2">
+          <li className="me-3 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest ">
             <a href="#">PixelCraft</a>
           </li>
-          <li className="me-5 font-semibold hover:scale-110 duration-300">
+          <li className="me-3 font-semibold duration-300">
             <a href="#">Home</a>
           </li>
-          <li className="me-5 font-semibold hover:scale-110 duration-300">
+          <li className="me-3 font-semibold duration-300">
             <a href="#">Products</a>
           </li>
-          <li className="me-5 hover:scale-110 duration-300">
+          <li className="me-3 duration-300">
             <div className=" flex items-center">
               <FormControl sx={{ padding: 0 }}>
                 <Select
@@ -145,7 +134,7 @@ export default function Navbar() {
                   sx={{
                     "& fieldset": { border: "none" },
                     "& .MuiOutlinedInput-input": {
-                      padding: "0", // ← شيل الـ padding
+                      padding: "0",
                     },
                   }}
                 >
@@ -187,42 +176,37 @@ export default function Navbar() {
               borderRadius: "20px",
               border: "2px solid #D8DBE0",
             }}
-            onClick={handleClick({ vertical: "top", horizontal: "center" })}
+            onClick={handleClick}
           >
             <SearchOutlinedIcon />
           </Button>
-          <Snackbar
-            anchorOrigin={{ vertical, horizontal }}
-            open={open}
-            onClose={handleClose}
-            style={{
-              outline: "none",
-              border: "none",
-              transform: "translate(-50%,40px)",
-            }}
+          <div
+            onBlur={handleClick}
+            className={` ${
+              open ? "flex" : "hidden"
+            } justify-start absolute left-1/2 -translate-x-1/2 top-16 w-80 sm:w-lg text-gray-600 bg-white rounded-xl px-3 py-3 border-gray-500`}
           >
-            <div className="flex justify-start w-72 sm:w-sm text-gray-600 bg-white rounded-xl py-7 px-3 border-gray-500 sm:py-1">
-              <SearchOutlinedIcon style={{ color: "#99a1af" }} />
-              <input
-                placeholder="search for products"
-                type="text"
-                className="placeholder:text-gray-400 outline-0"
-              />
-            </div>
-          </Snackbar>
-          <div className="account py-3 md:pe-5 flex shrink-0 cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all">
+            <SearchOutlinedIcon style={{ color: "#99a1af" }} />
+            <input
+              placeholder="search for products"
+              type="text"
+              className="placeholder:text-gray-400 outline-0 w-full"
+            />
+          </div>
+
+          <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all">
             <PermIdentityOutlinedIcon
               sx={{
-                marginX: "20px",
+                // margin: "0 16px 0 0",
                 color: "gray",
               }}
             />
             <h4 className="hidden md:block">Account</h4>
           </div>
-          <div className="cart py-3 md:pe-5 flex shrink-0 cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 rounded-e-full duration-300 transition-all">
+          <div className="cart py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 rounded-e-full duration-300 transition-all">
             <ShoppingCartOutlinedIcon
               sx={{
-                marginX: "20px",
+                // margin: "0 16px 0 0",
                 color: "gray",
               }}
             />
