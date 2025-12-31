@@ -197,7 +197,6 @@ export default function Navbar() {
           <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all">
             <PermIdentityOutlinedIcon
               sx={{
-                // margin: "0 16px 0 0",
                 color: "gray",
               }}
             />
@@ -206,7 +205,6 @@ export default function Navbar() {
           <div className="cart py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 rounded-e-full duration-300 transition-all">
             <ShoppingCartOutlinedIcon
               sx={{
-                // margin: "0 16px 0 0",
                 color: "gray",
               }}
             />
