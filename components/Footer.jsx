@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <div className="bg-gray-200">
       <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around md:divide-x-2 md:divide-dashed py-10">
-        <div className="mail md:w-1/2 text-center pb-5 md:pb-0">
+        <div className="mail md:w-1/2 flex flex-col items-center pb-5 md:pb-0">
           <p className="text-center text-gray-600 w-full md:w-4/5">
             It will be a pleasure to receive your opinions through
           </p>
