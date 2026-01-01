@@ -11,15 +11,15 @@ import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 export default function Footer() {
   return (
     <div className="bg-gray-200">
-      <div className="container m-auto flex items-center justify-around divide-x-2 divide-dashed py-10">
-        <div className="mail w-1/2 text-center">
-          <p className="text-center text-gray-600">
+      <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around md:divide-x-2 md:divide-dashed py-10">
+        <div className="mail md:w-1/2 text-center pb-5 md:pb-0">
+          <p className="text-center text-gray-600 w-full md:w-4/5">
             It will be a pleasure to receive your opinions through
           </p>
           <input
             placeholder="keep your message descriptive"
             type="text"
-            className="outline-0 border border-cyan-700 w-100 py-1 px-3 bg-violet-300 rounded-lg mt-3 placeholder:text-sm"
+            className="outline-0 border border-cyan-700 w-4/5 py-1 px-3 bg-violet-300 rounded-lg mt-3 placeholder:text-sm"
           />
         </div>
         <div className="w-1/2 flex justify-center">
