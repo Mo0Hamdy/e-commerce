@@ -17,7 +17,7 @@ async function getProducts(cat) {
 
 export default async function dynamicProduct({ params }) {
   let response = await params;
-  let product = response.product.split("%20").join(" ");
+  let product = response.product;
   let returnedProducts = await getProducts(product);
 
   const cards = returnedProducts.map((element) => {

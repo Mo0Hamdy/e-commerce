@@ -152,23 +152,26 @@ export default function Navbar() {
                     <em className="font-semibold">Categories</em>
                   </MenuItem>
                   {loading ? (
-                    names.map((name) => (
-                      // <Link
-                      //   href={`/landing/products/${name.split(" ").join("-")}`}
-                      //   key={name}
-                      // >
-                      // <a href="/landing/products">{name}</a>
-                      <MenuItem
-                        component={Link}
-                        href={`/landing/products/${name}`}
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
-                      >
-                        {name}
-                      </MenuItem>
+                    names.map(
+                      (name, index) =>
+                        // <Link
+                        //   href={`/landing/products/${name.split(" ").join("-")}`}
+                        //   key={name}
+                        // >
+                        // <a href="/landing/products">{name}</a>
+                        index <=1 ? (
+                          <MenuItem
+                            component={Link}
+                            href={`/landing/products/${name}`}
+                            key={name}
+                            value={name}
+                            style={getStyles(name, personName, theme)}
+                          >
+                            {name}
+                          </MenuItem>
+                        ) : null
                       // </Link>
-                    ))
+                    )
                   ) : (
                     <MenuItem
                       style={{
