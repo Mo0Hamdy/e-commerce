@@ -1,3 +1,10 @@
 export default function Gallery() {
-  return <div>this is gallery</div>;
+  return (
+    <div>
+      <div>
+        <img src="/images/2.webp" alt="" />
+      </div>
+      ;
+    </div>
+  );
 }
