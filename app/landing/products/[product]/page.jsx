@@ -16,6 +16,13 @@ async function getProducts(cat) {
 }
 
 export default async function dynamicProduct({ params }) {
+
+// if (!params?.product) {
+//     return <div>Invalid product</div>;
+//   }
+
+  // const product = params.product.split("-").join(" ");
+
   let response = await params;
   let product = response.product;
   let returnedProducts = await getProducts(product);
