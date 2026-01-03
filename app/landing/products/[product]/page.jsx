@@ -1,21 +1,17 @@
 import Image from "next/image";
 async function getProducts(cat) {
-  try {
-    const data = await fetch("https://fakestoreapi.com/products", {
-      next: {
-        revalidate: 60,
-      },
-    });
-    if (!data.ok) {
-      return [];
-    }
-    let response = await data.json();
-    return response.filter((element) => {
-      return element.category === cat.split("-").join(" ");
-    });
-  } catch (err) {
-    return [];
+  const data = await fetch("https://fakestoreapi.com/products", {
+    next: {
+      revalidate: 60,
+    },
+  });
+  if (!data.ok) {
+    throw new Error("couldn't find any element");
   }
+  let response = await data.json();
+  return response.filter((element) => {
+    return element.category === cat.split("-").join(" ");
+  });
 }
 
 export default async function dynamic({ params }) {
@@ -61,7 +57,7 @@ export default async function dynamic({ params }) {
     <div className="py-40 bg-green-200">
       {/* <h3>{response.product.split("-").join(" ")}</h3> */}
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
-        {cards.length ? cards : <p className="py-10">No products found.</p>}
+        {cards}
       </div>
     </div>
   );

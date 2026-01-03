@@ -1,18 +1,16 @@
 async function getBestSelling() {
-  try {
-    const data = await fetch("https://fakestoreapi.com/products", {
-      next: {
-        revalidate: 60,
-      },
-    });
-    if (!data.ok) return [];
-    let response = await data.json();
-    return response.filter((element) => {
-      return element.category === "jewelery";
-    });
-  } catch (err) {
-    return [];
+  const data = await fetch("https://fakestoreapi.com/products", {
+    next: {
+      revalidate: 60,
+    },
+  });
+  if (!data.ok) {
+    throw new Error("couldn't find any element")
   }
+  let response = await data.json();
+    return response.filter((element) => {
+     return element.category === "jewelery"
+  });
 }
 
 export default async function Popular() {
@@ -27,8 +25,6 @@ export default async function Popular() {
       </div>
     );
   });
-
-  if (!data.length) return <div className="py-10">No popular products available.</div>;
 
   return <div className="grid grid-cols-2">{data}</div>;
 }
