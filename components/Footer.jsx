@@ -75,7 +75,7 @@ export default function Footer() {
             </a>
             <a
               href="https://github.com/Mo0Hamdy"
-              className="text-white origin-top-left rounded-bl-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#181717] "
+              className="text-white origin-top-right rounded-bl-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#181717] "
             >
               <FontAwesomeIcon
                 style={{
@@ -86,7 +86,7 @@ export default function Footer() {
             </a>
             <a
               href="https://www.linkedin.com/in/m0hamedhamdy?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BlkA1IIX1RJ6ndsRuGIvtiQ%3D%3D"
-              className="text-white origin-top-right rounded-br-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#0A66C2]"
+              className="text-white origin-top-left rounded-br-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#0A66C2]"
             >
               <FontAwesomeIcon
                 style={{
