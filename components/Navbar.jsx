@@ -160,7 +160,7 @@ export default function Navbar() {
                       // <a href="/landing/products">{name}</a>
                       <MenuItem
                         component={Link}
-                        href="/landing/products"
+                        href={`/landing/products/${name}`}
                         key={name}
                         value={name}
                         style={getStyles(name, personName, theme)}
