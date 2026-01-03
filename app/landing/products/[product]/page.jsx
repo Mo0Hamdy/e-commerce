@@ -1,11 +1,14 @@
 import Image from "next/image";
 async function getProducts(cat) {
-  console.log(cat)
-  const data = await fetch("https://fakestoreapi.com/products", {
-    next: {
-      revalidate: 60,
-    },
-  });
+  console.log(cat);
+  const data = await fetch(
+    "https://fakestoreapi.com/products"
+    // , {
+    // next: {
+    // revalidate: 60,
+    // },
+    // }
+  );
   if (!data.ok) {
     throw new Error("couldn't find any element");
   }
@@ -16,13 +19,6 @@ async function getProducts(cat) {
 }
 
 export default async function dynamicProduct({ params }) {
-
-// if (!params?.product) {
-//     return <div>Invalid product</div>;
-//   }
-
-  // const product = params.product.split("-").join(" ");
-
   let response = await params;
   let product = response.product;
   let returnedProducts = await getProducts(product);
@@ -38,9 +34,7 @@ export default async function dynamicProduct({ params }) {
             className="max-w-full max-h-full object-contain"
             src={element.image}
             alt={element.title}
-            // placeholder="blur"
             fill
-            // blurDataURL="/placeholder.png"
           />
         </div>
         <h1 className="text-md text-gray-700">{element.title}</h1>
