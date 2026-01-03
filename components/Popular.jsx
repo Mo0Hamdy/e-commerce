@@ -17,10 +17,7 @@ export default async function Popular() {
   const products = await getBestSelling();
   const data = products.map((element, index) => {
     return (
-      <div
-        key={index}
-        // className={`${index == 0 ? "row-span-2" : "bg-teal-300"}`}
-      >
+      <div key={index}>
         <img src={element.image} alt="" />
       </div>
     );
