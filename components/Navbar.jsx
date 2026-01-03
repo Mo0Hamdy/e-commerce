@@ -157,7 +157,7 @@ export default function Navbar() {
                       //   href={`/landing/products/${name.split(" ").join("-")}`}
                       //   key={name}
                       // >
-                      <a href={`/landing/products/${name.split(" ").join("-")}`}>{name}</a>
+                      <a href="/landing/products">{name}</a>
                       // <MenuItem
                       //   component={Link}
                       //   href={`/landing/products/${name.split(" ").join("-")}`}
