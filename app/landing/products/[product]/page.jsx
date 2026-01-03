@@ -1,5 +1,6 @@
 import Image from "next/image";
 async function getProducts(cat) {
+  console.log(cat)
   const data = await fetch("https://fakestoreapi.com/products", {
     next: {
       revalidate: 60,
@@ -10,30 +11,28 @@ async function getProducts(cat) {
   }
   let response = await data.json();
   return response.filter((element) => {
-    return element.category === cat.split("-").join(" ");
+    return element.category === cat;
   });
 }
 
 export default async function dynamicProduct({ params }) {
-  let response = await params;
-  let data = await getProducts(response.product);
-  const cards = data.map((element) => {
+  let response  = await params
+  let product = response.product.split("-").join(" ")
+  let returnedProducts = await getProducts(product)
+  // console.log(returnedProducts)
+
+  const cards = returnedProducts.map((element) => {
     return (
       <div
         key={element.id}
         className="rounded-xl w-72 h-94 p-3 mx-10 bg-white flex flex-col justify-between shrink-0"
       >
         <div className="relative h-60 flex items-center justify-center">
-          {/* <img
-            className="rounded-xl max-w-full max-h-full object-contain"
-            src={element.image}
-            alt=""
-          /> */}
           <Image
             className="max-w-full max-h-full object-contain"
             src={element.image}
             alt={element.title}
-            placeholder="blur"
+            // placeholder="blur"
             fill
             blurDataURL="/placeholder.png"
           />
@@ -53,6 +52,12 @@ export default async function dynamicProduct({ params }) {
       </div>
     );
   });
+
+
+  // console.log("the product selected is : " +product.product.split("-").join(" "))
+  // console.log(await getProducts(product))
+  // console.log(product.product.split("-").join(" "))
+  // return
   return (
     <div className="py-40 bg-green-200">
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
@@ -60,4 +65,55 @@ export default async function dynamicProduct({ params }) {
       </div>
     </div>
   );
+  
+  // <div>{product}</div>
 }
+
+
+// export default async function dynamicProduct({ params }) {
+//   console.log(params)
+//   // let response = await params;
+//   let { product } = await params;
+//   let data = await getProducts(product);
+//   console.log(product +"is the product")
+//   console.log(data)
+//   let data2 = data.split("-").join(" ")
+//   const cards = data2.map((element) => {
+//     return (
+//       <div
+//         key={element.id}
+//         className="rounded-xl w-72 h-94 p-3 mx-10 bg-white flex flex-col justify-between shrink-0"
+//       >
+//         <div className="relative h-60 flex items-center justify-center">
+//           <Image
+//             className="max-w-full max-h-full object-contain"
+//             src={element.image}
+//             alt={element.title}
+//             placeholder="blur"
+//             fill
+//             blurDataURL="/placeholder.png"
+//           />
+//         </div>
+//           <h1 className="text-md text-gray-700">{element.title}</h1>
+//         <div className="flex justify-between items-center">
+//           <h1 className="text-md text-red-500 ">
+//             ${element.price}{" "}
+//             <span className="line-through ms-5 text-gray-500">
+//               ${Math.round(element.price * 1.2)}
+//             </span>{" "}
+//           </h1>
+//           <button className="cursor-pointer bg-green-900 text-white p-2 rounded-xl hover:scale-110 duration-300">
+//             Add to cart
+//           </button>
+//         </div>
+//       </div>
+//     );
+//   });
+//   return (
+//     <div className="py-40 bg-green-200">
+//       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
+//         {cards}
+//       </div>
+//     </div>
+//   );
+// }
