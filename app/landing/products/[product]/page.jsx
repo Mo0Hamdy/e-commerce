@@ -40,7 +40,7 @@ export default async function dynamicProduct({ params }) {
             alt={element.title}
             // placeholder="blur"
             fill
-            blurDataURL="/placeholder.png"
+            // blurDataURL="/placeholder.png"
           />
         </div>
         <h1 className="text-md text-gray-700">{element.title}</h1>
