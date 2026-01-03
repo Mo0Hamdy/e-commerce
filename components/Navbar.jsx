@@ -153,18 +153,14 @@ export default function Navbar() {
                   </MenuItem>
                   {loading ? (
                     names.map((name) => (
-                      // <Link href={`/landing/products/${name}`}>
-                      <MenuItem
-                        component={Link}
-                        href={`/landing/products/${name.split(" ").join("-")}`}
-                        key={name}
-                        value={name}
-                        // onClick={handleClick}
-                        style={getStyles(name, personName, theme)}
-                      >
-                        {name}
-                      </MenuItem>
-                      // </Link>
+                      <Link href={`/landing/products/${name.split(" ").join("-")}`} key={name}>
+                        <MenuItem
+                          value={name}
+                          style={getStyles(name, personName, theme)}
+                        >
+                          {name}
+                        </MenuItem>
+                      </Link>
                     ))
                   ) : (
                     <MenuItem
