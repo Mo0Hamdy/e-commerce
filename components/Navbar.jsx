@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import "../app/globals.css";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
@@ -35,6 +36,7 @@ function getStyles(name, personName, theme) {
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [openSelect, setOpenSelect] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
   const [personName, setPersonName] = useState([]);
@@ -48,7 +50,10 @@ export default function Navbar() {
   const handleClick = () => {
     setOpen(open ? false : true);
   };
-
+  const handleSelectClick = (event) => {
+    // setPersonName(event.target.value)
+    setOpenSelect(openSelect ? false : true);
+  };
   const theme = useTheme();
 
   const handleChange = (event) => {
@@ -57,7 +62,8 @@ export default function Navbar() {
     } = event;
     setPersonName(
       // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
+      // typeof value === "string" ? value.split(",") : value
+      value
     );
   };
 
@@ -77,7 +83,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="fixed w-full navbar">
+    <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-white flex justify-between items-center rounded-full">
         <div className="block md:hidden ms-2">
           <button
@@ -105,9 +111,11 @@ export default function Navbar() {
           </Menu>
         </div>
         <ul className="hidden md:flex text-black items-center ms-2">
-          <li className="me-3 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest ">
-            <a href="#">PixelCraft</a>
-          </li>
+          <Link href="/landing">
+            <li className="me-3 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest ">
+              PixelCraft
+            </li>
+          </Link>
           <li className="me-3 font-semibold duration-300">
             <a href="#">Home</a>
           </li>
@@ -118,16 +126,18 @@ export default function Navbar() {
             <div className=" flex items-center">
               <FormControl sx={{ padding: 0 }}>
                 <Select
+                  open={openSelect}
                   multiple
                   displayEmpty
                   value={personName}
                   onChange={handleChange}
+                  onClick={handleSelectClick}
                   input={<OutlinedInput />}
                   renderValue={(selected) => {
                     if (selected.length === 0) {
                       return <em className="font-semibold">Categories</em>;
                     }
-                    return selected.join(", ");
+                    return selected[selected.length - 1];
                   }}
                   MenuProps={MenuProps}
                   inputProps={{ "aria-label": "Without label" }}
@@ -143,13 +153,18 @@ export default function Navbar() {
                   </MenuItem>
                   {loading ? (
                     names.map((name) => (
+                      // <Link href={`/landing/products/${name}`}>
                       <MenuItem
+                        component={Link}
+                        href={`/landing/products/${name.split(" ").join("-")}`}
                         key={name}
                         value={name}
+                        // onClick={handleClick}
                         style={getStyles(name, personName, theme)}
                       >
                         {name}
                       </MenuItem>
+                      // </Link>
                     ))
                   ) : (
                     <MenuItem

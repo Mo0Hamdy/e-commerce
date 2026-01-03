@@ -5,24 +5,37 @@ import {
   faWhatsapp,
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
-
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
-
 export default function Footer() {
   return (
-    <div className="bg-gray-200">
-      <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around md:divide-x-2 md:divide-dashed py-10">
-        <div className="mail md:w-1/2 flex flex-col items-center pb-5 md:pb-0">
-          <p className="text-center text-gray-600 w-full md:w-4/5">
+    <div className="bg-gray-200 pt-7">
+      <h1 className="text-center text-4xl md:text-6xl font-bold text-gray-500 tracking-wide">
+        Contact us <span className="inline-block text-2xl md:text-4xl animate-bounce">❤️</span>
+      </h1>
+      <p className="text-center text-gray-400">as we are a family </p>
+      <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around py-7 px-2">
+        <div className="mail w-full md:w-1/3 md:pb-0 items-center justify-centent">
+          <p className="text-center text-gray-600 w-full lg:w-4/5 mb-5">
             It will be a pleasure to receive your opinions through
           </p>
-          <input
-            placeholder="keep your message descriptive"
-            type="text"
-            className="outline-0 border border-cyan-700 w-4/5 py-1 px-3 bg-violet-300 rounded-lg mt-3 placeholder:text-sm"
-          />
+          <div className="flex">
+            <input
+              placeholder="keep your message descriptive"
+              type="text"
+              className="outline-0 border border-cyan-700 py-1 px-3 bg-violet-300 rounded-lg placeholder:text-sm w-full me-4 md:me-1"
+            />
+            <button className="rounded-xl cursor-pointer bg-black text-white text-sm px-2 py-1">
+              Submit
+            </button>
+          </div>
         </div>
-        <div className="w-1/2 flex justify-center">
+        <img
+          className="w-1/2 md:w-1/3"
+          src="/images/Mail-rafiki.png"
+          alt="sdf"
+        />
+        <div className="w-full md:w-1/3 mt-5 md:mt-0 flex flex-col items-center">
+          <p className="text-gray-600 mb-5">or contact us via social media</p>
           <div className="contact relative grid grid-cols-2 gap-1 w-fit">
             <FontAwesomeIcon
               icon={faShareNodes}
@@ -60,7 +73,6 @@ export default function Footer() {
                 icon={faWhatsapp}
               />
             </a>
-
             <a
               href="https://github.com/Mo0Hamdy"
               className="text-white origin-top-left rounded-bl-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#181717] "
@@ -86,8 +98,9 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="text-center py-2 capitalize text-white bg-cyan-800">
-        all right reserved &copy; <span>Mohamed Hamdy</span> 2026
+      <div className="text-center py-4 capitalize text-white bg-cyan-800">
+        all right reserved &copy;{" "}
+        <span className="text-lime-500">Mohamed Hamdy</span> 2026
       </div>
     </div>
   );

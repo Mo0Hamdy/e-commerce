@@ -1,0 +1,64 @@
+import Image from "next/image";
+async function getProducts(cat) {
+  const data = await fetch("https://fakestoreapi.com/products", {
+    next: {
+      revalidate: 60,
+    },
+  });
+  if (!data.ok) {
+    throw new Error("couldn't find any element");
+  }
+  let response = await data.json();
+  return response.filter((element) => {
+    return element.category === cat.split("-").join(" ");
+  });
+}
+
+export default async function dynamic({ params }) {
+  let response = await params;
+  let data = await getProducts(response.product);
+  const cards = data.map((element, index) => {
+    return (
+      <div
+        key={index}
+        className="rounded-xl w-72 h-94 p-3 mx-10 bg-white flex flex-col justify-between shrink-0"
+      >
+        <div className="relative h-60 flex items-center justify-center">
+          {/* <img
+            className="rounded-xl max-w-full max-h-full object-contain"
+            src={element.image}
+            alt=""
+          /> */}
+          <Image
+            className="max-w-full max-h-full object-contain"
+            src={element.image}
+            alt={element.title}
+            placeholder="blur"
+            fill
+            blurDataURL="/placeholder.png"
+          />
+        </div>
+          <h1 className="text-md text-gray-700">{element.title}</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-md text-red-500 ">
+            ${element.price}{" "}
+            <span className="line-through ms-5 text-gray-500">
+              ${Math.round(element.price * 1.2)}
+            </span>{" "}
+          </h1>
+          <button className="cursor-pointer bg-green-900 text-white p-2 rounded-xl hover:scale-110 duration-300">
+            Add to cart
+          </button>
+        </div>
+      </div>
+    );
+  });
+  return (
+    <div className="py-40 bg-green-200">
+      {/* <h3>{response.product.split("-").join(" ")}</h3> */}
+      <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
+        {cards}
+      </div>
+    </div>
+  );
+}

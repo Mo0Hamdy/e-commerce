@@ -1,5 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "tailwindcss";
-
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -36,6 +38,7 @@
 
 body {
   padding-right: 0;
+  
   /* height: 5000px; */
   /* background-color: teal; */
   /* overflow-x: hidden; */
