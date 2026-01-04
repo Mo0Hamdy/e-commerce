@@ -7,7 +7,7 @@ export default function Landing() {
     <>
       <Hero />
       <Card />
-      <Gallery />
+      {/* <Gallery /> */}
       {/* <Popular /> */}
     </>
   );

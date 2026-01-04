@@ -1,14 +1,11 @@
 import Image from "next/image";
 async function getProducts(cat) {
   console.log(cat);
-  const data = await fetch(
-    "https://fakestoreapi.com/products"
-    // , {
-    // next: {
-    // revalidate: 60,
-    // },
-    // }
-  );
+  const data = await fetch("https://fakestoreapi.com/products", {
+    next: {
+      revalidate: 60,
+    },
+  });
   if (!data.ok) {
     throw new Error("couldn't find any element");
   }
@@ -31,7 +28,7 @@ export default async function dynamicProduct({ params }) {
       >
         <div className="relative h-60 flex items-center justify-center">
           <Image
-            className="max-w-full max-h-full object-contain hover:scale-110 duration-300 overflow-hidden"
+            className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
             src={element.image}
             alt={element.title}
             fill

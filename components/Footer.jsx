@@ -22,7 +22,7 @@ export default function Footer() {
             <input
               placeholder="keep your message descriptive"
               type="text"
-              className="outline-0 border border-cyan-700 py-1 px-3 bg-violet-300 rounded-lg placeholder:text-sm w-full me-4 md:me-1"
+              className="outline-0 border border-cyan-700 py-1 px-3 bg-white rounded-lg placeholder:text-sm w-full me-4 md:me-1"
             />
             <button className="rounded-xl cursor-pointer bg-black text-white text-sm px-2 py-1">
               Submit
