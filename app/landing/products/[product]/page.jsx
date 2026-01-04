@@ -14,7 +14,7 @@ async function getProducts(cat) {
   }
   let response = await data.json();
   return response.filter((element) => {
-    return element.category === cat;
+    return element.category === cat.split("-").join(" ");
   });
 }
 
@@ -31,21 +31,22 @@ export default async function dynamicProduct({ params }) {
       >
         <div className="relative h-60 flex items-center justify-center">
           <Image
-            className="max-w-full max-h-full object-contain"
+            className="max-w-full max-h-full object-contain hover:scale-110 duration-300 overflow-hidden"
             src={element.image}
             alt={element.title}
             fill
+
           />
         </div>
         <h1 className="text-md text-gray-700">{element.title}</h1>
         <div className="flex justify-between items-center">
-          <h1 className="text-md text-red-500 ">
+          <h1 className="text-md text-red-500 font-bold">
             ${element.price}{" "}
             <span className="line-through ms-5 text-gray-500">
               ${Math.round(element.price * 1.2)}
             </span>{" "}
           </h1>
-          <button className="cursor-pointer bg-green-900 text-white p-2 rounded-xl hover:scale-110 duration-300">
+          <button className="cursor-pointer bg-cyan-800 text-white p-2 rounded-xl hover:scale-110 duration-300">
             Add to cart
           </button>
         </div>
@@ -54,7 +55,7 @@ export default async function dynamicProduct({ params }) {
   });
 
   return (
-    <div className="py-40 bg-green-200">
+    <div className="py-40 bg-blue-300 min-h-full">
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
         {cards}
       </div>
