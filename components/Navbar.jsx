@@ -84,7 +84,7 @@ export default function Navbar() {
 
   return (
     <div className="fixed w-full navbar z-10">
-      <div className="relative container m-auto bg-white flex justify-between items-center rounded-full">
+      <div className="relative container m-auto bg-white flex justify-between items-center rounded-full border border-cyan-800">
         <div className="block md:hidden ms-2">
           <button
             onClick={handleClickAnchor}

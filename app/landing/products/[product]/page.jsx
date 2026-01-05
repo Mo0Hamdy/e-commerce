@@ -14,12 +14,10 @@ async function getProducts(cat) {
     return element.category === cat.split("-").join(" ");
   });
 }
-
 export default async function dynamicProduct({ params }) {
   let response = await params;
   let product = response.product;
   let returnedProducts = await getProducts(product);
-
   const cards = returnedProducts.map((element) => {
     return (
       <div
@@ -32,7 +30,8 @@ export default async function dynamicProduct({ params }) {
             src={element.image}
             alt={element.title}
             fill
-
+            sizes="full"
+            loading="eager"
           />
         </div>
         <h1 className="text-md text-gray-700">{element.title}</h1>
@@ -50,7 +49,6 @@ export default async function dynamicProduct({ params }) {
       </div>
     );
   });
-
   return (
     <div className="py-40 bg-blue-300 min-h-full">
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
@@ -59,4 +57,3 @@ export default async function dynamicProduct({ params }) {
     </div>
   );
 }
-
