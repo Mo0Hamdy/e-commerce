@@ -1,4 +1,6 @@
+
 import Image from "next/image";
+export const dynamic = "force-dynamic";
 export default async function AllProducts() {
   let response = await fetch("https://fakestoreapi.com/products", {
     next: { revalidate: 60 },
