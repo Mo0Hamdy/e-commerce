@@ -119,9 +119,11 @@ export default function Navbar() {
           <li className="me-3 font-semibold duration-300">
             <a href="#">Home</a>
           </li>
+          <Link href="/landing/Allproducts">
           <li className="me-3 font-semibold duration-300">
-            <a href="#">Products</a>
+            {/* <a href="./Allproducts">Products</a> */}Products
           </li>
+          </Link>
           <li className="me-3 duration-300">
             <div className=" flex items-center">
               <FormControl sx={{ padding: 0 }}>
@@ -162,7 +164,7 @@ export default function Navbar() {
 
                         <MenuItem
                           component={Link}
-                          href={`/landing/products/${name.split(" ").join("-")}`}
+                          href={`/landing/${name.split(" ").join("-")}`}
                           key={name}
                           value={name}
                           style={getStyles(name, personName, theme)}
