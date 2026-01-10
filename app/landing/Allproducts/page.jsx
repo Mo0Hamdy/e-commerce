@@ -6,11 +6,10 @@ export default async function AllProducts() {
     next: { revalidate: 60 },
   });
   if (!response.ok) {
-    throw new Error("all products has an error!");
+    // throw new Error("all products has an error!");
+    return [];
   }
-  let data = await response.json()
-  // let returnedProduct = data.product;
-//   let returnedProducts = await getProducts(product);
+  let data = await response.json();
   const cards = data.map((element) => {
     return (
       <div
