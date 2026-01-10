@@ -5,10 +5,10 @@ export default async function AllProducts() {
   let response = await fetch("https://fakestoreapi.com/products", {
     next: { revalidate: 60 },
   });
-  if (!response.ok) {
-    // throw new Error("all products has an error!");
-    return [];
-  }
+  // if (!response.ok) {
+  //   // throw new Error("all products has an error!");
+  //   return [];
+  // }
   let data = await response.json();
   const cards = data.map((element) => {
     return (
