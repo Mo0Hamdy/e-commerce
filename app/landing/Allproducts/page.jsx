@@ -1,15 +1,16 @@
 
 import Image from "next/image";
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export default async function AllProducts() {
-  let response = await fetch("https://fakestoreapi.com/products", {
+  // let response = await fetch("https://fakestoreapi.com/products", {
+  let response = await fetch("https://dummyjson.com/products", {
     next: { revalidate: 60 },
   });
-  // if (!response.ok) {
-  //   // throw new Error("all products has an error!");
-  //   return [];
-  // }
-  let data = await response.json();
+  if (!response.ok) {
+    throw new Error("all products has an error!");
+  
+  }
+  let data = (await response.json()).products;
   const cards = data.map((element) => {
     return (
       <div
@@ -19,7 +20,7 @@ export default async function AllProducts() {
         <div className="relative h-60 flex items-center justify-center">
           <Image
             className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
-            src={element.image}
+            src={element.thumbnail}
             alt={element.title}
             fill
             sizes="full"
