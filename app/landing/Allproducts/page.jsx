@@ -20,7 +20,7 @@ export default async function AllProducts() {
         <div className="relative h-60 flex items-center justify-center">
           <Image
             className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
-            src={element.thumbnail}
+            src={element.images[0]}
             alt={element.title}
             fill
             sizes="full"

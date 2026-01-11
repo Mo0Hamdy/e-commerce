@@ -10,7 +10,7 @@ export default function Hero() {
           Because boring is never an option. Shop smart, live stylish, and let
           your home speak volumes.
         </p>
-        <Link href="/landing/products">
+        <Link href="/landing/Allproducts">
           <button className="cursor-pointer bg-black text-white p-3 rounded-xl my-4 md:my-10">
             Go to products
           </button>
