@@ -45,7 +45,7 @@ export default function Card() {
       <div className="flex flex-col md:flex-row justify-evenly items-center md:items-start py-20">
         {cards}
       </div>
-      <Gallery />
+      {/* <Gallery /> */}
     </div>
   );
 }

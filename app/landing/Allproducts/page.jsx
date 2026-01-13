@@ -1,6 +1,7 @@
-
 import Image from "next/image";
-// export const dynamic = "force-dynamic";
+import AddToCart from "@/components/AddToCart";
+
+export const dynamic = "force-dynamic";
 export default async function AllProducts() {
   // let response = await fetch("https://fakestoreapi.com/products", {
   let response = await fetch("https://dummyjson.com/products", {
@@ -8,7 +9,6 @@ export default async function AllProducts() {
   });
   if (!response.ok) {
     throw new Error("all products has an error!");
-  
   }
   let data = (await response.json()).products;
   const cards = data.map((element) => {
@@ -35,15 +35,18 @@ export default async function AllProducts() {
               ${Math.round(element.price * 1.2)}
             </span>{" "}
           </h1>
-          <button className="cursor-pointer bg-cyan-800 text-white p-2 rounded-xl hover:scale-110 duration-300">
+          {/* <button onClick={() => {
+            console.log("hello world")
+          }} className="cursor-pointer bg-cyan-800 text-white p-2 rounded-xl hover:scale-110 duration-300">
             Add to cart
-          </button>
+          </button> */}
+          <AddToCart element={element} />
         </div>
       </div>
     );
   });
 
-   return (
+  return (
     <div className="py-40 bg-blue-300 min-h-full">
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
         {cards}

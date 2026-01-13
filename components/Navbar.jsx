@@ -3,24 +3,32 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import "../app/globals.css";
 import * as React from "react";
+import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
+import List from "@mui/material/List";
 import Fade from "@mui/material/Fade";
 import Select from "@mui/material/Select";
+import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
 import { useTheme } from "@mui/material/styles";
+import MailIcon from "@mui/icons-material/Mail";
 import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import ListItemButton from "@mui/material/ListItemButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-// const ITEM_HEIGHT = 48;
-// const ITEM_PADDING_TOP = 8;
+
 const MenuProps = {
   PaperProps: {
     style: {
-      // maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 200,
     },
   },
@@ -33,6 +41,9 @@ function getStyles(name, personName, theme) {
       : theme.typography.fontWeightRegular,
   };
 }
+
+import { useAppSelector, useAppDispatch, useAppStore } from "../lib/hooks";
+import { add } from "../lib/features/CartSlice";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -51,7 +62,6 @@ export default function Navbar() {
     setOpen(open ? false : true);
   };
   const handleSelectClick = (event) => {
-    // setPersonName(event.target.value)
     setOpenSelect(openSelect ? false : true);
   };
   const theme = useTheme();
@@ -60,15 +70,49 @@ export default function Navbar() {
     const {
       target: { value },
     } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      // typeof value === "string" ? value.split(",") : value
-      value
-    );
+    setPersonName(value);
   };
 
   let [names, setNames] = useState([]);
   let [loading, setLoading] = useState(false);
+  let [openDraw, setOpenDraw] = useState(false);
+
+  const DrawerList = (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={(event) => {
+        event.stopPropagation();
+        setOpenDraw(false);
+      }}
+    >
+      <List>
+        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["All mail", "Trash", "Spam"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,6 +125,14 @@ export default function Navbar() {
     };
     fetchData();
   }, []);
+
+  const resultState = useAppSelector((state) => {
+    return state.cart.result;
+  });
+  const dispatch = useAppDispatch();
+  function handleAddClick() {
+    dispatch(add({ additionValue: 10 }));
+  }
 
   return (
     <div className="fixed w-full navbar z-10">
@@ -120,9 +172,7 @@ export default function Navbar() {
             <a href="#">Home</a>
           </li>
           <Link href="/landing/Allproducts">
-          <li className="me-3 font-semibold duration-300">
-            {/* <a href="./Allproducts">Products</a> */}Products
-          </li>
+            <li className="me-3 font-semibold duration-300">Products</li>
           </Link>
           <li className="me-3 duration-300">
             <div className=" flex items-center">
@@ -154,27 +204,17 @@ export default function Navbar() {
                     <em className="font-semibold">Categories</em>
                   </MenuItem>
                   {loading ? (
-                    names.map(
-                      (name, index) => (
-                        // <Link
-                        //   href={`/landing/products/${name.split(" ").join("-")}`}
-                        //   key={name}
-                        // >
-                        // <a href="/landing/products">{name}</a>
-
-                        <MenuItem
-                          component={Link}
-                          href={`/landing/${name.split(" ").join("-")}`}
-                          key={name}
-                          value={name}
-                          style={getStyles(name, personName, theme)}
-                        >
-                          {name}
-                        </MenuItem>
-                      )
-
-                      // </Link>
-                    )
+                    names.map((name) => (
+                      <MenuItem
+                        component={Link}
+                        href={`/landing/${name.split(" ").join("-")}`}
+                        key={name}
+                        value={name}
+                        style={getStyles(name, personName, theme)}
+                      >
+                        {name}
+                      </MenuItem>
+                    ))
                   ) : (
                     <MenuItem
                       style={{
@@ -226,13 +266,37 @@ export default function Navbar() {
             />
             <h4 className="hidden md:block">Account</h4>
           </div>
-          <div className="cart py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 rounded-e-full duration-300 transition-all">
+          <div
+            onClick={() => {
+              setOpenDraw(true);
+              handleAddClick();
+            }}
+            className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all rounded-e-full"
+          >
             <ShoppingCartOutlinedIcon
               sx={{
                 color: "gray",
               }}
             />
             <h4 className="hidden md:block">Cart</h4>
+            <div>
+              <Drawer
+                anchor="right"
+                open={openDraw}
+                onClose={(event) => {
+                  event.stopPropagation();
+                  setOpenDraw(false);
+                }}
+                sx={{
+                  "& .MuiDrawer-paper": { width: 250 },
+                }}
+              >
+                {DrawerList}
+              </Drawer>
+            </div>
+            <span className="bg-red-500 rounded-md text-white ms-2">
+              {resultState}
+            </span>
           </div>
         </div>
       </div>
