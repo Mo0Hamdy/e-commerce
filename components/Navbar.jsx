@@ -25,6 +25,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import CloseIcon from '@mui/icons-material/Close';
 
 const MenuProps = {
   PaperProps: {
@@ -43,7 +44,7 @@ function getStyles(name, personName, theme) {
 }
 
 import { useAppSelector, useAppDispatch, useAppStore } from "../lib/hooks";
-import { add } from "../lib/features/CartSlice";
+// import { add } from "../lib/features/CartSlice";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -77,29 +78,41 @@ export default function Navbar() {
   let [loading, setLoading] = useState(false);
   let [openDraw, setOpenDraw] = useState(false);
 
+   const resultState = useAppSelector((state) => {
+    return state.cart.result;
+   });
+  const cartProducts = useAppSelector((state) => {
+    return state.cart.cartProducts
+  })
+
   const DrawerList = (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 400 ,padding:"20px"}}
       role="presentation"
       onClick={(event) => {
         event.stopPropagation();
         setOpenDraw(false);
       }}
     >
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
+      <div className="flex justify-between items-center mb-5">
+
+      <h3 className="text-gray-700 text-xl tracking-wide font-bold">Shopping cart</h3>
+        <CloseIcon style={{cursor:"pointer",fontSize:"30px"}} />
+      </div>
+      {cartProducts.length == 0 ?<ListItem disablePadding>Your Cart is empty</ListItem> :
+        <List>
+          {cartProducts.map((item) => (
+            <ListItem className="pb-3" key={item.element.id} disablePadding>
+              <img className="w-28 bg-gray-300 rounded-lg" src={item.element.images[0]} alt="" />          
+                <ListItemText primary={item.element.title} />
+              {/* </ListItemButton> */}
+            </ListItem>
+          ))}
+          {/* <Divider /> */}
+        </List>
+      }
+      
+      {/* <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
@@ -110,7 +123,9 @@ export default function Navbar() {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List> */}
+
+     
     </Box>
   );
 
@@ -125,15 +140,7 @@ export default function Navbar() {
     };
     fetchData();
   }, []);
-
-  const resultState = useAppSelector((state) => {
-    return state.cart.result;
-  });
-  const dispatch = useAppDispatch();
-  function handleAddClick() {
-    dispatch(add({ additionValue: 10 }));
-  }
-
+ 
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-white flex justify-between items-center rounded-full border border-cyan-800">
@@ -269,7 +276,7 @@ export default function Navbar() {
           <div
             onClick={() => {
               setOpenDraw(true);
-              handleAddClick();
+      
             }}
             className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all rounded-e-full"
           >
@@ -288,13 +295,16 @@ export default function Navbar() {
                   setOpenDraw(false);
                 }}
                 sx={{
-                  "& .MuiDrawer-paper": { width: 250 },
+                  "& .MuiDrawer-paper": { width: 400 },
                 }}
               >
                 {DrawerList}
               </Drawer>
             </div>
-            <span className="bg-red-500 rounded-md text-white ms-2">
+            <span
+              className={"rounded-md bg-red-500 text-white ms-2 px-1"}
+              style={{ display: resultState <= 0 ? "none" : "block" }}
+            >
               {resultState}
             </span>
           </div>

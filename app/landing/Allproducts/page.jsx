@@ -1,6 +1,9 @@
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
 
+// import { useAppSelector, useAppDispatch, useAppStore } from "../../../lib/store";
+// import { add } from "../../../lib/features/CartSlice";
+
 export const dynamic = "force-dynamic";
 export default async function AllProducts() {
   // let response = await fetch("https://fakestoreapi.com/products", {
