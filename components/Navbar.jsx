@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import "../app/globals.css";
+import Link from "next/link";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
@@ -10,22 +10,20 @@ import Fade from "@mui/material/Fade";
 import Select from "@mui/material/Select";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
 import MenuItem from "@mui/material/MenuItem";
+import AddIcon from "@mui/icons-material/Add";
 import { useTheme } from "@mui/material/styles";
-import MailIcon from "@mui/icons-material/Mail";
+import CloseIcon from "@mui/icons-material/Close";
 import FormControl from "@mui/material/FormControl";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
+import RemoveIcon from "@mui/icons-material/Remove";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import ListItemButton from "@mui/material/ListItemButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import CloseIcon from '@mui/icons-material/Close';
+
+import { useAppSelector, useAppDispatch, useAppStore } from "../lib/hooks";
+import { increase, decrease } from "../lib/features/CartSlice";
 
 const MenuProps = {
   PaperProps: {
@@ -43,10 +41,16 @@ function getStyles(name, personName, theme) {
   };
 }
 
-import { useAppSelector, useAppDispatch, useAppStore } from "../lib/hooks";
-// import { add } from "../lib/features/CartSlice";
-
 export default function Navbar() {
+  const dispatch = useAppDispatch();
+  function handlePlusClick(id) {
+    dispatch(increase({ id }));
+  }
+
+  function handleMinusClick(id) {
+    dispatch(decrease({ id }));
+  }
+
   const [open, setOpen] = useState(false);
   const [openSelect, setOpenSelect] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -78,61 +82,92 @@ export default function Navbar() {
   let [loading, setLoading] = useState(false);
   let [openDraw, setOpenDraw] = useState(false);
 
-   const resultState = useAppSelector((state) => {
-    return state.cart.result;
-   });
+  // const resultState = useAppSelector((state) => {
+  //   return state.cart.result;
+  // });
   const cartProducts = useAppSelector((state) => {
-    return state.cart.cartProducts
-  })
+    return state.cart.cartProducts;
+  });
+  const defaultProductsCounter = useAppSelector((state) => {
+    return state.cart.defaultProductsCounter;
+  });
 
   const DrawerList = (
-    <Box
-      sx={{ width: 400 ,padding:"20px"}}
-      role="presentation"
-      onClick={(event) => {
-        event.stopPropagation();
-        setOpenDraw(false);
-      }}
-    >
+    <Box sx={{ width: 400, padding: "20px" }} role="presentation">
       <div className="flex justify-between items-center mb-5">
-
-      <h3 className="text-gray-700 text-xl tracking-wide font-bold">Shopping cart</h3>
-        <CloseIcon style={{cursor:"pointer",fontSize:"30px"}} />
+        <h3 className="text-gray-700 text-xl tracking-wide font-bold">
+          Shopping cart
+        </h3>
+        <CloseIcon
+          onClick={(event) => {
+            event.stopPropagation();
+            setOpenDraw(false);
+          }}
+          style={{ cursor: "pointer", fontSize: "30px" }}
+        />
       </div>
-      {cartProducts.length == 0 ?<ListItem disablePadding>Your Cart is empty</ListItem> :
+      {cartProducts.length == 0 ? (
+        <h3>Your Cart is empty</h3>
+      ) : (
         <List>
           {cartProducts.map((item) => (
-            <ListItem className="pb-3" key={item.element.id} disablePadding>
-              <img className="w-28 bg-gray-300 rounded-lg" src={item.element.images[0]} alt="" />          
-                <ListItemText primary={item.element.title} />
-              {/* </ListItemButton> */}
-            </ListItem>
+            <div
+              className="h-20 mb-4 flex bg-green-300 rounded-xl gap-3"
+              key={item.id}
+            >
+              <img
+                className="w-20 h-20 bg-gray-300 rounded-lg"
+                src={item.image}
+                alt=""
+              />
+              <div className="info flex flex-col items-start justify-between w-full">
+                <h2>{item.title}</h2>
+                <div className="flex justify-between w-full mb-2">
+                  <div className="count text-center flex items-center">
+                    <RemoveIcon
+                      onClick={() => {
+                        handleMinusClick(item.id);
+                      }}
+                      style={{
+                        fontSize: "18px",
+                        color: "#6a7282",
+                        cursor: "pointer",
+                        border: "1px solid black",
+                        borderRadius: "2px",
+                        marginRight: "15px",
+                      }}
+                    />
+                    <span>{item.counter}</span>
+                    <AddIcon
+                      onClick={() => {
+                        handlePlusClick(item.id);
+                      }}
+                      style={{
+                        fontSize: "18px",
+                        color: "#6a7282",
+                        cursor: "pointer",
+                        border: "1px solid black",
+                        borderRadius: "2px",
+                        marginLeft: "15px",
+                      }}
+                    />
+                  </div>
+                  <span className="text-gray-700 mr-5">
+                    ${item.counter * item.price}
+                  </span>
+                </div>
+              </div>
+            </div>
           ))}
-          {/* <Divider /> */}
         </List>
-      }
-      
-      {/* <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-
-     
+      )}
     </Box>
   );
 
   useEffect(() => {
     const fetchData = async () => {
       let response = await fetch(
-        "https://fakestoreapi.com/products/categories"
+        "https://fakestoreapi.com/products/categories",
       );
       let data = await response.json();
       setLoading(true);
@@ -140,7 +175,7 @@ export default function Navbar() {
     };
     fetchData();
   }, []);
- 
+
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-white flex justify-between items-center rounded-full border border-cyan-800">
@@ -276,7 +311,6 @@ export default function Navbar() {
           <div
             onClick={() => {
               setOpenDraw(true);
-      
             }}
             className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all rounded-e-full"
           >
@@ -303,9 +337,11 @@ export default function Navbar() {
             </div>
             <span
               className={"rounded-md bg-red-500 text-white ms-2 px-1"}
-              style={{ display: resultState <= 0 ? "none" : "block" }}
+              style={{
+                display: defaultProductsCounter <= 0 ? "none" : "block",
+              }}
             >
-              {resultState}
+              {defaultProductsCounter}
             </span>
           </div>
         </div>

@@ -1,12 +1,7 @@
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
-
-// import { useAppSelector, useAppDispatch, useAppStore } from "../../../lib/store";
-// import { add } from "../../../lib/features/CartSlice";
-
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 export default async function AllProducts() {
-  // let response = await fetch("https://fakestoreapi.com/products", {
   let response = await fetch("https://dummyjson.com/products", {
     next: { revalidate: 60 },
   });
@@ -38,11 +33,6 @@ export default async function AllProducts() {
               ${Math.round(element.price * 1.2)}
             </span>{" "}
           </h1>
-          {/* <button onClick={() => {
-            console.log("hello world")
-          }} className="cursor-pointer bg-cyan-800 text-white p-2 rounded-xl hover:scale-110 duration-300">
-            Add to cart
-          </button> */}
           <AddToCart element={element} />
         </div>
       </div>

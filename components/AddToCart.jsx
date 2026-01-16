@@ -9,6 +9,7 @@ export default function AddToCart({ element }) {
   const handleClick = () => {
     setOpen(true);
   };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -25,6 +26,13 @@ export default function AddToCart({ element }) {
     <div>
       <button
         onClick={() => {
+          // let newProduct = {
+          //   title: element.title,
+          //   id:element.id,
+          //   price: element.price,
+          //   img: element.images[0],
+          //   counter: 1,
+          // };
           handleClick();
           handleAddClick();
         }}
