@@ -81,10 +81,7 @@ export default function Navbar() {
   let [names, setNames] = useState([]);
   let [loading, setLoading] = useState(false);
   let [openDraw, setOpenDraw] = useState(false);
-
-  // const resultState = useAppSelector((state) => {
-  //   return state.cart.result;
-  // });
+  
   const cartProducts = useAppSelector((state) => {
     return state.cart.cartProducts;
   });
@@ -210,9 +207,9 @@ export default function Navbar() {
               PixelCraft
             </li>
           </Link>
-          <li className="me-3 font-semibold duration-300">
-            <a href="#">Home</a>
-          </li>
+          <Link href="/landing/home">
+            <li className="me-3 font-semibold duration-300">Home</li>
+          </Link>
           <Link href="/landing/Allproducts">
             <li className="me-3 font-semibold duration-300">Products</li>
           </Link>

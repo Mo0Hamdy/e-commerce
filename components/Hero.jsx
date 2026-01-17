@@ -11,7 +11,7 @@ export default function Hero() {
           your home speak volumes.
         </p>
         <Link href="/landing/Allproducts">
-          <button className="cursor-pointer bg-black text-white p-3 rounded-xl my-4 md:my-10">
+          <button className="cursor-pointer bg-black text-white p-3 rounded-xl my-4 md:my-10 font-bold hover:scale-110 duration-300">
             Go to products
           </button>
         </Link>

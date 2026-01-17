@@ -26,13 +26,6 @@ export default function AddToCart({ element }) {
     <div>
       <button
         onClick={() => {
-          // let newProduct = {
-          //   title: element.title,
-          //   id:element.id,
-          //   price: element.price,
-          //   img: element.images[0],
-          //   counter: 1,
-          // };
           handleClick();
           handleAddClick();
         }}
@@ -46,7 +39,7 @@ export default function AddToCart({ element }) {
         onClose={handleClose}
         sx={{
           "& .MuiSnackbarContent-root": {
-            backgroundColor: "teal",
+            backgroundColor: "#1e293b",
             color: "white",
             fontSize: "16px",
             fontWeight: "bold",

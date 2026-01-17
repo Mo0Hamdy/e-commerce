@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
+import Link from "next/link";
 // export const dynamic = "force-dynamic";
 export default async function AllProducts() {
   let response = await fetch("https://dummyjson.com/products", {
@@ -15,16 +16,18 @@ export default async function AllProducts() {
         key={element.id}
         className="rounded-xl w-72 h-94 p-3 mx-10 bg-white flex flex-col justify-between shrink-0"
       >
-        <div className="relative h-60 flex items-center justify-center">
-          <Image
-            className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
-            src={element.images[0]}
-            alt={element.title}
-            fill
-            sizes="full"
-            loading="eager"
-          />
-        </div>
+        <Link href="/landing/productDetails">
+          <div className="relative h-60 flex items-center justify-center">
+            <Image
+              className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
+              src={element.images[0]}
+              alt={element.title}
+              fill
+              sizes="full"
+              loading="lazy"
+            />
+          </div>
+        </Link>
         <h1 className="text-md text-gray-700">{element.title}</h1>
         <div className="flex justify-between items-center">
           <h1 className="text-md text-red-500 font-bold">
