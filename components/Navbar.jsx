@@ -81,7 +81,7 @@ export default function Navbar() {
   let [names, setNames] = useState([]);
   let [loading, setLoading] = useState(false);
   let [openDraw, setOpenDraw] = useState(false);
-  
+
   const cartProducts = useAppSelector((state) => {
     return state.cart.cartProducts;
   });
@@ -196,9 +196,34 @@ export default function Navbar() {
             open={openAnchor}
             onClose={handleCloseAnchor}
           >
-            <MenuItem onClick={handleCloseAnchor}>Home</MenuItem>
-            <MenuItem onClick={handleCloseAnchor}>Products</MenuItem>
-            <MenuItem onClick={handleCloseAnchor}>Categories</MenuItem>
+            <MenuItem
+              component={Link}
+              href="/landing"
+              onClick={handleCloseAnchor}
+            >
+              Pixel Craft
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              href="/landing/home"
+              onClick={handleCloseAnchor}
+            >
+              Home
+            </MenuItem>
+            <MenuItem
+              component={Link}
+              href="/landing/Allproducts"
+              onClick={handleCloseAnchor}
+            >
+              Products
+            </MenuItem>
+            {/* <MenuItem
+              component={Link}
+              href="/landing/Allproducts"
+              onClick={handleCloseAnchor}
+            >
+              Categories
+            </MenuItem> */}
           </Menu>
         </div>
         <ul className="hidden md:flex text-black items-center ms-2">
@@ -213,7 +238,7 @@ export default function Navbar() {
           <Link href="/landing/Allproducts">
             <li className="me-3 font-semibold duration-300">Products</li>
           </Link>
-          <li className="me-3 duration-300">
+          {/* <li className="me-3 duration-300">
             <div className=" flex items-center">
               <FormControl sx={{ padding: 0 }}>
                 <Select
@@ -268,7 +293,7 @@ export default function Navbar() {
                 </Select>
               </FormControl>
             </div>
-          </li>
+          </li> */}
         </ul>
         <div className="flex items-center">
           <Button

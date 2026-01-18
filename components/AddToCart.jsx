@@ -46,6 +46,9 @@ export default function AddToCart({ element }) {
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             minWidth: "300px",
+
+            position:"absolute",
+            top: {xs: "70px",sm:"70px"}
           },
         }}
         anchorOrigin={{ horizontal: `center`, vertical: `top` }}
