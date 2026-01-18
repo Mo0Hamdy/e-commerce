@@ -3,6 +3,11 @@ import AddToCart from "@/components/AddToCart";
 import Link from "next/link";
 // export const dynamic = "force-dynamic";
 export default async function AllProducts() {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    },7000)
+  })
   let response = await fetch("https://dummyjson.com/products", {
     next: { revalidate: 60 },
   });

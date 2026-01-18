@@ -1,27 +1,33 @@
-async function getBestSelling() {
-  const data = await fetch("https://dummyjson.com/products", {
-    next: {
-      revalidate: 60,
-    },
-  });
-  if (!data.ok) {
-    throw new Error("couldn't find any element");
-  }
-  let response = (await data.json()).products;
-  return response.filter((element) => element.rating >= 4.5);
-}
+"use client";
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import PopularAndCheap from "./PopularAndCheapProducts";
+export default function Popular() {
+  const [type, setType] = useState("best");
 
-export default async function Popular() {
-  const products = await getBestSelling();
-  console.log(products);
-  const data = products.map((element) => {
-    return (
-      <div key={element.id}>
-        <img src={element.images[0]} alt="" />
-      </div>
-    );
-  });
+  return (
+    <div className="container m-auto pt-24 flex flex-col items-center">
+      <ButtonGroup aria-label="Basic button group">
+        <Button
+          variant={type === "best" ? "contained" : "outlined"}
+          onClick={() => {
+            setType("best");
+          }}
+        >
+          Best Selling
+        </Button>
+        <Button
+          variant={type === "cheap" ? "contained" : "outlined"}
+          onClick={() => {
+            setType("cheap");
+          }}
+        >
+          Low Prices
+        </Button>
+      </ButtonGroup>
 
-  return <div className="grid grid-cols-2">{data}</div>;
+      <PopularAndCheap type={type} />
+    </div>
+  );
 }
-      
