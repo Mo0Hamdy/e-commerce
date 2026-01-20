@@ -74,7 +74,11 @@ export default function PopularAndCheap({ type }) {
       {!loading ? (
         <div className="flex flex-wrap justify-evenly gap-y-8 md:gap-y-16">{data} </div>
       ) : (
-        <Facebook />
+                  // <Facebook />
+                  <div className="min-h-100 flex items-center justify-center">
+                      
+                      <img src="/images/Blocks@1x-1.0s-200px-200px.svg" alt="" />
+                  </div>
       )}
     </>
   );
