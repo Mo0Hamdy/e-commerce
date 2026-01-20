@@ -1,22 +1,26 @@
 @import "tailwindcss";
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-} */
 
-/* @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-} */
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+@theme {
+  --color-primary: #2d3748;
+  --color-primary-dark: #1a202c;
+  --color-primary-light: #4a5568;
+  
+  --color-secondary: #e53e3e;
+  --color-secondary-dark: #c53030;
+  --color-secondary-light: #fc8181;
+  
+  --color-accent: #f6ad55;
+  --color-accent-dark: #ed8936;
+  --color-accent-light: #fbd38d;
+  
+  --color-background: #f7fafc;
+  --color-background-dark: #edf2f7;
+  --color-background-white: #ffffff;
+  
+  --color-textColor: #1a202c;
+  --color-textColor-light: #4a5568;
+  --color-textColor-lighter: #718096;
+}
 
 @keyframes navbar {
   from{
@@ -35,11 +39,4 @@
 
 body {
   padding-right: 0;
-  
-  /* height: 5000px; */
-  /* background-color: teal; */
-  /* overflow-x: hidden; */
-  /* background: var(--background); */
-  /* color: var(--foreground); */
-  /* font-family: Arial, Helvetica, sans-serif; */
 }

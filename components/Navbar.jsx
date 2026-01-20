@@ -1,23 +1,19 @@
 "use client";
+// import "../app/globals.css"
 import { useState, useEffect } from "react";
-import "../app/globals.css";
 import Link from "next/link";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
 import Fade from "@mui/material/Fade";
-import Select from "@mui/material/Select";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
 import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
-import FormControl from "@mui/material/FormControl";
 import RemoveIcon from "@mui/icons-material/Remove";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import CircularProgress from "@mui/material/CircularProgress";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -25,21 +21,13 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useAppSelector, useAppDispatch, useAppStore } from "../lib/hooks";
 import { increase, decrease } from "../lib/features/CartSlice";
 
-const MenuProps = {
-  PaperProps: {
-    style: {
-      width: 200,
-    },
-  },
-};
-
-function getStyles(name, personName, theme) {
-  return {
-    fontWeight: personName.includes(name)
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
-  };
-}
+// const MenuProps = {
+//   PaperProps: {
+//     style: {
+//       width: 200,
+//     },
+//   },
+// };
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -52,10 +40,10 @@ export default function Navbar() {
   }
 
   const [open, setOpen] = useState(false);
-  const [openSelect, setOpenSelect] = useState(false);
+  // const [openSelect, setOpenSelect] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
-  const [personName, setPersonName] = useState([]);
+  // const [personName, setPersonName] = useState([]);
   const handleClickAnchor = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -66,17 +54,8 @@ export default function Navbar() {
   const handleClick = () => {
     setOpen(open ? false : true);
   };
-  const handleSelectClick = (event) => {
-    setOpenSelect(openSelect ? false : true);
-  };
-  const theme = useTheme();
+  // const theme = useTheme();
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(value);
-  };
 
   let [names, setNames] = useState([]);
   let [loading, setLoading] = useState(false);
@@ -175,7 +154,7 @@ export default function Navbar() {
 
   return (
     <div className="fixed w-full navbar z-10">
-      <div className="relative container m-auto bg-white flex justify-between items-center rounded-full border border-cyan-800">
+      <div className="relative container m-auto bg-primary flex justify-between items-center rounded-full">
         <div className="block md:hidden ms-2">
           <button
             onClick={handleClickAnchor}
@@ -217,13 +196,6 @@ export default function Navbar() {
             >
               Products
             </MenuItem>
-            {/* <MenuItem
-              component={Link}
-              href="/landing/Allproducts"
-              onClick={handleCloseAnchor}
-            >
-              Categories
-            </MenuItem> */}
           </Menu>
         </div>
         <ul className="hidden md:flex text-black items-center ms-2">
@@ -238,75 +210,19 @@ export default function Navbar() {
           <Link href="/landing/Allproducts">
             <li className="me-3 font-semibold duration-300">Products</li>
           </Link>
-          {/* <li className="me-3 duration-300">
-            <div className=" flex items-center">
-              <FormControl sx={{ padding: 0 }}>
-                <Select
-                  open={openSelect}
-                  multiple
-                  displayEmpty
-                  value={personName}
-                  onChange={handleChange}
-                  onClick={handleSelectClick}
-                  input={<OutlinedInput />}
-                  renderValue={(selected) => {
-                    if (selected.length === 0) {
-                      return <em className="font-semibold">Categories</em>;
-                    }
-                    return selected[selected.length - 1];
-                  }}
-                  MenuProps={MenuProps}
-                  inputProps={{ "aria-label": "Without label" }}
-                  sx={{
-                    "& fieldset": { border: "none" },
-                    "& .MuiOutlinedInput-input": {
-                      padding: "0",
-                    },
-                  }}
-                >
-                  <MenuItem disabled value="">
-                    <em className="font-semibold">Categories</em>
-                  </MenuItem>
-                  {loading ? (
-                    names.map((name) => (
-                      <MenuItem
-                        component={Link}
-                        href={`/landing/${name.split(" ").join("-")}`}
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
-                      >
-                        {name}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        backgroundColor: "transparent",
-                      }}
-                    >
-                      <CircularProgress style={{ color: "#eee" }} />
-                    </MenuItem>
-                  )}
-                </Select>
-              </FormControl>
-            </div>
-          </li> */}
         </ul>
         <div className="flex items-center">
           <Button
+            
             style={{
               padding: "0",
               margin: "0 20px",
-              color: "#D8DBE0",
               borderRadius: "20px",
               border: "2px solid #D8DBE0",
             }}
             onClick={handleClick}
           >
-            <SearchOutlinedIcon />
+            <SearchOutlinedIcon className="text-accent" />
           </Button>
           <div
             onBlur={handleClick}
@@ -324,9 +240,7 @@ export default function Navbar() {
 
           <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all">
             <PermIdentityOutlinedIcon
-              sx={{
-                color: "gray",
-              }}
+              className="text-accent"
             />
             <h4 className="hidden md:block">Account</h4>
           </div>
@@ -337,9 +251,7 @@ export default function Navbar() {
             className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all rounded-e-full"
           >
             <ShoppingCartOutlinedIcon
-              sx={{
-                color: "gray",
-              }}
+              className="text-accent"
             />
             <h4 className="hidden md:block">Cart</h4>
             <div>

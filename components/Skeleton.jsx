@@ -12,7 +12,6 @@ import Skeleton from "@mui/material/Skeleton";
 
 function Media(props) {
   const { loading = false } = props;
-
   return (
     <Card sx={{ maxWidth: 345, m: 2 }}>
       <CardHeader
@@ -100,17 +99,17 @@ Media.propTypes = {
 
 export default function Facebook() {
   return (
-    <div className="grid grid-cols-2 gap-2">
-      <div className="rounded-xl w-72 h-94 mx-10">
+    <div className="grid md:grid-cols-2 gap-4">
+      <div className="rounded-xl w-64 h-80 md:w-72 md:h-94 mx-10 p-3">
+        <Media className="w-full" loading />
+      </div>
+      <div className="rounded-xl w-64 h-80 md:w-72 md:h-94 mx-10 p-3">
         <Media loading />
       </div>
-      <div className="rounded-xl w-72 h-94 mx-10">
+      <div className="rounded-xl w-64 h-80 md:w-72 md:h-94 mx-10 p-3">
         <Media loading />
       </div>
-      <div className="rounded-xl w-72 h-94 mx-10">
-        <Media loading />
-      </div>
-      <div className="rounded-xl w-72 h-94 mx-10">
+      <div className="rounded-xl w-64 h-80 md:w-72 md:h-94 mx-10 p-3">
         <Media loading />
       </div>
     </div>

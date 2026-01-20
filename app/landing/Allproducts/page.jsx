@@ -1,7 +1,6 @@
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
 import Link from "next/link";
-// export const dynamic = "force-dynamic";
 export default async function AllProducts() {
   await new Promise((resolve) => {
     setTimeout(() => {
@@ -48,7 +47,7 @@ export default async function AllProducts() {
   });
 
   return (
-    <div className="py-40 bg-blue-300 min-h-full">
+    <div className="py-40 bg-background-dark min-h-full">
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
         {cards}
       </div>

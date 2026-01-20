@@ -1,9 +1,6 @@
 import DiamondOutlinedIcon from "@mui/icons-material/DiamondOutlined";
 import RocketLaunchOutlinedIcon from "@mui/icons-material/RocketLaunchOutlined";
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
-
-import Gallery from "./Gallery";
-
 const data = [
   {
     icon: DiamondOutlinedIcon,
@@ -29,7 +26,7 @@ const cards = data.map((element, index) => {
       key={index}
       className="flex flex-col items-center md:items-start md:flex-row text-gray-700 w-4/5 md:w-80 py-7 md:p-0"
     >
-      <element.icon style={{ fontSize: "32px", margin: "0 0 10px 5px" }} />
+      <element.icon className="text-accent" style={{ fontSize: "32px", margin: "0 0 10px 5px" }} />
       <div className="text md:ps-5">
         <h3 className="text-2xl pb-3 text-black text-center md:text-start">
           {element.title}
@@ -45,7 +42,6 @@ export default function Card() {
       <div className="flex flex-col md:flex-row justify-evenly items-center md:items-start py-20">
         {cards}
       </div>
-      {/* <Gallery /> */}
     </div>
   );
 }

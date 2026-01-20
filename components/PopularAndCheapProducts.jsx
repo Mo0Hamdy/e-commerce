@@ -28,17 +28,15 @@ export default function PopularAndCheap({ type }) {
       setLoading(false);
     });
   }, [type]);
-    
-   
 
   const data = selected.map((element) => {
     return (
       <div
         key={element.id}
-        className={`overflow-hidden relative rounded-xl w-72 h-94 p-3 mx-10 bg-white flex flex-col justify-between shrink-0 border ${type === "best" ? "before:absolute before:content-[] before:-top-6.5 before:-left-1.5 before:w-10 before:h-20 before:rounded-s-xl before:bg-violet-500 before:rotate-45" : null}`}
+        className={`overflow-hidden rounded-xl relative md:w-72 md:h-94 w-64 h-80 p-3 md:mx-10 bg-background-white flex flex-col justify-between ${type === "best" ? "before:absolute before:content-[] before:-top-6.5 before:-left-1.5 before:w-10 before:h-20 before:rounded-s-xl before:bg-accent before:rotate-45" : null}`}
       >
         <span
-          className={`absolute top-0 ${type === "best" ? "left-0" : "right-0 bg-neutral-300 rounded-bl-xl"} h-10   p-1 text-blacks`}
+          className={`absolute top-0 ${type === "best" ? "left-0" : "right-0 bg-accent rounded-bl-xl"} p-1 text-black`}
         >
           {type === "best"
             ? element.rating
@@ -71,7 +69,13 @@ export default function PopularAndCheap({ type }) {
     );
   });
 
-    return <>
-       {!loading ? <div className="grid grid-cols-2 gap-2">{data} </div> :<Facebook/>} 
+  return (
+    <>
+      {!loading ? (
+        <div className="flex flex-wrap justify-evenly gap-y-8 md:gap-y-16">{data} </div>
+      ) : (
+        <Facebook />
+      )}
     </>
+  );
 }

@@ -39,6 +39,7 @@ export default function Footer() {
           <div className="contact relative grid grid-cols-2 gap-1 w-fit">
             <FontAwesomeIcon
               icon={faShareNodes}
+              className="text-accent"
               style={{
                 position: "absolute",
                 top: "50%",
@@ -48,7 +49,6 @@ export default function Footer() {
                 padding: "15px",
                 borderRadius: "50%",
                 zIndex: "10",
-                color: "gray",
               }}
             />
             <a
@@ -98,7 +98,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="text-center py-4 capitalize text-white bg-cyan-800">
+      <div className="text-center py-4 capitalize text-white bg-primary">
         all right reserved &copy;{" "}
         <span className="text-lime-500">Mohamed Hamdy</span> 2026
       </div>
