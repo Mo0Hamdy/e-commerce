@@ -69,7 +69,10 @@ export default function Navbar() {
   });
 
   const DrawerList = (
-    <Box sx={{ maxWidth: 400, padding: "20px" }} role="presentation">
+    <Box
+      /*sx={{ maxWidth: 400, padding: "20px" }}*/ className="w-full md:w-[400px] p-5"
+      role="presentation"
+    >
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-gray-700 text-xl tracking-wide font-bold">
           Shopping cart
@@ -258,7 +261,14 @@ export default function Navbar() {
                   setOpenDraw(false);
                 }}
                 sx={{
-                  "& .MuiDrawer-paper": { width: 400 },
+                  "& .MuiDrawer-paper": {
+                    width: {
+                      xs: "100%",
+                      sm: "100%",
+                      md: "400px",
+                    },
+                    maxWidth: "400px",
+                  },
                 }}
               >
                 {DrawerList}
