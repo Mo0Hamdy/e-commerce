@@ -275,7 +275,7 @@ export default function Navbar() {
               </Drawer>
             </div>
             <span
-              className={"rounded-md bg-accent-light text-primary ms-2 px-1"}
+              className={"rounded-md bg-accent-light text-primary ms-2 px-1 mr-2"}
               style={{
                 display: defaultProductsCounter <= 0 ? "none" : "block",
               }}
