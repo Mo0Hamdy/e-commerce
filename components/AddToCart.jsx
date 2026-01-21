@@ -29,7 +29,7 @@ export default function AddToCart({ element }) {
           handleClick();
           handleAddClick();
         }}
-        className="cursor-pointer bg-secondary text-white p-2 rounded-xl hover:scale-110 duration-300"
+        className="cursor-pointer bg-primary-light text-white p-2 rounded-xl hover:scale-110 duration-300"
       >
         Add to cart
       </button>
@@ -46,7 +46,6 @@ export default function AddToCart({ element }) {
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             minWidth: "300px",
-
             position:"absolute",
             top: {xs: "70px",sm:"70px"}
           },

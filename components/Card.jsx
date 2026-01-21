@@ -26,7 +26,7 @@ const cards = data.map((element, index) => {
       key={index}
       className="flex flex-col items-center md:items-start md:flex-row text-gray-700 w-4/5 md:w-80 py-7 md:p-0"
     >
-      <element.icon className="text-accent" style={{ fontSize: "32px", margin: "0 0 10px 5px" }} />
+      <element.icon className="text-accent-dark" style={{ fontSize: "32px", margin: "0 0 10px 5px" }} />
       <div className="text md:ps-5">
         <h3 className="text-2xl pb-3 text-black text-center md:text-start">
           {element.title}

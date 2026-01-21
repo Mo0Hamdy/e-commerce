@@ -88,11 +88,11 @@ export default function Navbar() {
         <List>
           {cartProducts.map((item) => (
             <div
-              className="h-20 mb-4 flex bg-green-300 rounded-xl gap-3"
+              className="h-20 mb-4 flex bg-accent-dark rounded-xl gap-3"
               key={item.id}
             >
               <img
-                className="w-20 h-20 bg-gray-300 rounded-lg"
+                className="w-20 h-20 bg-gray-300 rounded-l-lg"
                 src={item.image}
                 alt=""
               />
@@ -198,22 +198,21 @@ export default function Navbar() {
             </MenuItem>
           </Menu>
         </div>
-        <ul className="hidden md:flex text-black items-center ms-2">
+        <ul className="hidden md:flex items-center ms-2">
           <Link href="/landing">
-            <li className="me-3 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest ">
+            <li className="me-3 rounded-full bg-accent-light text-primary-dark px-4 py-2 font-bold tracking-widest ">
               PixelCraft
             </li>
           </Link>
           <Link href="/landing/home">
-            <li className="me-3 font-semibold duration-300">Home</li>
+            <li className="me-3 font-bold text-white">Home</li>
           </Link>
           <Link href="/landing/Allproducts">
-            <li className="me-3 font-semibold duration-300">Products</li>
+            <li className="me-3 font-bold text-white">Products</li>
           </Link>
         </ul>
         <div className="flex items-center">
           <Button
-            
             style={{
               padding: "0",
               margin: "0 20px",
@@ -222,7 +221,7 @@ export default function Navbar() {
             }}
             onClick={handleClick}
           >
-            <SearchOutlinedIcon className="text-accent" />
+            <SearchOutlinedIcon className="text-accent-dark" />
           </Button>
           <div
             onBlur={handleClick}
@@ -238,22 +237,18 @@ export default function Navbar() {
             />
           </div>
 
-          <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all">
-            <PermIdentityOutlinedIcon
-              className="text-accent"
-            />
-            <h4 className="hidden md:block">Account</h4>
+          <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
+            <PermIdentityOutlinedIcon className="text-accent-dark" />
+            <h4 className="hidden md:block font-bold text-white">Account</h4>
           </div>
           <div
             onClick={() => {
               setOpenDraw(true);
             }}
-            className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 text-black hover:bg-gray-100 duration-300 transition-all rounded-e-full"
+            className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
           >
-            <ShoppingCartOutlinedIcon
-              className="text-accent"
-            />
-            <h4 className="hidden md:block">Cart</h4>
+            <ShoppingCartOutlinedIcon className="text-accent-dark" />
+            <h4 className="hidden md:block font-bold text-white">Cart</h4>
             <div>
               <Drawer
                 anchor="right"
@@ -270,7 +265,7 @@ export default function Navbar() {
               </Drawer>
             </div>
             <span
-              className={"rounded-md bg-red-500 text-white ms-2 px-1"}
+              className={"rounded-md bg-accent-light text-primary ms-2 px-1"}
               style={{
                 display: defaultProductsCounter <= 0 ? "none" : "block",
               }}

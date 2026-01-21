@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Facebook from "./Skeleton";
+// import Facebook from "./Skeleton";
 
 export default function PopularAndCheap({ type }) {
   const [selected, setSelected] = useState([]);

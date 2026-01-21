@@ -13,7 +13,7 @@ export default function Footer() {
         Contact us <span className="inline-block text-2xl md:text-4xl animate-bounce">❤️</span>
       </h1>
       <p className="text-center text-gray-400">as we are a family </p>
-      <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around py-7 px-2">
+      <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around px-2">
         <div className="mail w-full md:w-1/3 md:pb-0 items-center justify-centent">
           <p className="text-center text-gray-600 w-full lg:w-4/5 mb-5">
             It will be a pleasure to receive your opinions through
