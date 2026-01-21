@@ -69,7 +69,7 @@ export default function Navbar() {
   });
 
   const DrawerList = (
-    <Box sx={{ width: 400, padding: "20px" }} role="presentation">
+    <Box sx={{ maxWidth: 400, padding: "20px" }} role="presentation">
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-gray-700 text-xl tracking-wide font-bold">
           Shopping cart
