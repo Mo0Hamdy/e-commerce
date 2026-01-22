@@ -70,7 +70,7 @@ export default function Navbar() {
 
   const DrawerList = (
     <Box
-      /*sx={{ maxWidth: 400, padding: "20px" }}*/ className="w-full md:w-[400px] p-5"
+       className="w-full md:w-100 p-5"
       role="presentation"
     >
       <div className="flex justify-between items-center mb-5">
@@ -161,7 +161,7 @@ export default function Navbar() {
         <div className="block md:hidden ms-2">
           <button
             onClick={handleClickAnchor}
-            className="me-5 rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest"
+            className="rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest"
           >
             PixelCraft
           </button>
@@ -275,7 +275,7 @@ export default function Navbar() {
               </Drawer>
             </div>
             <span
-              className={"rounded-md bg-accent-light text-primary ms-2 px-1 mr-2"}
+              className={"rounded-md bg-accent-light text-primary mx-2 px-1"}
               style={{
                 display: defaultProductsCounter <= 0 ? "none" : "block",
               }}
