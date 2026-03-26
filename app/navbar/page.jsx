@@ -89,11 +89,11 @@ export default function Navbar() {
         <List>
           {cartProducts.map((item) => (
             <div
-              className="h-20 mb-4 flex bg-accent-dark rounded-xl gap-3"
+              className="h-24 mb-4 flex bg-accent-dark rounded-xl gap-3"
               key={item.id}
             >
               <img
-                className="w-20 h-20 bg-gray-300 rounded-l-lg"
+                className="w-24 h-24 bg-gray-300 rounded-l-lg"
                 src={item.image}
                 alt=""
               />
