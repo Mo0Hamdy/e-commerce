@@ -39,7 +39,7 @@ export default function Profile() {
           <Link href="/landing">
             <button
               type="submit"
-              className="cursor-pointer bg-accent rounded-md p-1 mt-3 hover:scale-110 transition-all duration-300"
+              className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
             >
               Sign in
             </button>
