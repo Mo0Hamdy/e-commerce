@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* body{
+  font-family: "EmilysCandy-Regular";
+} */
+
 @theme {
   --color-primary: #2d3748;
   --color-primary-dark: #1a202c;
@@ -33,10 +37,41 @@
   }
 }
 
+@keyframes form {
+  from{
+    display:none;
+  }
+  to{
+    display:block;
+  }
+}
+@keyframes image {
+  0%{
+    transform: scale(0);
+  }
+
+  100%{
+    transform: scale(100%);
+  }
+}
+
 .navbar {
   animation: navbar 1s ease-out forwards;
 }
-
+.form{
+  animation:form 5s 2s ease-in forwards;
+}
+.image{
+  animation:image 1s linear forwards;
+}
 body {
   padding-right: 0;
 }
+
+/* @font-face {
+  font-family: "Emilys Candy";
+  src: url("/fonts/EmilysCandy-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+} */

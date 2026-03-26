@@ -21,7 +21,7 @@ export default async function ProductDetails({ params }) {
           <img src={product.images[0]} alt={product.title} />
         </aside>
         <aside className="lg:w-1/2 rounded-4xl px-10 lg:ml-10">
-                  <Accordion className="py-2">
+          <Accordion className="py-2">
             <AccordionSummary
               expandIcon={<ArrowDownwardIcon />}
               aria-controls="panel1-content"
@@ -45,23 +45,37 @@ export default async function ProductDetails({ params }) {
                 Details
               </Typography>
             </AccordionSummary>
-            <AccordionDetails className="grid grid-cols-2 gap-1">
-              <section className="font-bold">
-                <h3 className="pb-2">Price</h3>
-                <h3 className="pb-2">Brand</h3>
-                <h3 className="pb-2">Availability</h3>
-                <h3 className="pb-2">Minimum order quantity</h3>
-                <h3 className="pb-2">Warranty Information</h3>
-                <h3 className="pb-2">QR Code</h3>
-              </section>
-              <section>
-                <p className="pb-2">{product.price}</p>
-                <p className="pb-2">{product.brand}</p>
-                <p className="pb-2">{product.availabilityStatus}</p>
-                <p className="pb-2">{product.minimumOrderQuantity}</p>
-                <p className="pb-2">{product.warrantyInformation}</p>
-                <img src={product.meta.qrCode} alt={product.title} />
-              </section>
+            <AccordionDetails>
+              <table className="w-full">
+                <tbody>
+                  <tr className="grid grid-cols-2 gap-1 pb-2">
+                    <td>Price</td>
+                    <td>{product.price}</td>
+                  </tr>
+                  <tr className="grid grid-cols-2 gap-1 pb-2">
+                    <td>Brand</td>
+                    <td>{product.brand}</td>
+                  </tr>
+                  <tr className="grid grid-cols-2 gap-1 pb-2">
+                    <td>Availability</td>
+                    <td>{product.availabilityStatus}</td>
+                  </tr>
+                  <tr className="grid grid-cols-2 gap-1 pb-2">
+                    <td>Minimum order quantity</td>
+                    <td>{product.minimumOrderQuantity}</td>
+                  </tr>
+                  <tr className="grid grid-cols-2 gap-1 pb-2">
+                    <td>Warranty Information</td>
+                    <td>{product.warrantyInformation}</td>
+                  </tr>
+                  <tr className="grid grid-cols-2 gap-1 pb-2">
+                    <td>QR Code</td>
+                    <td>
+                      <img src={product.meta.qrCode} alt={product.title} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </AccordionDetails>
           </Accordion>
         </aside>
