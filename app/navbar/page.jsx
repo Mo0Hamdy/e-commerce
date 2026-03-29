@@ -1,5 +1,4 @@
 "use client";
-// import "../app/globals.css"
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as React from "react";
@@ -11,7 +10,6 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
-// import { useTheme } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -21,13 +19,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useAppSelector, useAppDispatch, useAppStore } from "../../lib/hooks";
 import { increase, decrease } from "../../lib/features/CartSlice";
 
-// const MenuProps = {
-//   PaperProps: {
-//     style: {
-//       width: 200,
-//     },
-//   },
-// };
+
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -52,13 +44,9 @@ export default function Navbar() {
   const handleClick = () => {
     setOpen(open ? false : true);
   };
-  // const theme = useTheme();
 
-
-  // let [names, setNames] = useState([]);
-  // let [loading, setLoading] = useState(false);
   let [openDraw, setOpenDraw] = useState(false);
-
+  const [searchProduct, setSearchProduct] = useState("");
   const cartProducts = useAppSelector((state) => {
     return state.cart.cartProducts;
   });
@@ -67,10 +55,7 @@ export default function Navbar() {
   });
 
   const DrawerList = (
-    <Box
-       className="w-full md:w-100 p-5"
-      role="presentation"
-    >
+    <Box className="w-full md:w-100 p-5" role="presentation">
       <div className="flex justify-between items-center mb-5">
         <h3 className="text-gray-700 text-xl tracking-wide font-bold">
           Shopping cart
@@ -218,20 +203,24 @@ export default function Navbar() {
               open ? "flex" : "hidden"
             } justify-start absolute left-1/2 -translate-x-1/2 top-16 w-80 sm:w-lg text-gray-600 bg-white rounded-xl px-3 py-3 border-gray-500`}
           >
-            <button className="cursor-pointer">
-              <SearchOutlinedIcon style={{ color: "#99a1af" }} />
-            </button>
+              <button className="cursor-pointer">
+                <SearchOutlinedIcon style={{ color: "#99a1af" }} />
+              </button>
             <input
               placeholder="search for products"
               type="text"
+              value={searchProduct}
+              onChange={(e) => {
+                setSearchProduct(e.target.value);
+              }}
               className="placeholder:text-gray-400 outline-0 w-full"
             />
           </div>
           <Link href="/navbar/profile">
-          <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
-            <PermIdentityOutlinedIcon className="text-accent-dark" />
-            <h4 className="hidden md:block font-bold text-white">Account</h4>
-          </div>
+            <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
+              <PermIdentityOutlinedIcon className="text-accent-dark" />
+              <h4 className="hidden md:block font-bold text-white">Account</h4>
+            </div>
           </Link>
           <div
             onClick={() => {

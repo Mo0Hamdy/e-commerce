@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-// import Facebook from "./Skeleton";
 
 export default function PopularAndCheap({ type }) {
   const [selected, setSelected] = useState([]);
@@ -63,7 +62,6 @@ export default function PopularAndCheap({ type }) {
               )}
             </span>{" "}
           </h1>
-          {/* <AddToCart element={element} /> */}
         </div>
       </div>
     );
@@ -72,13 +70,13 @@ export default function PopularAndCheap({ type }) {
   return (
     <>
       {!loading ? (
-        <div className="flex flex-wrap justify-evenly gap-y-8 md:gap-y-16">{data} </div>
+        <div className="flex flex-wrap justify-evenly gap-y-8 md:gap-y-16">
+          {data}{" "}
+        </div>
       ) : (
-                  // <Facebook />
-                  <div className="min-h-100 flex items-center justify-center">
-                      
-                      <img src="/images/Blocks@1x-1.0s-200px-200px.svg" alt="" />
-                  </div>
+        <div className="min-h-100 flex items-center justify-center">
+          <img src="/images/Blocks@1x-1.0s-200px-200px.svg" alt="" />
+        </div>
       )}
     </>
   );

@@ -35,7 +35,6 @@ export default function Profile() {
             className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
             placeholder="enter password"
           />
-          {/* <input type="file" className="bg-teal-500 rounded-md" /> */}
           <Link href="/landing">
             <button
               type="submit"
