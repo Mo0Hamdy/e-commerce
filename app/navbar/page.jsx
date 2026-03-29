@@ -19,8 +19,6 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useAppSelector, useAppDispatch, useAppStore } from "../../lib/hooks";
 import { increase, decrease } from "../../lib/features/CartSlice";
 
-
-
 export default function Navbar() {
   const dispatch = useAppDispatch();
   function handlePlusClick(id) {
@@ -53,7 +51,6 @@ export default function Navbar() {
   const defaultProductsCounter = useAppSelector((state) => {
     return state.cart.defaultProductsCounter;
   });
-
   const DrawerList = (
     <Box className="w-full md:w-100 p-5" role="presentation">
       <div className="flex justify-between items-center mb-5">
@@ -125,7 +122,6 @@ export default function Navbar() {
       )}
     </Box>
   );
-
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-primary flex justify-between items-center rounded-full">

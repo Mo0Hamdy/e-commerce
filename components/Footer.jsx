@@ -10,15 +10,18 @@ export default function Footer() {
   return (
     <div className="bg-gray-200 pt-7">
       <h1 className="text-center text-4xl md:text-6xl font-bold text-gray-500 tracking-wide">
-        Contact us <span className="inline-block text-2xl md:text-4xl animate-bounce">❤️</span>
+        Contact us{" "}
+        <span className="inline-block text-2xl md:text-4xl animate-bounce">
+          ❤️
+        </span>
       </h1>
       <p className="text-center text-gray-400">as we are a family </p>
       <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around pb-10 md:pb-0 px-2">
         <div className="mail w-full md:w-1/3 md:pb-0 items-center justify-centent">
           <p className="text-center text-gray-600 w-full lg:w-4/5 mb-5">
-            It will be a pleasure to receive your opinions through
+            It will be a pleasure to receive your opinions
           </p>
-          <div className="flex">
+          <form className="flex" action="">
             <input
               placeholder="keep your message descriptive"
               type="text"
@@ -27,7 +30,7 @@ export default function Footer() {
             <button className="rounded-xl cursor-pointer bg-black text-white text-sm px-2 py-1">
               Submit
             </button>
-          </div>
+          </form>
         </div>
         <img
           className="w-1/2 md:w-1/3"
