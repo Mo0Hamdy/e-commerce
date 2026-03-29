@@ -203,9 +203,9 @@ export default function Navbar() {
               open ? "flex" : "hidden"
             } justify-start absolute left-1/2 -translate-x-1/2 top-16 w-80 sm:w-lg text-gray-600 bg-white rounded-xl px-3 py-3 border-gray-500`}
           >
-              <button className="cursor-pointer">
-                <SearchOutlinedIcon style={{ color: "#99a1af" }} />
-              </button>
+            <button className="cursor-pointer">
+              <SearchOutlinedIcon style={{ color: "#99a1af" }} />
+            </button>
             <input
               placeholder="search for products"
               type="text"
@@ -245,7 +245,6 @@ export default function Navbar() {
                       sm: "100%",
                       md: "400px",
                     },
-                    maxWidth: "400px",
                   },
                 }}
               >

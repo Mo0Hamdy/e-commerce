@@ -66,7 +66,6 @@ export default function PopularAndCheap({ type }) {
       </div>
     );
   });
-
   return (
     <>
       {!loading ? (
