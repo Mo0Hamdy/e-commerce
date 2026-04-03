@@ -1,27 +1,33 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 export default function Profile() {
-  let profiles = JSON.parse(localStorage.getItem("user")) || [];
   const [signUp, setSignUp] = useState(true);
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+  setProfiles(JSON.parse(window.localStorage.getItem("user")) || []);
+  }, []);
   const handleSignUp = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    profiles.push(data)
-    localStorage.setItem("user", JSON.stringify(profiles))
+    if (data !== undefined) {
+      setProfiles([...profiles, data]);
+      window.localStorage.setItem("user", JSON.stringify(profiles));
+    }
   };
   const handleSignIn = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    const foundProfile = profiles.find((profile) =>
-      (profile.userName == data.userName && profile.password == data.password)
-    )
-    console.log(foundProfile)
-  }
+    const foundProfile = profiles.find(
+      (profile) =>
+        profile.userName == data.userName && profile.password == data.password,
+    );
+    console.log(foundProfile);
+  };
 
   return (
     <div className="flex md:flex-row flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
@@ -74,14 +80,14 @@ export default function Profile() {
               className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
               placeholder="password"
             />
-            <Link href="/landing">
-            <button
-              type="submit"
-              className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
-            >
-              Sign up
-            </button>
-            </Link>
+            {/* <Link href="/landing"> */}
+              <button
+                type="submit"
+                className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
+              >
+                Sign up
+              </button>
+            {/* </Link> */}
             <p>
               Already have an account?{" "}
               <span
