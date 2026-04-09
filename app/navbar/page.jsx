@@ -18,7 +18,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 import { useAppSelector, useAppDispatch, useAppStore } from "../../lib/hooks";
 import { increase, decrease } from "../../lib/features/CartSlice";
-
+// import { changeUser } from "@/lib/features/UserSlice";
 export default function Navbar() {
   const dispatch = useAppDispatch();
   function handlePlusClick(id) {
@@ -43,6 +43,7 @@ export default function Navbar() {
     setOpen(open ? false : true);
   };
 
+
   let [openDraw, setOpenDraw] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
   const cartProducts = useAppSelector((state) => {
@@ -50,6 +51,13 @@ export default function Navbar() {
   });
   const defaultProductsCounter = useAppSelector((state) => {
     return state.cart.defaultProductsCounter;
+  });
+
+  const firstName = useAppSelector((state) => {
+    return state.user.firstName;
+  });
+  const userProducts = useAppSelector((state) => {
+    return state.user.userProducts;
   });
   const DrawerList = (
     <Box className="w-full md:w-100 p-5" role="presentation">
@@ -212,10 +220,12 @@ export default function Navbar() {
               className="placeholder:text-gray-400 outline-0 w-full"
             />
           </div>
-          <Link href="/navbar/profile">
+          <Link href={"/navbar/profile"}>
             <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
               <PermIdentityOutlinedIcon className="text-accent-dark" />
-              <h4 className="hidden md:block font-bold text-white">Account</h4>
+              <h4 className="hidden md:block font-bold text-white">
+                {firstName}
+              </h4>
             </div>
           </Link>
           <div

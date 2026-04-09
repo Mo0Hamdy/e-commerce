@@ -1,22 +1,25 @@
 "use client";
-import Link from "next/link";
+// import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useAppDispatch } from "@/lib/hooks";
+import { changeUser } from "@/lib/features/UserSlice";
 export default function Profile() {
+  const dispatch = useAppDispatch();
   const [signUp, setSignUp] = useState(true);
   const [profiles, setProfiles] = useState([]);
+  
   useEffect(() => {
-  setProfiles(JSON.parse(window.localStorage.getItem("user")) || []);
+    setProfiles(JSON.parse(window.localStorage.getItem("user")) || []);
   }, []);
   const handleSignUp = (e) => {
-    e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    if (data !== undefined) {
-      setProfiles([...profiles, data]);
-      window.localStorage.setItem("user", JSON.stringify(profiles));
-    }
+    dispatch(changeUser(data));
+    const updatedProfiles = [...profiles, data];
+    setProfiles(updatedProfiles);
+    window.localStorage.setItem("user", JSON.stringify(updatedProfiles));
   };
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -26,7 +29,7 @@ export default function Profile() {
       (profile) =>
         profile.userName == data.userName && profile.password == data.password,
     );
-    console.log(foundProfile);
+    dispatch(changeUser(foundProfile));
   };
 
   return (
@@ -42,7 +45,10 @@ export default function Profile() {
       <div className="form">
         {signUp ? (
           <form
-            onSubmit={handleSignUp}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSignUp(e);
+            }}
             className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
           >
             <AccountCircleIcon
@@ -80,14 +86,12 @@ export default function Profile() {
               className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
               placeholder="password"
             />
-            {/* <Link href="/landing"> */}
-              <button
-                type="submit"
-                className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
-              >
-                Sign up
-              </button>
-            {/* </Link> */}
+            <button
+              type="submit"
+              className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
+            >
+              Sign up
+            </button>
             <p>
               Already have an account?{" "}
               <span
@@ -102,7 +106,9 @@ export default function Profile() {
           </form>
         ) : (
           <form
-            onSubmit={handleSignIn}
+            onSubmit={(e) => {
+              handleSignIn(e);
+            }}
             className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
           >
             <AccountCircleIcon
@@ -126,14 +132,12 @@ export default function Profile() {
               className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
               placeholder="password"
             />
-            {/* <Link href="/landing"> */}
             <button
               type="submit"
               className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
             >
               Sign in
             </button>
-            {/* </Link> */}
           </form>
         )}
       </div>
