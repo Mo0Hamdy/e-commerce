@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as React from "react";
 import Box from "@mui/material/Box";
+import Fab from "@mui/material/Fab";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
 import Fade from "@mui/material/Fade";
@@ -43,7 +44,6 @@ export default function Navbar() {
     setOpen(open ? false : true);
   };
 
-
   let [openDraw, setOpenDraw] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
   const cartProducts = useAppSelector((state) => {
@@ -65,13 +65,15 @@ export default function Navbar() {
         <h3 className="text-gray-700 text-xl tracking-wide font-bold">
           Shopping cart
         </h3>
-        <CloseIcon
-          onClick={(event) => {
-            event.stopPropagation();
-            setOpenDraw(false);
-          }}
-          style={{ cursor: "pointer", fontSize: "30px" }}
-        />
+        <Fab color="error" aria-label="add">
+          <CloseIcon
+            onClick={(event) => {
+              event.stopPropagation();
+              setOpenDraw(false);
+            }}
+            style={{ cursor: "pointer", fontSize: "30px" }}
+          />
+        </Fab>
       </div>
       {cartProducts.length == 0 ? (
         <h3>Your Cart is empty</h3>
