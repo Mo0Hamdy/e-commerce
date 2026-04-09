@@ -1,3 +1,4 @@
+import Image from "next/image";
 export default function Gallery() {
   return (
     <div className="text-center px-2">
@@ -23,7 +24,6 @@ export default function Gallery() {
             src="/images/hanging-pullover.jpg"
             alt=""
             className="object-cover w-full h-full"
-            loading="lazy"
           />
         </div>
         <div className="col-span-2 overflow-hidden rounded-3xl">
@@ -31,7 +31,6 @@ export default function Gallery() {
             src="/images/still-life-with-classic-shirts-hanger (1).jpg"
             alt=""
             className="object-cover w-full h-full"
-            loading="lazy"
           />
         </div>
         <div className="overflow-hidden rounded-3xl">
@@ -39,15 +38,13 @@ export default function Gallery() {
             src="/images/still-life-with-classic-shirts-hanger.jpg"
             alt=""
             className="object-cover w-full h-full"
-            loading="lazy"
           />
         </div>
         <div className="bg-[#dedfde] overflow-hidden rounded-3xl">
           <img
             src="/images/10556978.png"
             alt=""
-            className="object-cover w-full h-full"
-            loading="lazy"
+            className="object-cover w-full h-full"      
           />
         </div>
       </div>
