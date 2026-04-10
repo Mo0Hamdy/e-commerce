@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import Image from "next/image";
+import Image from "next/image";
 export default function Hero() {
   return (
     <div className="bg-cyan-600 flex items-center px-2">
@@ -12,11 +12,16 @@ export default function Hero() {
             Go to products
           </button>
         </Link>
-        <img
-          src="/images/shopping-bag-cart.jpg"
-          alt=""
-          className="rounded-t-4xl w-full md:w-4/5"
-        />
+        <div className="w-full md:w-4/5">
+          <Image
+            src="/images/shopping-bag-cart.jpg"
+            alt=""
+            className="rounded-t-4xl"
+            loading="eager"
+            width={6085}
+            height={3423}
+          />
+        </div>
       </div>
     </div>
   );

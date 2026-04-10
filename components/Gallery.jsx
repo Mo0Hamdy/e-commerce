@@ -20,31 +20,43 @@ export default function Gallery() {
       </div>
       <div className="container m-auto grid md:grid-cols-4 md:grid-rows-2 gap-6 py-10 md:h-200">
         <div className="col-span-2 row-span-2 items-center overflow-hidden rounded-3xl">
-          <img
+          <Image
             src="/images/hanging-pullover.jpg"
             alt=""
             className="object-cover w-full h-full"
+            loading="eager"
+            width={6239}
+            height={6239}
           />
         </div>
         <div className="col-span-2 overflow-hidden rounded-3xl">
-          <img
+          <Image
             src="/images/still-life-with-classic-shirts-hanger (1).jpg"
             alt=""
             className="object-cover w-full h-full"
+            loading="eager"
+            width={7990}
+            height={5316}
           />
         </div>
         <div className="overflow-hidden rounded-3xl">
-          <img
+          <Image
             src="/images/still-life-with-classic-shirts-hanger.jpg"
             alt=""
             className="object-cover w-full h-full"
+            loading="eager"
+            width={7990}
+            height={5317}
           />
         </div>
         <div className="bg-[#dedfde] overflow-hidden rounded-3xl">
-          <img
+          <Image
             src="/images/10556978.png"
             alt=""
-            className="object-cover w-full h-full"      
+            className="object-cover w-full h-full"
+            loading="eager"
+            width={4016}
+            height={4016}
           />
         </div>
       </div>
