@@ -76,7 +76,7 @@ export default function Navbar() {
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
-        <h3>Your Cart is empty</h3>
+        <h3> {firstName == "Account"?"":firstName} Your Cart is empty</h3>
       ) : (
         <List>
           {cartProducts.map((item) => (

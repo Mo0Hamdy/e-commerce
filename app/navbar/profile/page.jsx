@@ -1,17 +1,31 @@
 "use client";
-import Link from "next/link";
 import Image from "next/image";
+import Alert from "@mui/material/Alert";
 import { useState, useEffect } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch,useAppSelector } from "@/lib/hooks";
+import Snackbar from "@mui/material/Snackbar";
 import { changeUser } from "@/lib/features/UserSlice";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 export default function Profile() {
   const dispatch = useAppDispatch();
   const [signUp, setSignUp] = useState(true);
+  const [found, setFound] = useState(false);
   const [profiles, setProfiles] = useState([]);
-  
+  const [open, setOpen] = useState(false);
+   const firstName = useAppSelector((state) => {
+      return state.user.firstName;
+    });
+  const handleClick = () => {
+    setOpen(true);
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   useEffect(() => {
-    setProfiles(JSON.parse(window.localStorage.getItem("user")) || []);
+    setProfiles(JSON.parse(localStorage.getItem("user")) || []);
   }, []);
   const handleSignUp = (e) => {
     const formData = new FormData(e.currentTarget);
@@ -19,7 +33,7 @@ export default function Profile() {
     dispatch(changeUser(data));
     const updatedProfiles = [...profiles, data];
     setProfiles(updatedProfiles);
-    window.localStorage.setItem("user", JSON.stringify(updatedProfiles));
+    localStorage.setItem("user", JSON.stringify(updatedProfiles));
   };
   const handleSignIn = (e) => {
     e.preventDefault();
@@ -27,9 +41,15 @@ export default function Profile() {
     const data = Object.fromEntries(formData.entries());
     const foundProfile = profiles.find(
       (profile) =>
-        profile.userName == data.userName && profile.password == data.password,
+        profile.userName === data.userName &&
+        profile.password === data.password,
     );
-    dispatch(changeUser(foundProfile));
+    if (foundProfile) {
+      dispatch(changeUser(foundProfile));
+      setFound(true);
+    } else {
+      setFound(false);
+    }
   };
 
   return (
@@ -135,11 +155,26 @@ export default function Profile() {
             <button
               type="submit"
               className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
+              onClick={handleClick}
             >
               Sign in
             </button>
           </form>
         )}
+      </div>
+      <div className="absolute w-screen bg-green-500">
+        <Snackbar
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        >
+          {found ? (
+            <Alert severity="success">Welcome , { firstName}</Alert>
+          ) : (
+            <Alert severity="error">User is not found</Alert>
+          )}
+        </Snackbar>
       </div>
     </div>
   );
