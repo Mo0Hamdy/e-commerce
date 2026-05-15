@@ -31,26 +31,29 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch("https://e-commerce-backend-production-503b.up.railway.app/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://e-commerce-backend-production-1.up.railway.app/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.userName,
+            password: data.password,
+          }),
         },
-        body: JSON.stringify({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.userName,
-          password: data.password,
-        }),
-      });
+      );
       const result = await res.json();
 
       if (!res.ok) {
         console.log("Server error:", result);
         return;
       }
-      dispatch(changeUser({ firstName: result.firstName }));
       localStorage.setItem("token", result.token);
+      dispatch(changeUser({ firstName: result.firstName }));
       setFound(true);
       setSnack(result.firstName);
     } catch (error) {
@@ -63,16 +66,19 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch("https://e-commerce-backend-production-503b.up.railway.app/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://e-commerce-backend-production-1.up.railway.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.userName,
+            password: data.password,
+          }),
         },
-        body: JSON.stringify({
-          email: data.userName,
-          password: data.password,
-        }),
-      });
+      );
       const result = await res.json();
       if (!res.ok) {
         console.log("Server error:", result);
@@ -82,11 +88,11 @@ export default function Profile() {
         return;
       }
       console.log("Success:", result);
-      console.log(result.token)
+      console.log(result.token);
+      localStorage.setItem("token", result.token);
       dispatch(changeUser({ firstName: result.firstName }));
       setFound(true);
       setSnack(result.firstName);
-      localStorage.setItem("token", result.token);
     } catch (error) {
       console.log("Network error:", error);
     }

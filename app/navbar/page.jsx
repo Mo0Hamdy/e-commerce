@@ -35,7 +35,7 @@ export default function Navbar() {
     const getData = async () => {
       if (token) {
         try {
-          const res = await fetch("https://e-commerce-backend-production-503b.up.railway.app/api/auth/me", {
+          const res = await fetch("https://e-commerce-backend-production-1.up.railway.app/api/auth/me", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
