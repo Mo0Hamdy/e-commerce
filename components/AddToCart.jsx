@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
-import { useAppSelector, useAppDispatch, useAppStore } from "../lib/hooks";
+import { useAppDispatch } from "../lib/hooks";
 import { add } from "../lib/features/CartSlice";
 export default function AddToCart({ element }) {
   const [open, setOpen] = useState(false);

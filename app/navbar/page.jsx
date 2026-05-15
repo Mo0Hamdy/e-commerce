@@ -86,9 +86,7 @@ export default function Navbar() {
   const firstName = useAppSelector((state) => {
     return state.user.firstName;
   });
-  const userProducts = useAppSelector((state) => {
-    return state.user.userProducts;
-  });
+
   const DrawerList = (
     <Box className="w-full md:w-100 p-5" role="presentation">
       <div className="flex justify-between items-center mb-5">
