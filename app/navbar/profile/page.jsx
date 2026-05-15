@@ -31,7 +31,7 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch("http://localhost:4000/api/auth/register", {
+      const res = await fetch("https://mo0hamdy.github.io/e-commerce-backend/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch("http://localhost:4000/api/auth/login", {
+      const res = await fetch("https://mo0hamdy.github.io/e-commerce-backend/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

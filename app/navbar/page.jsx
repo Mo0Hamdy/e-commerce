@@ -35,7 +35,7 @@ export default function Navbar() {
     const getData = async () => {
       if (token) {
         try {
-          const res = await fetch("http://localhost:4000/api/auth/me", {
+          const res = await fetch("https://mo0hamdy.github.io/e-commerce-backend/api/auth/me", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
