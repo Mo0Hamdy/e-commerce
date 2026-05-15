@@ -32,7 +32,7 @@ export default function Profile() {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
       const res = await fetch(
-        "http://e-commerce-backend-production-1.up.railway.app/api/auth/register",
+        "https://e-commerce-backend-production-1.up.railway.app/api/auth/register",
         {
           method: "POST",
           headers: {
@@ -67,7 +67,7 @@ export default function Profile() {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
       const res = await fetch(
-        "http://e-commerce-backend-production-1.up.railway.app/api/auth/login",
+        "https://e-commerce-backend-production-1.up.railway.app/api/auth/login",
         {
           method: "POST",
           headers: {
