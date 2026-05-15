@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
+import { useState } from "react";
 import Alert from "@mui/material/Alert";
-import { useState, useEffect } from "react";
-import { useAppDispatch,useAppSelector } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/hooks";
 import Snackbar from "@mui/material/Snackbar";
 import { changeUser } from "@/lib/features/UserSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -10,45 +10,85 @@ export default function Profile() {
   const dispatch = useAppDispatch();
   const [signUp, setSignUp] = useState(true);
   const [found, setFound] = useState(false);
-  const [profiles, setProfiles] = useState([]);
+  const [exists, setExists] = useState(false);
   const [open, setOpen] = useState(false);
-   const firstName = useAppSelector((state) => {
-      return state.user.firstName;
-    });
+  const [snack, setSnack] = useState("");
+
   const handleClick = () => {
     setOpen(true);
   };
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpen(false);
   };
-  useEffect(() => {
-    setProfiles(JSON.parse(localStorage.getItem("user")) || []);
-  }, []);
-  const handleSignUp = (e) => {
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    dispatch(changeUser(data));
-    const updatedProfiles = [...profiles, data];
-    setProfiles(updatedProfiles);
-    localStorage.setItem("user", JSON.stringify(updatedProfiles));
-  };
-  const handleSignIn = (e) => {
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    const foundProfile = profiles.find(
-      (profile) =>
-        profile.userName === data.userName &&
-        profile.password === data.password,
-    );
-    if (foundProfile) {
-      dispatch(changeUser(foundProfile));
+
+    try {
+      const formData = new FormData(e.currentTarget);
+      const data = Object.fromEntries(formData.entries());
+      const res = await fetch("http://localhost:4000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.userName,
+          password: data.password,
+        }),
+      });
+      const result = await res.json();
+
+      if (!res.ok) {
+        console.log("Server error:", result);
+        return;
+      }
+      dispatch(changeUser({ firstName: result.firstName }));
+      localStorage.setItem("token", result.token);
       setFound(true);
-    } else {
-      setFound(false);
+      setSnack(result.firstName);
+    } catch (error) {
+      console.log("Network error:", error);
+    }
+  };
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData(e.currentTarget);
+      const data = Object.fromEntries(formData.entries());
+      const res = await fetch("http://localhost:4000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: data.userName,
+          password: data.password,
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        console.log("Server error:", result);
+        setExists(false);
+        setFound(false);
+        setSnack("User is not found");
+        return;
+      }
+      console.log("Success:", result);
+      console.log(result.token)
+      dispatch(changeUser({ firstName: result.firstName }));
+      setFound(true);
+      setSnack(result.firstName);
+      localStorage.setItem("token", result.token);
+    } catch (error) {
+      console.log("Network error:", error);
     }
   };
 
@@ -66,7 +106,6 @@ export default function Profile() {
         {signUp ? (
           <form
             onSubmit={(e) => {
-              e.preventDefault();
               handleSignUp(e);
             }}
             className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
@@ -109,6 +148,11 @@ export default function Profile() {
             <button
               type="submit"
               className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
+              onClick={() => {
+                setTimeout(() => {
+                  handleClick();
+                }, 200);
+              }}
             >
               Sign up
             </button>
@@ -155,7 +199,11 @@ export default function Profile() {
             <button
               type="submit"
               className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
-              onClick={handleClick}
+              onClick={() => {
+                setTimeout(() => {
+                  handleClick();
+                }, 200);
+              }}
             >
               Sign in
             </button>
@@ -170,9 +218,11 @@ export default function Profile() {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           {found ? (
-            <Alert severity="success">Welcome , { firstName}</Alert>
+            <Alert severity="success">Welcome,{snack} </Alert>
+          ) : exists ? (
+            <Alert severity="warning">This user already exists</Alert>
           ) : (
-            <Alert severity="error">User is not found</Alert>
+            <Alert severity="error">{snack}</Alert>
           )}
         </Snackbar>
       </div>

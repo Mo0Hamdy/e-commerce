@@ -17,9 +17,9 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
-import { useAppSelector, useAppDispatch, useAppStore } from "../../lib/hooks";
+import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { increase, decrease } from "../../lib/features/CartSlice";
-// import { changeUser } from "@/lib/features/UserSlice";
+import { changeUser } from "@/lib/features/UserSlice";
 export default function Navbar() {
   const dispatch = useAppDispatch();
   function handlePlusClick(id) {
@@ -29,6 +29,36 @@ export default function Navbar() {
   function handleMinusClick(id) {
     dispatch(decrease({ id }));
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const getData = async () => {
+      if (token) {
+        try {
+          const res = await fetch("http://localhost:4000/api/auth/me", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (!res.ok) {
+            dispatch(changeUser({ firstName: "Account" }));
+            return;
+          }
+          const result = await res.json();
+          if (result && result.firstName) {
+            dispatch(changeUser({ firstName: result.firstName }));
+          } else {
+            dispatch(changeUser({ firstName: "Account" }));
+          }
+        } catch (err) {
+          dispatch(changeUser({ firstName: "Account" }));
+        }
+      } else {
+        dispatch(changeUser({ firstName: "Account" }));
+      }
+    };
+    getData();
+  }, []);
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -76,7 +106,7 @@ export default function Navbar() {
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
-        <h3> {firstName == "Account"?"":firstName} Your Cart is empty</h3>
+        <h3> {firstName == "Account" ? "" : firstName} Your Cart is empty</h3>
       ) : (
         <List>
           {cartProducts.map((item) => (

@@ -7,7 +7,6 @@ import StoreProvider from "./StoreProvider";
 
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-
 config.autoAddCss = false;
 
 const geistSans = Geist({
@@ -32,9 +31,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <StoreProvider>
-          <Navbar />
-          {children}
-          <Footer />
+       
+            <Navbar />
+            {children}
+            <Footer />
+
         </StoreProvider>
       </body>
     </html>
