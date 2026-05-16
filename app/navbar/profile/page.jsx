@@ -55,7 +55,7 @@ export default function Profile() {
       localStorage.setItem("token", result.token);
       dispatch(changeUser({ firstName: result.firstName }));
       setFound(true);
-      setSnack(result.firstName);
+      setSnack(result.message);
     } catch (error) {
       console.log("Network error:", error);
     }
@@ -84,7 +84,7 @@ export default function Profile() {
         console.log("Server error:", result);
         setExists(false);
         setFound(false);
-        setSnack("User is not found");
+        setSnack(result.message);
         return;
       }
       console.log("Success:", result);
@@ -92,7 +92,7 @@ export default function Profile() {
       localStorage.setItem("token", result.token);
       dispatch(changeUser({ firstName: result.firstName }));
       setFound(true);
-      setSnack(result.firstName);
+      setSnack(result.message);
     } catch (error) {
       console.log("Network error:", error);
     }
