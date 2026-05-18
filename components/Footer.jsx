@@ -102,7 +102,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="text-center py-4 capitalize text-white bg-primary">
-        all right reserved &copy;{" "}
+        all rights reserved &copy;{" "}
         <span className="text-lime-500">Mohamed Hamdy</span> 2026
       </div>
     </div>

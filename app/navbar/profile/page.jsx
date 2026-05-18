@@ -15,7 +15,9 @@ export default function Profile() {
   const [snack, setSnack] = useState("");
 
   const handleClick = () => {
-    setOpen(true);
+    setTimeout(() => {
+      setOpen(true);
+    }, 400);
   };
 
   const handleClose = (event, reason) => {
@@ -87,14 +89,12 @@ export default function Profile() {
         setSnack(result.message);
         return;
       }
-      console.log("Success:", result);
-      console.log(result.token);
       localStorage.setItem("token", result.token);
       dispatch(changeUser({ firstName: result.firstName }));
       setFound(true);
       setSnack(result.message);
     } catch (error) {
-      console.log("Network error:", error);
+      setSnack("Network Error");
     }
   };
 
@@ -142,7 +142,7 @@ export default function Profile() {
               type="email"
               name="userName"
               className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-              placeholder="username"
+              placeholder="email"
             />
             <input
               required
@@ -157,7 +157,7 @@ export default function Profile() {
               onClick={() => {
                 setTimeout(() => {
                   handleClick();
-                }, 200);
+                }, 300);
               }}
             >
               Sign up
@@ -193,7 +193,7 @@ export default function Profile() {
               type="email"
               name="userName"
               className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-              placeholder="username"
+              placeholder="email"
             />
             <input
               required
@@ -208,7 +208,7 @@ export default function Profile() {
               onClick={() => {
                 setTimeout(() => {
                   handleClick();
-                }, 200);
+                }, 300);
               }}
             >
               Sign in
@@ -224,9 +224,9 @@ export default function Profile() {
           anchorOrigin={{ vertical: "top", horizontal: "center" }}
         >
           {found ? (
-            <Alert severity="success">Welcome,{snack} </Alert>
+            <Alert severity="success">{snack} </Alert>
           ) : exists ? (
-            <Alert severity="warning">This user already exists</Alert>
+              <Alert severity="warning">{snack}</Alert>
           ) : (
             <Alert severity="error">{snack}</Alert>
           )}

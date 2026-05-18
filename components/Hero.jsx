@@ -2,8 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 export default function Hero() {
   return (
-    <div className="bg-cyan-600 flex items-center px-2">
-      <div className="container m-auto flex items-center flex-col mt-64">
+    <div className="bg-linear-to-b from-[#efe7da] to-[#d6c0b3] flex items-center px-2">
+      <div className="container m-auto flex items-center flex-col mt-60">
         <h2 className="text-textColor text-3xl md:text-5xl w-full md:w-150 text-center md:leading-14 pb-2">
           Sit back, relax, and let great products impress you
         </h2>
