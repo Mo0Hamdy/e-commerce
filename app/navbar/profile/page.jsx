@@ -9,15 +9,12 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 export default function Profile() {
   const dispatch = useAppDispatch();
   const [signUp, setSignUp] = useState(true);
-  const [found, setFound] = useState(false);
-  const [exists, setExists] = useState(false);
   const [open, setOpen] = useState(false);
   const [snack, setSnack] = useState("");
+  const [severity, setSeverity] = useState("");
 
   const handleClick = () => {
-    setTimeout(() => {
-      setOpen(true);
-    }, 400);
+    setOpen(true);
   };
 
   const handleClose = (event, reason) => {
@@ -51,15 +48,20 @@ export default function Profile() {
       const result = await res.json();
 
       if (!res.ok) {
-        console.log("Server error:", result);
+        setSeverity("warning");
+        setSnack(result.message);
+        handleClick();
         return;
       }
       localStorage.setItem("token", result.token);
       dispatch(changeUser({ firstName: result.firstName }));
-      setFound(true);
       setSnack(result.message);
+      setSeverity("success");
+      handleClick();
     } catch (error) {
-      console.log("Network error:", error);
+      setSeverity("error");
+      setSnack("Network Error");
+      handleClick();
     }
   };
 
@@ -83,18 +85,20 @@ export default function Profile() {
       );
       const result = await res.json();
       if (!res.ok) {
-        console.log("Server error:", result);
-        setExists(false);
-        setFound(false);
+        setSeverity("warning");
         setSnack(result.message);
+        handleClick();
         return;
       }
       localStorage.setItem("token", result.token);
       dispatch(changeUser({ firstName: result.firstName }));
-      setFound(true);
+      setSeverity("success");
       setSnack(result.message);
+      handleClick();
     } catch (error) {
+      setSeverity("error");
       setSnack("Network Error");
+      handleClick();
     }
   };
 
@@ -154,11 +158,6 @@ export default function Profile() {
             <button
               type="submit"
               className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
-              onClick={() => {
-                setTimeout(() => {
-                  handleClick();
-                }, 300);
-              }}
             >
               Sign up
             </button>
@@ -205,33 +204,20 @@ export default function Profile() {
             <button
               type="submit"
               className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
-              onClick={() => {
-                setTimeout(() => {
-                  handleClick();
-                }, 300);
-              }}
             >
               Sign in
             </button>
           </form>
         )}
       </div>
-      <div className="absolute w-screen bg-green-500">
-        <Snackbar
-          open={open}
-          autoHideDuration={5000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          {found ? (
-            <Alert severity="success">{snack} </Alert>
-          ) : exists ? (
-              <Alert severity="warning">{snack}</Alert>
-          ) : (
-            <Alert severity="error">{snack}</Alert>
-          )}
-        </Snackbar>
-      </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity={severity}>{snack} </Alert>
+      </Snackbar>
     </div>
   );
 }
