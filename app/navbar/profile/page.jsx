@@ -103,7 +103,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex md:flex-row flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
+    <div className="flex lg:flex-row flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
       <Image
         src="/images/Sign in-pana.png"
         width={500}
