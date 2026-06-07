@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+import StarRateIcon from '@mui/icons-material/StarRate';
+
 export default function PopularAndCheap({ type }) {
   const [selected, setSelected] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,13 +34,13 @@ export default function PopularAndCheap({ type }) {
     return (
       <div
         key={element.id}
-        className={`overflow-hidden rounded-xl relative md:w-72 md:h-94 w-64 h-80 p-3 md:mx-10 bg-background-white flex flex-col justify-between ${type === "best" ? "before:absolute before:content-[] before:-top-6.5 before:-left-1.5 before:w-10 before:h-20 before:rounded-s-xl before:bg-accent before:rotate-45" : null}`}
+        className={`overflow-hidden rounded-xl shadow-2xl relative md:w-72 md:h-94 w-64 h-80 p-3 md:mx-10 bg-background-white flex flex-col justify-between ${type === "best" ? "before:absolute before:content-[] before:-top-16 before:-left-5 before:w-20 before:h-40 before:rounded-s-xl before:bg-accent before:rotate-45" : null}`}
       >
         <span
           className={`absolute top-0 ${type === "best" ? "left-0" : "right-0 bg-accent rounded-bl-xl"} p-1 text-black`}
         >
           {type === "best"
-            ? element.rating
+            ? <> {element.rating} < StarRateIcon sx={{color:"white",fontSize:"17px"}} /> </>
             : "-" + Math.round(element.discountPercentage) + "% off"}
         </span>
         <div className="relative h-60 flex items-center justify-center">

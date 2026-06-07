@@ -25,7 +25,7 @@ export default function AddToCart({ element }) {
   const handleAddToCart = async () => {
     try {
       const token = localStorage.getItem("token");
-      let res = await fetch("http://localhost:8080/api/cart", {
+      let res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
