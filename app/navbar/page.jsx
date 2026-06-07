@@ -18,8 +18,7 @@ import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
-import { increase, decrease } from "../../lib/features/CartSlice";
-import { changeUser } from "@/lib/features/UserSlice";
+import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
   const dispatch = useAppDispatch();
   function handlePlusClick(id) {
@@ -30,35 +29,75 @@ export default function Navbar() {
     dispatch(decrease({ id }));
   }
 
+  const { cartProducts, defaultProductsCounter, firstName } = useAppSelector(
+    (state) => {
+      return state.cart;
+    },
+  );
+
   useEffect(() => {
     const token = localStorage.getItem("token");
+    if (token === null) return;
     const getData = async () => {
       if (token) {
         try {
-          const res = await fetch("https://e-commerce-backend-production-1.up.railway.app/api/auth/me", {
+          const res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/auth/me", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
           if (!res.ok) {
-            dispatch(changeUser({ firstName: "Account" }));
+            dispatch(restore({ firstName: "Account" }));
             return;
           }
           const result = await res.json();
           if (result && result.firstName) {
-            dispatch(changeUser({ firstName: result.firstName }));
+            console.log("hello from main if");
+            try {
+              const res2 = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/cart", {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              if (!res2.ok) {
+                console.log("hello from res2.ok");
+                dispatch(
+                  restore({ firstName: "Account", products: [], counter: 0 }),
+                );
+                return;
+              }
+              console.log("hello from cart success");
+              const result2 = await res2.json();
+              if (result2) {
+                console.log(result2.products);
+                console.log("hello from result2");
+                let counter = result2.products.reduce(
+                  (acc, curr) => acc + Number(curr.quantity),
+                  0,
+                );
+                dispatch(
+                  restore({
+                    firstName: result.firstName,
+                    products: result2.products,
+                    counter: counter,
+                  }),
+                );
+              }
+            } catch (error) {
+              console.log(error)
+            }
           } else {
-            dispatch(changeUser({ firstName: "Account" }));
+            dispatch(restore({ firstName: "Account" }));
           }
         } catch (err) {
-          dispatch(changeUser({ firstName: "Account" }));
+          dispatch(restore({ firstName: "Account" }));
         }
       } else {
-        dispatch(changeUser({ firstName: "Account" }));
+        dispatch(restore({ firstName: "Account" }));
       }
     };
     getData();
-  }, []);
+  }, [dispatch,firstName]);
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -76,16 +115,6 @@ export default function Navbar() {
 
   let [openDraw, setOpenDraw] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
-  const cartProducts = useAppSelector((state) => {
-    return state.cart.cartProducts;
-  });
-  const defaultProductsCounter = useAppSelector((state) => {
-    return state.cart.defaultProductsCounter;
-  });
-
-  const firstName = useAppSelector((state) => {
-    return state.user.firstName;
-  });
 
   const DrawerList = (
     <Box className="w-full md:w-100 p-5" role="presentation">
@@ -104,7 +133,7 @@ export default function Navbar() {
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
-        <h3> {firstName == "Account" ? "" : firstName} Your Cart is empty</h3>
+        <h3> {firstName == "Account" ? "" : firstName}, Your Cart is empty!</h3>
       ) : (
         <List>
           {cartProducts.map((item) => (
@@ -134,7 +163,7 @@ export default function Navbar() {
                         marginRight: "15px",
                       }}
                     />
-                    <span>{item.counter}</span>
+                    <span>{item.quantity}</span>
                     <AddIcon
                       onClick={() => {
                         handlePlusClick(item.id);
@@ -150,7 +179,7 @@ export default function Navbar() {
                     />
                   </div>
                   <span className="mr-5 text-white">
-                    ${item.counter * item.price}
+                    ${item.quantity * item.price}
                   </span>
                 </div>
               </div>
@@ -279,7 +308,7 @@ export default function Navbar() {
                     width: {
                       xs: "100%",
                       sm: "100%",
-                      md: "400px",
+                      md: "415px",
                     },
                   },
                 }}

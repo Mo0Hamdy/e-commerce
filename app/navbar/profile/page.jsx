@@ -2,9 +2,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import Alert from "@mui/material/Alert";
-import { useAppDispatch } from "@/lib/hooks";
 import Snackbar from "@mui/material/Snackbar";
-import { changeUser } from "@/lib/features/UserSlice";
+import { restore } from "@/lib/features/CartSlice";
+import { useAppDispatch } from "@/lib/hooks";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 export default function Profile() {
   const dispatch = useAppDispatch();
@@ -12,7 +12,6 @@ export default function Profile() {
   const [open, setOpen] = useState(false);
   const [snack, setSnack] = useState("");
   const [severity, setSeverity] = useState("");
-
   const handleClick = () => {
     setOpen(true);
   };
@@ -26,25 +25,21 @@ export default function Profile() {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch(
-        "https://e-commerce-backend-production-1.up.railway.app/api/auth/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.userName,
-            password: data.password,
-          }),
+      const res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.userName,
+          password: data.password,
+        }),
+      });
       const result = await res.json();
 
       if (!res.ok) {
@@ -54,10 +49,13 @@ export default function Profile() {
         return;
       }
       localStorage.setItem("token", result.token);
-      dispatch(changeUser({ firstName: result.firstName }));
+      dispatch(restore({ firstName: result.fristName }));
       setSnack(result.message);
       setSeverity("success");
       handleClick();
+      setTimeout(() => {
+        window.location.href="/landing/home"
+      }, 3000);
     } catch (error) {
       setSeverity("error");
       setSnack("Network Error");
@@ -70,19 +68,16 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch(
-        "https://e-commerce-backend-production-1.up.railway.app/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: data.userName,
-            password: data.password,
-          }),
+      const res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify({
+          email: data.userName,
+          password: data.password,
+        }),
+      });
       const result = await res.json();
       if (!res.ok) {
         setSeverity("warning");
@@ -91,10 +86,13 @@ export default function Profile() {
         return;
       }
       localStorage.setItem("token", result.token);
-      dispatch(changeUser({ firstName: result.firstName }));
+      dispatch(restore({ firstName: result.firstName }));
       setSeverity("success");
       setSnack(result.message);
       handleClick();
+      setTimeout(() => {
+        window.location.href="/landing/home"
+      }, 3000);
     } catch (error) {
       setSeverity("error");
       setSnack("Network Error");

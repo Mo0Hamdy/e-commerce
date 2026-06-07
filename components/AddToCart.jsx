@@ -22,12 +22,45 @@ export default function AddToCart({ element }) {
     dispatch(add({ element }));
   }
 
+  const handleAddToCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      let res = await fetch("http://localhost:8080/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({
+          products: [
+            {
+              id: element.id,
+              title: element.title,
+              price: element.price,
+              category: element.category,
+              discount: element.discountPercentage,
+              image: element.images[0],
+              quantity:1
+            },
+          ],
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        console.log(result.message);
+      }
+    } catch (error) {
+      console.log("an error has occurred", error);
+    }
+  };
+
   return (
     <div>
       <button
         onClick={() => {
           handleClick();
           handleAddClick();
+          handleAddToCart();
         }}
         className="cursor-pointer bg-primary-light text-white p-2 rounded-xl hover:scale-110 duration-300"
       >
