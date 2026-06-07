@@ -22,7 +22,7 @@ export default async function dynamicProduct({ params }) {
     return (
       <div
         key={element.id}
-        className="rounded-xl w-72 h-94 p-3 mx-10 bg-white flex flex-col justify-between shrink-0"
+        className="rounded-xl w-72 h-94 p-3 mx-10 shadow-2xl bg-white flex flex-col justify-between shrink-0"
       >
         <div className="relative h-60 flex items-center justify-center">
           <Image
