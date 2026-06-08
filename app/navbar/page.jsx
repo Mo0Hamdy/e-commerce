@@ -43,45 +43,6 @@ export default function Navbar() {
       else dispatch(decrease({ id }));
     }
   }
-  // async function handlePlusClick(id, amount) {
-  //   const product = await fetch(
-  //     "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
-  //     {
-  //       method: "Patch",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         id: id,
-  //         amount: amount,
-  //       }),
-  //     },
-  //   );
-  //   if (product.ok) {
-  //     dispatch(increase({ id }));
-  //   }
-  // }
-
-  // async function handleMinusClick(id, amount) {
-  //   const product = await fetch(
-  //     "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
-  //     {
-  //       method: "Patch",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         id: id,
-  //         amount: amount,
-  //       }),
-  //     },
-  //   );
-  //   if (product.ok) {
-  //     dispatch(decrease({ id }));
-  //   }
-  // }
 
   const { cartProducts, defaultProductsCounter, firstName } = useAppSelector(
     (state) => {
