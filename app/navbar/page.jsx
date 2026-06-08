@@ -26,7 +26,7 @@ export default function Navbar() {
     const product = await fetch(
       "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
       {
-        method: "Patch",
+        method: "Put",
         headers: {
           "Content-Type": "application/json",
           Authorization: `bearer ${token}`,
