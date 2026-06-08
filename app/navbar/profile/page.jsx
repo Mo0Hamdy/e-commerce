@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 import Alert from "@mui/material/Alert";
@@ -7,6 +8,7 @@ import { restore } from "@/lib/features/CartSlice";
 import { useAppDispatch } from "@/lib/hooks";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 export default function Profile() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const [signUp, setSignUp] = useState(true);
   const [open, setOpen] = useState(false);
@@ -54,7 +56,7 @@ export default function Profile() {
       setSeverity("success");
       handleClick();
       setTimeout(() => {
-        window.location.href="/landing"
+        router.push("/landing");
       }, 3000);
     } catch (error) {
       setSeverity("error");
@@ -91,7 +93,7 @@ export default function Profile() {
       setSnack(result.message);
       handleClick();
       setTimeout(() => {
-        window.location.href="/landing"
+        router.push("/landing");
       }, 3000);
     } catch (error) {
       setSeverity("error");
