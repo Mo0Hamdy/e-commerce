@@ -49,7 +49,7 @@ export default function Profile() {
         return;
       }
       localStorage.setItem("token", result.token);
-      dispatch(restore({ firstName: result.fristName }));
+      dispatch(restore({ firstName: result.firstName }));
       setSnack(result.message);
       setSeverity("success");
       handleClick();
