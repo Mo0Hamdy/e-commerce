@@ -21,13 +21,67 @@ import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
   const dispatch = useAppDispatch();
-  function handlePlusClick(id) {
-    dispatch(increase({ id }));
+  async function handlePlusMinusClick(id, amount) {
+    const token = localStorage.getItem("token");
+    const product = await fetch(
+      "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
+      {
+        method: "Patch",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: id,
+          amount: amount,
+        }),
+      },
+    );
+    if (product.ok) {
+      console.log("hello from patch request!");
+      if (amount == 1) dispatch(increase({ id }));
+      else dispatch(decrease({ id }));
+    }
   }
+  // async function handlePlusClick(id, amount) {
+  //   const product = await fetch(
+  //     "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
+  //     {
+  //       method: "Patch",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         id: id,
+  //         amount: amount,
+  //       }),
+  //     },
+  //   );
+  //   if (product.ok) {
+  //     dispatch(increase({ id }));
+  //   }
+  // }
 
-  function handleMinusClick(id) {
-    dispatch(decrease({ id }));
-  }
+  // async function handleMinusClick(id, amount) {
+  //   const product = await fetch(
+  //     "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
+  //     {
+  //       method: "Patch",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `bearer ${token}`,
+  //       },
+  //       body: JSON.stringify({
+  //         id: id,
+  //         amount: amount,
+  //       }),
+  //     },
+  //   );
+  //   if (product.ok) {
+  //     dispatch(decrease({ id }));
+  //   }
+  // }
 
   const { cartProducts, defaultProductsCounter, firstName } = useAppSelector(
     (state) => {
@@ -41,11 +95,14 @@ export default function Navbar() {
     const getData = async () => {
       if (token) {
         try {
-          const res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/auth/me", {
-            headers: {
-              Authorization: `Bearer ${token}`,
+          const res = await fetch(
+            "https://e-commerce-backend-nine-olive.vercel.app/api/auth/me",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
-          });
+          );
           if (!res.ok) {
             dispatch(restore({ firstName: "Account" }));
             return;
@@ -54,11 +111,14 @@ export default function Navbar() {
           if (result && result.firstName) {
             console.log("hello from main if");
             try {
-              const res2 = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/cart", {
-                headers: {
-                  Authorization: `Bearer ${token}`,
+              const res2 = await fetch(
+                "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
                 },
-              });
+              );
               if (!res2.ok) {
                 console.log("hello from res2.ok");
                 dispatch(
@@ -84,7 +144,7 @@ export default function Navbar() {
                 );
               }
             } catch (error) {
-              console.log(error)
+              console.log(error);
             }
           } else {
             dispatch(restore({ firstName: "Account" }));
@@ -97,7 +157,7 @@ export default function Navbar() {
       }
     };
     getData();
-  }, [dispatch,firstName]);
+  }, [dispatch, firstName]);
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -138,7 +198,7 @@ export default function Navbar() {
         <List>
           {cartProducts.map((item) => (
             <div
-              className="h-24 mb-4 flex bg-accent-dark rounded-xl gap-3"
+              className="h-24 mb-4 flex bg-teal-500 rounded-xl gap-3"
               key={item.id}
             >
               <img
@@ -152,7 +212,7 @@ export default function Navbar() {
                   <div className="count text-center flex items-center">
                     <RemoveIcon
                       onClick={() => {
-                        handleMinusClick(item.id);
+                        handlePlusMinusClick(item.id, -1);
                       }}
                       style={{
                         fontSize: "18px",
@@ -166,7 +226,7 @@ export default function Navbar() {
                     <span>{item.quantity}</span>
                     <AddIcon
                       onClick={() => {
-                        handlePlusClick(item.id);
+                        handlePlusMinusClick(item.id, 1);
                       }}
                       style={{
                         fontSize: "18px",
