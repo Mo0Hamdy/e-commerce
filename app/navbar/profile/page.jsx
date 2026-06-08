@@ -54,7 +54,7 @@ export default function Profile() {
       setSeverity("success");
       handleClick();
       setTimeout(() => {
-        window.location.href="/landing/home"
+        window.location.href="/landing"
       }, 3000);
     } catch (error) {
       setSeverity("error");
