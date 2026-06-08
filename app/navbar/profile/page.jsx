@@ -30,18 +30,21 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://e-commerce-backend-nine-olive.vercel.app/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.userName,
+            password: data.password,
+          }),
         },
-        body: JSON.stringify({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.userName,
-          password: data.password,
-        }),
-      });
+      );
       const result = await res.json();
 
       if (!res.ok) {
@@ -70,16 +73,19 @@ export default function Profile() {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch("https://e-commerce-backend-nine-olive.vercel.app/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://e-commerce-backend-nine-olive.vercel.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: data.userName,
+            password: data.password,
+          }),
         },
-        body: JSON.stringify({
-          email: data.userName,
-          password: data.password,
-        }),
-      });
+      );
       const result = await res.json();
       if (!res.ok) {
         setSeverity("warning");
