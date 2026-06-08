@@ -84,6 +84,7 @@ export default function AddToCart({ element }) {
             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             minWidth: "341px",
             position: "absolute",
+            textAlign:"center",
             top: { xs: "70px", sm: "70px" },
           },
         }}
