@@ -1,7 +1,6 @@
 import Image from "next/image";
 async function getProducts(cat) {
-  console.log(cat);
-  const data = await fetch("https://fakestoreapi.com/products", {
+  const data = await fetch("https://dummyjson.com/products", {
     next: {
       revalidate: 60,
     },
@@ -10,14 +9,11 @@ async function getProducts(cat) {
     throw new Error("couldn't find any element");
   }
   let response = await data.json();
-  return response.filter((element) => {
-    return element.category === cat.split("-").join(" ");
-  });
+  return response.products.filter((element) => element.category === cat);
 }
 export default async function dynamicProduct({ params }) {
   let response = await params;
-  let product = response.product;
-  let returnedProducts = await getProducts(product);
+  let returnedProducts = await getProducts(response.product);
   const cards = returnedProducts.map((element) => {
     return (
       <div
@@ -27,7 +23,7 @@ export default async function dynamicProduct({ params }) {
         <div className="relative h-60 flex items-center justify-center">
           <Image
             className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
-            src={element.image}
+            src={element.images[0]}
             alt={element.title}
             fill
             sizes="full"
@@ -51,6 +47,7 @@ export default async function dynamicProduct({ params }) {
   });
   return (
     <div className="py-40 bg-blue-300 min-h-full">
+      <div className="text-center py-5 text-2xl capitalize">{response.product}</div>
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
         {cards}
       </div>

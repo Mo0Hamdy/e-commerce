@@ -7,12 +7,15 @@ import Fab from "@mui/material/Fab";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
 import Fade from "@mui/material/Fade";
+import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -49,7 +52,8 @@ export default function Navbar() {
       return state.cart;
     },
   );
-
+  const [visible, setVisible] = useState("none");
+  const [CATS, setCATS] = useState([]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token === null) return;
@@ -117,8 +121,43 @@ export default function Navbar() {
         dispatch(restore({ firstName: "Account" }));
       }
     };
+
     getData();
   }, [dispatch, firstName]);
+
+  useEffect(() => {
+    const catFetch = async () => {
+      try {
+        const cats = await categories();
+        setCATS(cats);
+      } catch (error) {
+        throw new Error(error);
+      }
+    };
+    catFetch();
+  }, []);
+  const categories = async () => {
+    let data = await fetch("https://dummyjson.com/products", {
+      next: {
+        revalidate: 60,
+      },
+    });
+    if (!data.ok) {
+      throw new Error("couldn't find any element");
+    }
+    let response = await data.json();
+    return [...new Set(response.products.map((element) => element.category))];
+  };
+
+  let cartMenu = CATS.map((element, index) => {
+    return (
+      <Link key={index} href={`/landing/${element}`}>
+        <ListItemButton selected aria-current="page">
+          <ListItemText primary={element} />
+        </ListItemButton>
+      </Link>
+    );
+  });
 
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -154,7 +193,12 @@ export default function Navbar() {
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
-        <h3> {firstName == "Account" ? "" : firstName}, Your Cart is empty!</h3>
+        <h3>
+          {" "}
+          {firstName == "Account"
+            ? "Please Register to access your Cart"
+            : `${firstName}, Your Cart is empty!`}
+        </h3>
       ) : (
         <List>
           {cartProducts.map((item) => (
@@ -208,6 +252,8 @@ export default function Navbar() {
           ))}
         </List>
       )}
+      <button>Total </button>
+      <div></div>
     </Box>
   );
   return (
@@ -262,6 +308,23 @@ export default function Navbar() {
               PixelCraft
             </li>
           </Link>
+
+          <li
+            className="me-3 font-bold text-white cursor-pointer"
+            onClick={() => {
+              visible === "none" ? setVisible("block") : setVisible("none");
+            }}
+          >
+            Categories
+            <Paper
+              variant="outlined"
+              sx={{ maxWidth: "100%", position: "absolute", display: visible,top:"50px" }}
+            >
+              <List component="nav" aria-label="mail folders" sx={{ py: 0 }}>
+                {cartMenu}
+              </List>
+            </Paper>
+          </li>
           <Link href="/landing/home">
             <li className="me-3 font-bold text-white">Home</li>
           </Link>
