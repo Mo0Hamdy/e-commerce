@@ -20,6 +20,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
+
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
@@ -286,13 +287,7 @@ export default function Navbar() {
             >
               Pixel Craft
             </MenuItem>
-            <MenuItem
-              component={Link}
-              href="/landing/home"
-              onClick={handleCloseAnchor}
-            >
-              Home
-            </MenuItem>
+         
             <MenuItem
               component={Link}
               href="/landing/Allproducts"
@@ -300,17 +295,46 @@ export default function Navbar() {
             >
               Products
             </MenuItem>
+            <MenuItem
+              component={Link}
+              href="/landing/home"
+              onClick={handleCloseAnchor}
+            >
+              Special
+            </MenuItem>
           </Menu>
+          {/* <Paper
+            onClick={() => {
+              setVisible("none");
+            }}
+            variant="outlined"
+            sx={{
+              maxWidth: "100%",
+              position: "absolute",
+              display: visible,
+              top: "100px",
+              backgroundColor: "teal",
+              left: "120px",
+              zIndex:"15000"
+            }}
+          >
+            <List
+              sx={{ zIndex: 10, py: 0}}
+              component="nav"
+              aria-label="mail folders"
+            >
+              {cartMenu}
+            </List>
+          </Paper> */}
         </div>
         <ul className="hidden md:flex items-center ms-2">
           <Link href="/landing">
-            <li className="me-3 rounded-full bg-accent-light text-primary-dark px-4 py-2 font-bold tracking-widest ">
+            <li className="me-3 hover:text-blue-500 transition-all duration-300 rounded-full bg-accent-light text-primary-dark px-4 py-2 font-bold tracking-widest ">
               PixelCraft
             </li>
           </Link>
-
           <li
-            className="me-3 font-bold text-white cursor-pointer"
+            className="me-3 font-bold text-white cursor-pointer hover:text-teal-400 transition-all duration-300"
             onClick={() => {
               visible === "none" ? setVisible("block") : setVisible("none");
             }}
@@ -318,18 +342,27 @@ export default function Navbar() {
             Categories
             <Paper
               variant="outlined"
-              sx={{ maxWidth: "100%", position: "absolute", display: visible,top:"50px" }}
+              sx={{
+                maxWidth: "100%",
+                position: "absolute",
+                display: visible,
+                top: "50px",
+              }}
             >
               <List component="nav" aria-label="mail folders" sx={{ py: 0 }}>
                 {cartMenu}
               </List>
             </Paper>
           </li>
-          <Link href="/landing/home">
-            <li className="me-3 font-bold text-white">Home</li>
-          </Link>
           <Link href="/landing/Allproducts">
-            <li className="me-3 font-bold text-white">Products</li>
+            <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
+              Products
+            </li>
+          </Link>
+          <Link href="/landing/home">
+            <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
+              Special
+            </li>
           </Link>
         </ul>
         <div className="flex items-center">

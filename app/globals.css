@@ -22,6 +22,10 @@
   --color-textColor-lighter: #718096;
 }
 
+::selection{
+  background-color: rgb(246, 255, 208);
+}
+
 @keyframes navbar {
   from{
     transform: translateY(-55px);
