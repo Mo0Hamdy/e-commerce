@@ -20,7 +20,6 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
-
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
@@ -71,6 +70,7 @@ export default function Navbar() {
           );
           if (!res.ok) {
             dispatch(restore({ firstName: "Account" }));
+            localStorage.removeItem("token");
             return;
           }
           const result = await res.json();
@@ -274,6 +274,7 @@ export default function Navbar() {
                 "aria-labelledby": "fade-button",
               },
             }}
+            
             slots={{ transition: Fade }}
             disableScrollLock={true}
             anchorEl={anchorEl}
@@ -284,10 +285,21 @@ export default function Navbar() {
               component={Link}
               href="/landing"
               onClick={handleCloseAnchor}
+              className="hover:text-red-500"
             >
-              Pixel Craft
+              Home
             </MenuItem>
-         
+
+            <MenuItem
+            // component={Link}
+            // href="/landing"
+              // onClick={handleCloseAnchor}
+              className="relative overflow-visible"
+            >
+              Categories
+                  <div className="bg-red-400 absolute z-[10000]"> {cartMenu}</div>
+            </MenuItem>
+
             <MenuItem
               component={Link}
               href="/landing/Allproducts"
@@ -303,29 +315,7 @@ export default function Navbar() {
               Special
             </MenuItem>
           </Menu>
-          {/* <Paper
-            onClick={() => {
-              setVisible("none");
-            }}
-            variant="outlined"
-            sx={{
-              maxWidth: "100%",
-              position: "absolute",
-              display: visible,
-              top: "100px",
-              backgroundColor: "teal",
-              left: "120px",
-              zIndex:"15000"
-            }}
-          >
-            <List
-              sx={{ zIndex: 10, py: 0}}
-              component="nav"
-              aria-label="mail folders"
-            >
-              {cartMenu}
-            </List>
-          </Paper> */}
+      
         </div>
         <ul className="hidden md:flex items-center ms-2">
           <Link href="/landing">
@@ -424,8 +414,7 @@ export default function Navbar() {
                   "& .MuiDrawer-paper": {
                     width: {
                       xs: "100%",
-                      sm: "100%",
-                      md: "415px",
+                      sm: "400px",
                     },
                   },
                 }}

@@ -1,12 +1,17 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useState } from "react";
+import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useAppDispatch } from "@/lib/hooks";
 import Snackbar from "@mui/material/Snackbar";
 import { restore } from "@/lib/features/CartSlice";
-import { useAppDispatch } from "@/lib/hooks";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 export default function Profile() {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -18,7 +23,11 @@ export default function Profile() {
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
+  const [token, setToken] = useState(null);
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
+  const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -100,7 +109,7 @@ export default function Profile() {
       handleClick();
       setTimeout(() => {
         router.push("/landing");
-      }, 3000);
+      }, 2000);
     } catch (error) {
       setSeverity("error");
       setSnack("Network Error");
@@ -108,8 +117,15 @@ export default function Profile() {
     }
   };
 
+  const handleSignOutORSwitchUser = async () => {
+    localStorage.removeItem("token");
+    setTimeout(() => {
+      window.location.href = "/navbar/profile";
+    }, 2000);
+  };
+
   return (
-    <div className="flex lg:flex-row flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
+    <div className="flex lg:flex-row gap-20 lg:gap-0 flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
       <Image
         src="/images/Sign in-pana.png"
         width={500}
@@ -118,104 +134,125 @@ export default function Profile() {
         priority
         className="image px-4"
       />
-      <div className="form">
-        {signUp ? (
-          <form
-            onSubmit={(e) => {
-              handleSignUp(e);
-            }}
-            className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
-          >
-            <AccountCircleIcon
-              sx={{
-                width: "100px",
-                height: "100px",
-                color: "gray",
+      {!token ? (
+        <div className="form">
+          {signUp ? (
+            <form
+              onSubmit={(e) => {
+                handleSignUp(e);
               }}
-            />
-            <input
-              required
-              type="text"
-              name="firstName"
-              placeholder="first name"
-              className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-            />
-            <input
-              required
-              type="text"
-              name="lastName"
-              placeholder="last name"
-              className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-            />
-            <input
-              required
-              type="email"
-              name="userName"
-              className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-              placeholder="email"
-            />
-            <input
-              required
-              type="password"
-              name="password"
-              className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-              placeholder="password"
-            />
-            <button
-              type="submit"
-              className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
+              className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
             >
-              Sign up
-            </button>
-            <p>
-              Already have an account?{" "}
-              <span
-                className="text-accent-dark cursor-pointer"
-                onClick={() => {
-                  setSignUp(false);
+              <AccountCircleIcon
+                sx={{
+                  width: "100px",
+                  height: "100px",
+                  color: "gray",
                 }}
+              />
+              <input
+                required
+                type="text"
+                name="firstName"
+                placeholder="first name"
+                className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
+              />
+              <input
+                required
+                type="text"
+                name="lastName"
+                placeholder="last name"
+                className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
+              />
+              <input
+                required
+                type="email"
+                name="userName"
+                className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
+                placeholder="email"
+              />
+              <input
+                required
+                type="password"
+                name="password"
+                className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
+                placeholder="password"
+              />
+              <button
+                type="submit"
+                className="cursor-pointer bg-accent rounded-md p-2 my-3 hover:scale-110 transition-all duration-300 text-white"
               >
-                sign in
-              </span>
-            </p>
-          </form>
-        ) : (
-          <form
-            onSubmit={(e) => {
-              handleSignIn(e);
-            }}
-            className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
-          >
-            <AccountCircleIcon
-              sx={{
-                width: "100px",
-                height: "100px",
-                color: "gray",
+                Sign up
+              </button>
+              <p>
+                Already have an account?{" "}
+                <span
+                  className="text-accent-dark cursor-pointer"
+                  onClick={() => {
+                    setSignUp(false);
+                  }}
+                >
+                  sign in
+                </span>
+              </p>
+            </form>
+          ) : (
+            <form
+              onSubmit={(e) => {
+                handleSignIn(e);
               }}
-            />
-            <input
-              required
-              type="email"
-              name="userName"
-              className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-              placeholder="email"
-            />
-            <input
-              required
-              type="password"
-              name="password"
-              className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
-              placeholder="password"
-            />
-            <button
-              type="submit"
-              className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
+              className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
             >
-              Sign in
-            </button>
-          </form>
-        )}
-      </div>
+              <AccountCircleIcon
+                sx={{
+                  width: "100px",
+                  height: "100px",
+                  color: "gray",
+                }}
+              />
+              <input
+                required
+                type="email"
+                name="userName"
+                className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
+                placeholder="email"
+              />
+              <input
+                required
+                type="password"
+                name="password"
+                className="border border-lime-500 p-1 rounded-md my-3 w-72 outline-0"
+                placeholder="password"
+              />
+              <button
+                type="submit"
+                className="cursor-pointer bg-accent rounded-md p-2 mt-3 hover:scale-110 transition-all duration-300"
+              >
+                Sign in
+              </button>
+            </form>
+          )}
+        </div>
+      ) : (
+        <Stack direction="column" spacing={6}>
+          <Button
+            onClick={handleSignOutORSwitchUser}
+              variant="contained"
+              color="info"
+            startIcon={<SwitchAccountIcon />}
+          >
+            Switch user
+          </Button>
+          <Button
+            onClick={handleSignOutORSwitchUser}
+            variant="contained"
+            color="warning"
+            endIcon={<LogoutIcon />}
+          >
+            Logout
+          </Button>
+        </Stack>
+      )}
       <Snackbar
         open={open}
         autoHideDuration={5000}
