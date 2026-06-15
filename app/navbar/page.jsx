@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { styled, alpha } from "@mui/material/styles";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -24,36 +25,11 @@ import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
   const dispatch = useAppDispatch();
-  async function handlePlusMinusClick(id, amount) {
-    const token = localStorage.getItem("token");
-    const product = await fetch(
-      "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
-      {
-        method: "Put",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `bearer ${token}`,
-        },
-        body: JSON.stringify({
-          id: id,
-          amount: amount,
-        }),
-      },
-    );
-    if (product.ok) {
-      console.log("hello from patch request!");
-      if (amount == 1) dispatch(increase({ id }));
-      else dispatch(decrease({ id }));
-    }
-  }
-
   const { cartProducts, defaultProductsCounter, firstName } = useAppSelector(
     (state) => {
       return state.cart;
     },
   );
-  const [visible, setVisible] = useState("none");
-  const [CATS, setCATS] = useState([]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token === null) return;
@@ -137,6 +113,33 @@ export default function Navbar() {
     };
     catFetch();
   }, []);
+
+  async function handlePlusMinusClick(id, amount) {
+    const token = localStorage.getItem("token");
+    const product = await fetch(
+      "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
+      {
+        method: "Put",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${token}`,
+        },
+        body: JSON.stringify({
+          id: id,
+          amount: amount,
+        }),
+      },
+    );
+    if (product.ok) {
+      console.log("hello from patch request!");
+      if (amount == 1) dispatch(increase({ id }));
+      else dispatch(decrease({ id }));
+    }
+  }
+
+  const [visible, setVisible] = useState("none");
+  const [CATS, setCATS] = useState([]);
+
   const categories = async () => {
     let data = await fetch("https://dummyjson.com/products", {
       next: {
@@ -149,17 +152,9 @@ export default function Navbar() {
     let response = await data.json();
     return [...new Set(response.products.map((element) => element.category))];
   };
-
-  let cartMenu = CATS.map((element, index) => {
-    return (
-      <Link key={index} href={`/landing/${element}`}>
-        <ListItemButton selected aria-current="page">
-          <ListItemText primary={element} />
-        </ListItemButton>
-      </Link>
-    );
-  });
-
+  /**
+   * main menu event handlers and state controls
+   */
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
@@ -174,8 +169,86 @@ export default function Navbar() {
     setOpen(open ? false : true);
   };
 
-  let [openDraw, setOpenDraw] = useState(false);
+  const [openDraw, setOpenDraw] = useState(false);
   const [searchProduct, setSearchProduct] = useState("");
+
+  /**
+   * nested menu event handlers and state controls
+   */
+
+  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const [open2, setOpen2] = useState(false);
+  const handleClick2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+    setOpen2(open2 ? false : true);
+  };
+  const handleClose = () => {
+    setAnchorEl2(null);
+  };
+
+  let cartMenu = CATS.map((element, index) => {
+    return (
+      <Link key={index} href={`/landing/${element}`}>
+        <ListItemButton selected aria-current="page">
+          <ListItemText primary={element} />
+        </ListItemButton>
+      </Link>
+    );
+  });
+
+  let cartMenuSm = CATS.map((element, index) => {
+    return (
+      <Link key={index} href={`/landing/${element}`}>
+        <MenuItem disableRipple>{element}</MenuItem>
+      </Link>
+    );
+  });
+
+  const StyledMenu = styled((props) => (
+    <Menu
+      elevation={0}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "left",
+      }}
+      {...props}
+    />
+  ))(({ theme }) => ({
+    "& .MuiPaper-root": {
+      borderRadius: 6,
+      marginTop: theme.spacing(1),
+      minWidth: 180,
+      color: "rgb(55, 65, 81)",
+      boxShadow:
+        "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+      "& .MuiMenu-list": {
+        padding: "4px 0",
+      },
+      "& .MuiMenuItem-root": {
+        "& .MuiSvgIcon-root": {
+          fontSize: 18,
+          color: theme.palette.text.secondary,
+          marginRight: theme.spacing(1.5),
+          ...theme.applyStyles("dark", {
+            color: "inherit",
+          }),
+        },
+        "&:active": {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            theme.palette.action.selectedOpacity,
+          ),
+        },
+      },
+      ...theme.applyStyles("dark", {
+        color: theme.palette.grey[300],
+      }),
+    },
+  }));
 
   const DrawerList = (
     <Box className="w-full md:w-100 p-5" role="presentation">
@@ -253,10 +326,9 @@ export default function Navbar() {
           ))}
         </List>
       )}
-      <button>Total </button>
-      <div></div>
     </Box>
   );
+
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-primary flex justify-between items-center rounded-full">
@@ -274,7 +346,6 @@ export default function Navbar() {
                 "aria-labelledby": "fade-button",
               },
             }}
-            
             slots={{ transition: Fade }}
             disableScrollLock={true}
             anchorEl={anchorEl}
@@ -291,13 +362,24 @@ export default function Navbar() {
             </MenuItem>
 
             <MenuItem
-            // component={Link}
-            // href="/landing"
-              // onClick={handleCloseAnchor}
+              onClick={handleClick2}
+              aria-expanded={open2}
               className="relative overflow-visible"
             >
               Categories
-                  <div className="bg-red-400 absolute z-[10000]"> {cartMenu}</div>
+              <StyledMenu
+                id="demo-customized-menu"
+                slotProps={{
+                  list: {
+                    "aria-labelledby": "demo-customized-button",
+                  },
+                }}
+                anchorEl={anchorEl2}
+                open={open2}
+                onClose={handleClose}
+              >
+                {cartMenuSm}
+              </StyledMenu>
             </MenuItem>
 
             <MenuItem
@@ -315,7 +397,6 @@ export default function Navbar() {
               Special
             </MenuItem>
           </Menu>
-      
         </div>
         <ul className="hidden md:flex items-center ms-2">
           <Link href="/landing">

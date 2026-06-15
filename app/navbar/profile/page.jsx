@@ -237,8 +237,8 @@ export default function Profile() {
         <Stack direction="column" spacing={6}>
           <Button
             onClick={handleSignOutORSwitchUser}
-              variant="contained"
-              color="info"
+            variant="contained"
+            color="info"
             startIcon={<SwitchAccountIcon />}
           >
             Switch user

@@ -18,7 +18,7 @@ export default function Footer() {
       <p className="text-center text-gray-400">as we are a family </p>
       <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around pb-10 md:pb-0 px-2">
         <div className="mail w-full md:w-1/3 md:pb-0 items-center justify-center">
-          <p className="text-gray-600 w-full lg:w-4/5 mb-5">
+          <p className="text-gray-600 w-full lg:w-4/5 my-5">
             It will be a pleasure to receive your opinions
           </p>
           <form className="flex" action="">
