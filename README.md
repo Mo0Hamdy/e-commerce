@@ -56,13 +56,7 @@ https://e-commerce-backend-nine-olive.vercel.app/
 
 ## 🏗️ Architecture
 
-User
-  ↓
-Next.js Frontend
-  ↓
-Express.js REST API
-  ↓
-MongoDB Database
+User ⟶ Next.js Frontend ⟶ Express.js REST API ⟶ MongoDB Database
 
 ---
 
