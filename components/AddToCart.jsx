@@ -66,7 +66,7 @@ export default function AddToCart({ element }) {
         onClick={() => {
           handleAddToCart();
         }}
-        className="cursor-pointer bg-primary-light text-white p-2 rounded-xl hover:scale-110 duration-300"
+        className="cursor-pointer bg-primary-light text-white p-1.5 rounded-xl hover:scale-110 duration-300"
       >
         Add to cart
       </button>

@@ -18,7 +18,7 @@ export default async function AllProducts() {
     return (
       <div
         key={element.id}
-        className="rounded-xl w-72 h-94 p-3 mx-10 bg-background-white flex flex-col justify-between shrink-0"
+        className="rounded-xl w-72 h-94 p-3 mx-3 bg-background-white flex flex-col justify-between shrink-0"
       >
         <Link href={`/landing/Allproducts/${element.id}`}>
           <div className="relative h-60 flex items-center justify-center">

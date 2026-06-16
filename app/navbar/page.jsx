@@ -176,7 +176,7 @@ export default function Navbar() {
    * nested menu event handlers and state controls
    */
 
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  const [anchorEl2, setAnchorEl2] = useState(null);
   const [open2, setOpen2] = useState(false);
   const handleClick2 = (event) => {
     setAnchorEl2(event.currentTarget);
@@ -409,6 +409,10 @@ export default function Navbar() {
             onClick={() => {
               visible === "none" ? setVisible("block") : setVisible("none");
             }}
+            tabIndex={0}
+            onBlur={() => {
+              setVisible("none")
+            }}
           >
             Categories
             <Paper
@@ -420,7 +424,11 @@ export default function Navbar() {
                 top: "50px",
               }}
             >
-              <List component="nav" aria-label="mail folders" sx={{ py: 0 }}>
+              <List
+                component="nav"
+                aria-label="mail folders"
+                sx={{ py: 0 }}
+              >
                 {cartMenu}
               </List>
             </Paper>
