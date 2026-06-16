@@ -117,7 +117,13 @@ export default function Profile() {
     }
   };
 
-  const handleSignOutORSwitchUser = async () => {
+  const handleSignOut = async () => {
+    localStorage.removeItem("token");
+    setTimeout(() => {
+      window.location.href = "/landing";
+    }, 2000);
+  };
+  const handleSwitchUser = async () => {
     localStorage.removeItem("token");
     setTimeout(() => {
       window.location.href = "/navbar/profile";
@@ -236,7 +242,7 @@ export default function Profile() {
       ) : (
         <Stack direction="column" spacing={6}>
           <Button
-            onClick={handleSignOutORSwitchUser}
+            onClick={handleSwitchUser}
             variant="contained"
             color="info"
             startIcon={<SwitchAccountIcon />}
@@ -244,7 +250,7 @@ export default function Profile() {
             Switch user
           </Button>
           <Button
-            onClick={handleSignOutORSwitchUser}
+            onClick={handleSignOut}
             variant="contained"
             color="warning"
             endIcon={<LogoutIcon />}
