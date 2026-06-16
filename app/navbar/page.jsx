@@ -17,6 +17,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { styled, alpha } from "@mui/material/styles";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -188,11 +189,18 @@ export default function Navbar() {
 
   let cartMenu = CATS.map((element, index) => {
     return (
-      <Link key={index} href={`/landing/${element}`}>
-        <ListItemButton selected aria-current="page">
-          <ListItemText primary={element} />
-        </ListItemButton>
-      </Link>
+      <ListItemButton
+        component={Link}
+        key={index}
+        href={`/landing/${element}`}
+        selected
+        aria-current="page"
+        onClick={(e) => {
+          console.log("clicked",element)
+        }}
+      >
+        <ListItemText primary={element} />
+      </ListItemButton>
     );
   });
 
@@ -404,15 +412,19 @@ export default function Navbar() {
               PixelCraft
             </li>
           </Link>
+          <ClickAwayListener onClickAway={() => {
+            setVisible("none")
+          }}>
+
           <li
             className="me-3 font-bold text-white cursor-pointer hover:text-teal-400 transition-all duration-300"
             onClick={() => {
               visible === "none" ? setVisible("block") : setVisible("none");
             }}
             tabIndex={0}
-            onBlur={() => {
-              setVisible("none")
-            }}
+            // onBlur={() => {
+            //   setVisible("none");
+            // }}
           >
             Categories
             <Paper
@@ -424,15 +436,12 @@ export default function Navbar() {
                 top: "50px",
               }}
             >
-              <List
-                component="nav"
-                aria-label="mail folders"
-                sx={{ py: 0 }}
-              >
+              <List component="nav"  aria-label="mail folders" sx={{ py: 0 }}>
                 {cartMenu}
               </List>
             </Paper>
           </li>
+          </ClickAwayListener>
           <Link href="/landing/Allproducts">
             <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
               Products

@@ -18,9 +18,9 @@ export default async function dynamicProduct({ params }) {
     return (
       <div
         key={element.id}
-        className="rounded-xl w-72 h-94 p-3 mx-10 shadow-2xl bg-white flex flex-col justify-between shrink-0"
+        className="rounded-xl w-72 h-80 md:h-94 p-3 mx-2 shadow-2xl bg-white flex flex-col justify-between shrink-0"
       >
-        <div className="relative h-60 flex items-center justify-center">
+        <div className="relative h-52 md:h-60 flex items-center justify-center">
           <Image
             className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
             src={element.images[0]}
@@ -38,7 +38,7 @@ export default async function dynamicProduct({ params }) {
               ${Math.round(element.price * 1.2)}
             </span>{" "}
           </h1>
-          <button className="cursor-pointer bg-cyan-800 text-white p-2 rounded-xl hover:scale-110 duration-300">
+          <button className="cursor-pointer bg-cyan-800 text-white p-1.5 rounded-xl hover:scale-110 duration-300">
             Add to cart
           </button>
         </div>
