@@ -1,6 +1,6 @@
 ## 🛒 E-Commerce Web App (Next.js-Express.js)
 
-A modern e-commerce web application built using **Next.js**, **Redux Toolkit**, **Material UI**, **Express.js**and **MongoDB**.  
+A modern e-commerce web application built using **Next.js**, **Redux Toolkit**, **Material UI**, **Express.js** and **MongoDB**.  
 The application allows users to browse products, create accounts, log in securely using JWT authentication, and manage their shopping carts with persistent storage in MongoDB.
 
 --- 
