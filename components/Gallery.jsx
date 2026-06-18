@@ -18,7 +18,7 @@ export default function Gallery() {
           "Every outfit is a step toward your best self."
         </p>
       </div>
-      <div className="container m-auto grid md:grid-cols-4 md:grid-rows-2 gap-6 py-10 md:h-200">
+      <div className="container m-auto grid lg:grid-cols-4 lg:grid-rows-2 gap-6 py-10 lg:h-200">
         <div className="col-span-2 row-span-2 items-center overflow-hidden rounded-3xl">
           <Image
             src="/images/hanging-pullover.jpg"
