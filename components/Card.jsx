@@ -7,16 +7,24 @@ const data = [
     title: "Shop what suits you best",
     paragraph:
       "From fashion to electronics, find products designed for your lifestyle.",
+    color: "#F0FDF4",
+    border: "#BAE6FD",
   },
+
   {
     icon: RocketLaunchOutlinedIcon,
     title: "Quick delivery, zero hassle",
     paragraph: "Enjoy fast shipping and smooth checkout every time you shop.",
+    color: "#F0FDFA",
+    border: "#99F6E4",
   },
+
   {
     icon: AutoAwesomeOutlinedIcon,
     title: "Great quality, better value",
     paragraph: "Premium-looking products without the premium price tag",
+    color: "#FFF7ED",
+    border: "#FFEDD5",
   },
 ];
 
@@ -24,9 +32,16 @@ const cards = data.map((element, index) => {
   return (
     <div
       key={index}
-      className="flex flex-col items-center md:items-start md:flex-row text-gray-700 w-4/5 md:w-80 py-7 md:p-0"
+      className="rounded-2xl flex flex-col items-center lg:items-start lg:flex-row text-gray-700 p-7 md:px-3"
+      style={{
+        backgroundColor: element.color,
+        border: `1px solid ${element.border}`,
+      }}
     >
-      <element.icon className="text-accent-dark" style={{ fontSize: "32px", margin: "0 0 10px 5px" }} />
+      <element.icon
+        className="text-accent-dark"
+        style={{ fontSize: "32px" }}
+      />
       <div className="text md:ps-5">
         <h3 className="text-2xl pb-3 text-black text-center md:text-start">
           {element.title}
@@ -38,10 +53,8 @@ const cards = data.map((element, index) => {
 });
 export default function Card() {
   return (
-    <div className="px-2 md:px-0">
-      <div className="flex flex-col md:flex-row justify-evenly items-center md:items-start py-20">
-        {cards}
-      </div>
+    <div className="container m-auto px-2 gap-6 grid md:grid-cols-3 justify-evenly py-20">
+      {cards}
     </div>
   );
 }

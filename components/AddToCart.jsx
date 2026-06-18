@@ -72,7 +72,7 @@ export default function AddToCart({ element }) {
       </button>
       <Snackbar
         open={open}
-        autoHideDuration={4000}
+        autoHideDuration={40000}
         onClose={handleClose}
         sx={{
           "& .MuiSnackbarContent-root": {
@@ -83,7 +83,7 @@ export default function AddToCart({ element }) {
             borderRadius: "12px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
             position: "absolute",
-            width:"max-content",
+            // width: "max-content",
             top: { xs: "70px", sm: "70px" },
           },
         }}
