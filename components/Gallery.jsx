@@ -3,18 +3,18 @@ export default function Gallery() {
   return (
     <div className="text-center px-2">
       <div className="py-10 md:w-150 m-auto">
-        <h2 className="text-4xl md:text-5xl font-semibold pb-5 text-black leading-snug">
+        <h2 className="text-3xl md:text-4xl font-semibold pb-5 text-black leading-snug">
           Life isn't perfect, but your outfit can be
         </h2>
-        <p className="text-xl md:text-2xl text-gray-500">
+        <p className="text-lg md:text-xl text-gray-500">
           "Find your perfect match in our collection."
         </p>
       </div>
       <div className="py-10 md:w-150 m-auto">
-        <h2 className="text-4xl md:text-5xl font-semibold pb-5 text-black leading-snug">
+        <h2 className="text-3xl md:text-4xl font-semibold pb-5 text-black leading-snug">
           Wear your dreams, own your story
         </h2>
-        <p className="text-xl md:text-2xl text-gray-500">
+        <p className="text-lg md:text-xl text-gray-500">
           "Every outfit is a step toward your best self."
         </p>
       </div>
