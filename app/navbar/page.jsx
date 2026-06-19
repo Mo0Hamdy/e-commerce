@@ -256,14 +256,16 @@ export default function Navbar() {
         <h3 className="text-gray-700 text-xl tracking-wide font-bold">
           Shopping cart
         </h3>
-        <Fab color="error" aria-label="add">
-          <CloseIcon
-            onClick={(event) => {
-              event.stopPropagation();
-              setOpenDraw(false);
-            }}
-            style={{ cursor: "pointer", fontSize: "30px" }}
-          />
+        <Fab
+          sx={{width:"40px",height:"40px"}}
+          color="warning"
+          onClick={(event) => {
+            event.stopPropagation();
+            setOpenDraw(false);
+          }}
+          aria-label="add"
+        >
+          <CloseIcon style={{ cursor: "pointer", fontSize: "25px" }} />
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
@@ -277,7 +279,7 @@ export default function Navbar() {
         <List>
           {cartProducts.map((item) => (
             <div
-              className="h-24 mb-4 flex bg-teal-500 rounded-xl gap-3"
+              className="h-24 mb-4 flex bg-emerald-500 rounded-xl gap-3"
               key={item.id}
             >
               <img
@@ -297,12 +299,14 @@ export default function Navbar() {
                         fontSize: "18px",
                         color: "white",
                         cursor: "pointer",
-                        border: "1px solid white",
                         borderRadius: "2px",
                         marginRight: "15px",
+                        backgroundColor: "teal",
                       }}
                     />
-                    <span>{item.quantity}</span>
+                    <span className="text-white font-bold">
+                      {item.quantity}
+                    </span>
                     <AddIcon
                       onClick={() => {
                         handlePlusMinusClick(item.id, 1);
@@ -311,9 +315,9 @@ export default function Navbar() {
                         fontSize: "18px",
                         color: "white",
                         cursor: "pointer",
-                        border: "1px solid white",
                         borderRadius: "2px",
                         marginLeft: "15px",
+                        backgroundColor: "teal",
                       }}
                     />
                   </div>
