@@ -5,13 +5,21 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Snackbar from "@mui/material/Snackbar";
 import { restore } from "@/lib/features/CartSlice";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import Avatar from "@mui/material/Avatar";
+import {
+  deepPurple,
+  deepOrange,
+  teal,
+  yellow,
+  blue,
+} from "@mui/material/colors";
 export default function Profile() {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -22,6 +30,7 @@ export default function Profile() {
   const handleClick = () => {
     setOpen(true);
   };
+  const name = useAppSelector((state) => state.cart.firstName);
 
   const [token, setToken] = useState(null);
   useEffect(() => {
@@ -117,25 +126,12 @@ export default function Profile() {
     }
   };
 
-  const handleSignOut = async () => {
-    localStorage.removeItem("token");
-    setTimeout(() => {
-      window.location.href = "/landing";
-    }, 2000);
-  };
-  const handleSwitchUser = async () => {
-    localStorage.removeItem("token");
-    setTimeout(() => {
-      window.location.href = "/navbar/profile";
-    }, 2000);
-  };
-
   return (
     <div className="flex lg:flex-row gap-20 lg:gap-0 flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
       <Image
-        src="/images/Sign in-pana.png"
-        width={500}
-        height={500}
+        src={!token ? "/images/Sign in-pana.png" : "/images/Welcome-cuate.png"}
+        width={450}
+        height={450}
         alt="sign in"
         priority
         className="image px-4"
@@ -240,24 +236,54 @@ export default function Profile() {
           )}
         </div>
       ) : (
-        <Stack direction="column" spacing={6}>
-          <Button
-            onClick={handleSwitchUser}
-            variant="contained"
-            color="info"
-            startIcon={<SwitchAccountIcon />}
-          >
-            Switch user
-          </Button>
-          <Button
-            onClick={handleSignOut}
-            variant="contained"
-            color="warning"
-            endIcon={<LogoutIcon />}
-          >
-            Logout
-          </Button>
-        </Stack>
+        <div className="bg-white rounded-xl p-10 w-96">
+          <Avatar sx={{ bgcolor: blue[300], margin: "auto" }}>{name[0]}</Avatar>
+          <p className="text-xl mt-3 text-start">welcome back {name} 👋</p>
+          <p className="text-lg mt-3 text-start text-gray-500">
+            You're already signed in to your account.
+          </p>
+          <p className="text-lg mt-1 text-start text-gray-500">
+            What would you like to do?
+          </p>
+          <Stack direction="column" spacing={3} sx={{ padding: "35px" }}>
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => {
+                window.location.href = "/landing/Allproducts";
+              }}
+              startIcon={<ShoppingBagOutlinedIcon />}
+            >
+              Continue Shopping
+            </Button>
+            <Button
+              onClick={() => {
+                localStorage.removeItem("token");
+                setTimeout(() => {
+                  window.location.href = "/navbar/profile";
+                }, 2000);
+              }}
+              variant="outlined"
+              color="primary"
+              startIcon={<SwitchAccountIcon />}
+            >
+              Switch user
+            </Button>
+            <Button
+              onClick={() => {
+                localStorage.removeItem("token");
+                setTimeout(() => {
+                  window.location.href = "/landing";
+                }, 2000);
+              }}
+              variant="outlined"
+              color="error"
+              endIcon={<LogoutIcon />}
+            >
+              Logout
+            </Button>
+          </Stack>
+        </div>
       )}
       <Snackbar
         open={open}
