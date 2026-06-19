@@ -52,7 +52,6 @@ export default function Navbar() {
           }
           const result = await res.json();
           if (result && result.firstName) {
-            console.log("hello from main if");
             try {
               const res2 = await fetch(
                 "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
@@ -63,17 +62,14 @@ export default function Navbar() {
                 },
               );
               if (!res2.ok) {
-                console.log("hello from res2.ok");
                 dispatch(
                   restore({ firstName: "Account", products: [], counter: 0 }),
                 );
                 return;
               }
-              console.log("hello from cart success");
+
               const result2 = await res2.json();
               if (result2) {
-                console.log(result2.products);
-                console.log("hello from result2");
                 let counter = result2.products.reduce(
                   (acc, curr) => acc + Number(curr.quantity),
                   0,
@@ -132,7 +128,6 @@ export default function Navbar() {
       },
     );
     if (product.ok) {
-      console.log("hello from patch request!");
       if (amount == 1) dispatch(increase({ id }));
       else dispatch(decrease({ id }));
     }

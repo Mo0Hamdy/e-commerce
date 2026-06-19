@@ -3,6 +3,7 @@ import RocketLaunchOutlinedIcon from "@mui/icons-material/RocketLaunchOutlined";
 import AutoAwesomeOutlinedIcon from "@mui/icons-material/AutoAwesomeOutlined";
 const data = [
   {
+    index:1,
     icon: DiamondOutlinedIcon,
     title: "Shop what suits you best",
     paragraph:
@@ -12,6 +13,7 @@ const data = [
   },
 
   {
+    index: 2,
     icon: RocketLaunchOutlinedIcon,
     title: "Quick delivery, zero hassle",
     paragraph: "Enjoy fast shipping and smooth checkout every time you shop.",
@@ -20,6 +22,7 @@ const data = [
   },
 
   {
+    index:3,
     icon: AutoAwesomeOutlinedIcon,
     title: "Great quality, better value",
     paragraph: "Premium-looking products without the premium price tag",
@@ -28,11 +31,11 @@ const data = [
   },
 ];
 
-const cards = data.map((element, index) => {
+const cards = data.map((element) => {
   return (
     <div
-      key={index}
-      className="rounded-2xl flex flex-col items-center lg:items-start lg:flex-row text-gray-700 p-7 md:px-3"
+      key={element.index}
+      className="rounded-2xl flex flex-col items-center lg:items-start lg:flex-row text-gray-700 p-7 mx-5 md:mx-0 lg:px-3"
       style={{
         backgroundColor: element.color,
         border: `1px solid ${element.border}`,
@@ -42,11 +45,11 @@ const cards = data.map((element, index) => {
         className="text-accent-dark"
         style={{ fontSize: "32px" }}
       />
-      <div className="text md:ps-5">
-        <h3 className="text-2xl pb-3 text-black text-center md:text-start">
+      <div className="lg:ps-5 pt-2 lg:pt-0">
+        <h3 className="text-xl lg:text-2xl pb-3 text-black text-center md:text-start">
           {element.title}
         </h3>
-        <p className="text-xl text-center md:text-start">{element.paragraph}</p>
+        <p className="text-lg lg:text-xl text-center md:text-start">{element.paragraph}</p>
       </div>
     </div>
   );
