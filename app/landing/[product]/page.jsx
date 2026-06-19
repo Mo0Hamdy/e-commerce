@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AddToCart from "@/components/AddToCart";
 async function getProducts(cat) {
   const data = await fetch("https://dummyjson.com/products", {
     next: {
@@ -13,6 +14,7 @@ async function getProducts(cat) {
 }
 export default async function dynamicProduct({ params }) {
   let response = await params;
+  
   let returnedProducts = await getProducts(response.product);
   const cards = returnedProducts.map((element) => {
     return (
@@ -38,9 +40,12 @@ export default async function dynamicProduct({ params }) {
               ${Math.round(element.price * 1.2)}
             </span>{" "}
           </h1>
-          <button className="cursor-pointer bg-cyan-800 text-white p-1.5 rounded-xl hover:scale-110 duration-300">
+          {/* <button className="cursor-pointer bg-cyan-800 text-white p-1.5 rounded-xl hover:scale-110 duration-300">
             Add to cart
-          </button>
+          </button> */}
+
+             <AddToCart element={element} />
+
         </div>
       </div>
     );

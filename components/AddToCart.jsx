@@ -1,12 +1,15 @@
 "use client";
 import * as React from "react";
 import { useState } from "react";
+import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { useAppDispatch } from "../lib/hooks";
 import { add } from "../lib/features/CartSlice";
+
 export default function AddToCart({ element }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState(null);
+  const [severity, setSeverity] = useState("");
 
   const handleClose = (reason) => {
     if (reason === "clickaway") {
@@ -22,10 +25,12 @@ export default function AddToCart({ element }) {
       const token = localStorage.getItem("token");
       if (!token) {
         setMessage("Please register first");
+        setSeverity("warning")
         setOpen(true);
       } else {
         dispatch(add({ element }));
         setMessage("Product Was added to cart successfully");
+        setSeverity("success")
         setOpen(true);
         let res = await fetch(
           "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
@@ -71,25 +76,13 @@ export default function AddToCart({ element }) {
         Add to cart
       </button>
       <Snackbar
-        open={open}
-        autoHideDuration={40000}
-        onClose={handleClose}
-        sx={{
-          "& .MuiSnackbarContent-root": {
-            backgroundColor: "#1e293b",
-            color: "white",
-            fontSize: "16px",
-            fontWeight: "bold",
-            borderRadius: "12px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-            position: "absolute",
-            // width: "max-content",
-            top: { xs: "70px", sm: "70px" },
-          },
-        }}
-        anchorOrigin={{ horizontal: `center`, vertical: `top` }}
-        message={message}
-      />
+              open={open}
+              autoHideDuration={5000}
+              onClose={handleClose}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert severity={severity}>{message} </Alert>
+            </Snackbar>
     </div>
   );
 }
