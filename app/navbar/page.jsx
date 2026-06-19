@@ -22,6 +22,9 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
+import Lottie from "lottie-react";
+import sleepingCat from "../../animations/Sleeping Cat Breathing Loop.json";
+
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
@@ -257,7 +260,7 @@ export default function Navbar() {
           Shopping cart
         </h3>
         <Fab
-          sx={{width:"40px",height:"40px"}}
+          sx={{ width: "40px", height: "40px" }}
           color="warning"
           onClick={(event) => {
             event.stopPropagation();
@@ -269,12 +272,20 @@ export default function Navbar() {
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
-        <h3>
-          {" "}
-          {firstName == "Account"
-            ? "Please Register to access your Cart"
-            : `${firstName}, Your Cart is empty!`}
-        </h3>
+        <div>
+          <h3>
+            {" "}
+            {firstName == "Account"
+              ? "Please Register first to access your Cart"
+              : `${firstName}, Your Cart is empty!`}
+          </h3>
+          <Lottie
+            animationData={sleepingCat}
+            loop={true}
+            style={{ width: 270, height: 270 ,margin:"auto"}}
+
+          />
+        </div>
       ) : (
         <List>
           {cartProducts.map((item) => (
