@@ -337,7 +337,7 @@ export default function Navbar() {
                       />
                     </div>
                     <span className="mr-5 text-white">
-                      {Math.round(item.quantity * item.price)}
+                      {(item.quantity * item.price).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -345,7 +345,7 @@ export default function Navbar() {
             ))}
           </List>
           <footer className="bg-teal-50 p-5 flex justify-center w-full md:w-100 font-bold text-gray-500 border-teal-100 border fixed bottom-0 rigth-0">
-            Total : $<span>{Math.round(total)}</span>
+              Total : $<span>{total.toFixed(2)}</span>
           </footer>
         </div>
       )}
