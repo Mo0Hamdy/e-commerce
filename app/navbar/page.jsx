@@ -347,7 +347,7 @@ export default function Navbar() {
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-primary flex justify-between items-center rounded-full">
-        <div className="block md:hidden ms-2">
+        <div className="block md:hidden ms-1 md:ms-2">
           <button
             onClick={handleClickAnchor}
             className="rounded-full bg-black text-white px-4 py-2 font-bold tracking-widest font-EmilysCandy"
@@ -490,7 +490,7 @@ export default function Navbar() {
             />
           </div>
           <Link href={"/navbar/profile"}>
-            <div className="account py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
+            <div className="account py-3 md:py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
               <PermIdentityOutlinedIcon className="text-accent-dark" />
               <h4 className="hidden md:block font-bold text-white">
                 {firstName}
@@ -501,7 +501,7 @@ export default function Navbar() {
             onClick={() => {
               setOpenDraw(true);
             }}
-            className="cart py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
+            className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
           >
             <ShoppingCartOutlinedIcon className="text-accent-dark" />
             <h4 className="hidden md:block font-bold text-white">Cart</h4>
