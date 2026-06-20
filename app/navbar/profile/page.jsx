@@ -236,7 +236,7 @@ export default function Profile() {
           )}
         </div>
       ) : (
-        <div className="bg-white rounded-xl p-10 w-96">
+        <div className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl">
           <Avatar sx={{ bgcolor: blue[300], margin: "auto" }}>{name[0]}</Avatar>
           <p className="text-xl mt-3 text-start">welcome back {name} 👋</p>
           <p className="text-lg mt-3 text-start text-gray-500">
