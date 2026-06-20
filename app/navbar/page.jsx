@@ -277,7 +277,7 @@ export default function Navbar() {
         </Fab>
       </div>
       {cartProducts.length == 0 ? (
-        <div>
+        <div className="px-5">
           <h3>
             {" "}
             {firstName == "Account"
