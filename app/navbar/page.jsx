@@ -17,11 +17,11 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { styled, alpha } from "@mui/material/styles";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-
 import Lottie from "lottie-react";
 import sleepingCat from "../../animations/Sleeping Cat Breathing Loop.json";
 
@@ -29,11 +29,10 @@ import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
 export default function Navbar() {
   const dispatch = useAppDispatch();
-  const { cartProducts, defaultProductsCounter, firstName } = useAppSelector(
-    (state) => {
+  const { cartProducts, defaultProductsCounter, firstName, total } =
+    useAppSelector((state) => {
       return state.cart;
-    },
-  );
+    });
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token === null) return;
@@ -77,11 +76,17 @@ export default function Navbar() {
                   (acc, curr) => acc + Number(curr.quantity),
                   0,
                 );
+                let total = result2.products.reduce(
+                  (acc, curr) =>
+                    acc + Number(curr.price) * Number(curr.quantity),
+                  0,
+                );
                 dispatch(
                   restore({
                     firstName: result.firstName,
                     products: result2.products,
                     counter: counter,
+                    total: total,
                   }),
                 );
               }
@@ -254,8 +259,8 @@ export default function Navbar() {
   }));
 
   const DrawerList = (
-    <Box className="w-full md:w-100 p-5" role="presentation">
-      <div className="flex justify-between items-center mb-5">
+    <Box className="w-full md:w-100" role="presentation">
+      <div className="flex justify-between items-center mb-5 px-5 pt-5">
         <h3 className="text-gray-700 text-xl tracking-wide font-bold">
           Shopping cart
         </h3>
@@ -282,64 +287,70 @@ export default function Navbar() {
           <Lottie
             animationData={sleepingCat}
             loop={true}
-            style={{ width: 270, height: 270 ,margin:"auto"}}
-
+            style={{ width: 270, height: 270, margin: "auto" }}
           />
         </div>
       ) : (
-        <List>
-          {cartProducts.map((item) => (
-            <div
-              className="h-24 mb-4 flex bg-emerald-500 rounded-xl gap-3"
-              key={item.id}
-            >
-              <img
-                className="w-24 h-24 bg-gray-300 rounded-l-lg"
-                src={item.image}
-                alt=""
-              />
-              <div className="info flex flex-col items-start justify-between w-full">
-                <h2 className="text-white font-bold">{item.title}</h2>
-                <div className="flex justify-between w-full mb-2">
-                  <div className="count text-center flex items-center">
-                    <RemoveIcon
-                      onClick={() => {
-                        handlePlusMinusClick(item.id, -1);
-                      }}
-                      style={{
-                        fontSize: "18px",
-                        color: "white",
-                        cursor: "pointer",
-                        borderRadius: "2px",
-                        marginRight: "15px",
-                        backgroundColor: "teal",
-                      }}
-                    />
-                    <span className="text-white font-bold">
-                      {item.quantity}
+        <div>
+          <List sx={{padding:"20px"}}>
+            {cartProducts.map((item) => (
+              <div
+                className="h-24 mb-4 flex bg-emerald-500 rounded-xl gap-3"
+                key={item.id}
+              >
+                <img
+                  className="w-24 h-24 bg-gray-300 rounded-l-lg"
+                  src={item.image}
+                  alt=""
+                />
+                <div className="info flex flex-col items-start justify-between w-full">
+                  <h2 className="text-white font-bold">{item.title}</h2>
+                  <div className="flex justify-between w-full mb-2">
+                    <div className="count text-center flex items-center">
+                      <RemoveIcon
+                        onClick={() => {
+                          handlePlusMinusClick(item.id, -1);
+                        }}
+                        style={{
+                          fontSize: "18px",
+                          color: "white",
+                          cursor: "pointer",
+                          borderRadius: "2px",
+                          marginRight: "15px",
+                          backgroundColor: "teal",
+                        }}
+                      />
+                      <span className="text-white font-bold">
+                        {item.quantity}
+                      </span>
+                      <AddIcon
+                        onClick={() => {
+                          handlePlusMinusClick(item.id, 1);
+                        }}
+                        style={{
+                          fontSize: "18px",
+                          color: "white",
+                          cursor: "pointer",
+                          borderRadius: "2px",
+                          marginLeft: "15px",
+                          backgroundColor: "teal",
+                        }}
+                      />
+                    </div>
+                    <span className="mr-5 text-white">
+                      ${item.quantity * item.price}
                     </span>
-                    <AddIcon
-                      onClick={() => {
-                        handlePlusMinusClick(item.id, 1);
-                      }}
-                      style={{
-                        fontSize: "18px",
-                        color: "white",
-                        cursor: "pointer",
-                        borderRadius: "2px",
-                        marginLeft: "15px",
-                        backgroundColor: "teal",
-                      }}
-                    />
                   </div>
-                  <span className="mr-5 text-white">
-                    ${item.quantity * item.price}
-                  </span>
                 </div>
               </div>
-            </div>
-          ))}
-        </List>
+            ))}
+          </List>
+          <footer className="h-14 w-full bg-teal-50 border-teal-100 border flex items-center justify-evenly fixed bottom-0 px-5">
+            <h4 className="font-bold text-gray-500">
+              Total : $<span>{Math.round(total)}</span>
+            </h4>
+          </footer>
+        </div>
       )}
     </Box>
   );
