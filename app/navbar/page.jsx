@@ -17,7 +17,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { styled, alpha } from "@mui/material/styles";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
@@ -338,17 +337,15 @@ export default function Navbar() {
                       />
                     </div>
                     <span className="mr-5 text-white">
-                      ${item.quantity * item.price}
+                      {Math.round(item.quantity * item.price)}
                     </span>
                   </div>
                 </div>
               </div>
             ))}
           </List>
-          <footer className="h-14 w-full bg-teal-50 border-teal-100 border flex items-center justify-evenly fixed bottom-0 px-5">
-            <h4 className="font-bold text-gray-500">
-              Total : $<span>{Math.round(total)}</span>
-            </h4>
+          <footer className="p-5 w-full bg-teal-50 font-bold text-gray-500 border-teal-100 border flex items-center justify-center fixed bottom-0 px-5">
+              Total : $<span>{Math.round(total)}</span>  
           </footer>
         </div>
       )}
