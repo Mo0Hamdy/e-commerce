@@ -127,7 +127,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex lg:flex-row gap-20 lg:gap-0 flex-col justify-evenly items-center py-30 px-2 md:pt-60 pb-32 bg-gray-300">
+    <div className="flex lg:flex-row gap-20 lg:gap-0 flex-col justify-evenly items-center py-30 px-5 md:pt-60 pb-32 bg-gray-300">
       <Image
         src={!token ? "/images/Sign in-pana.png" : "/images/Welcome-cuate.png"}
         width={450}
@@ -143,7 +143,7 @@ export default function Profile() {
               onSubmit={(e) => {
                 handleSignUp(e);
               }}
-              className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
+              className="flex flex-col bg-stone-100 items-center py-10 px-5 shadow-gray-500 shadow-lg rounded-xl"
             >
               <AccountCircleIcon
                 sx={{
@@ -236,16 +236,16 @@ export default function Profile() {
           )}
         </div>
       ) : (
-        <div className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl">
-          <Avatar sx={{ bgcolor: blue[300], margin: "auto" }}>{name[0]}</Avatar>
+        <div className="flex flex-col bg-stone-100 py-10 px-5 shadow-gray-500 shadow-lg rounded-xl">
+          <Avatar sx={{ bgcolor: blue[300],margin:"auto" }}>{name[0]}</Avatar>
           <p className="text-xl mt-3 text-start">welcome back {name} 👋</p>
           <p className="text-lg mt-3 text-start text-gray-500">
             You're already signed in to your account.
           </p>
-          <p className="text-lg mt-1 text-start text-gray-500">
+          <p className="text-lg mt-1 mb-3 text-start text-gray-500">
             What would you like to do?
           </p>
-          <Stack direction="column" spacing={3} sx={{ padding: "35px" }}>
+          <Stack direction="column" spacing={3} sx={{width:"80%",margin:"auto"}} >
             <Button
               variant="contained"
               color="warning"
