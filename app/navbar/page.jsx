@@ -291,7 +291,7 @@ export default function Navbar() {
         </div>
       ) : (
         <div>
-          <List sx={{padding:"20px"}}>
+          <List sx={{ padding: "20px" }}>
             {cartProducts.map((item) => (
               <div
                 className="h-24 mb-4 flex bg-emerald-500 rounded-xl gap-3"
@@ -344,8 +344,8 @@ export default function Navbar() {
               </div>
             ))}
           </List>
-          <footer className="p-5 w-full bg-teal-50 font-bold text-gray-500 border-teal-100 border flex items-center justify-center fixed bottom-0 px-5">
-              Total : $<span>{Math.round(total)}</span>  
+          <footer className="bg-teal-50 p-5 flex justify-center w-full md:w-100 font-bold text-gray-500 border-teal-100 border fixed bottom-0 rigth-0">
+            Total : $<span>{Math.round(total)}</span>
           </footer>
         </div>
       )}
