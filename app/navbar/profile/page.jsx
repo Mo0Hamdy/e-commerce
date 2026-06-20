@@ -134,7 +134,7 @@ export default function Profile() {
         height={450}
         alt="sign in"
         priority
-        className="image px-4"
+        className="image"
       />
       {!token ? (
         <div className="form">
