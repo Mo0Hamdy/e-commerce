@@ -203,7 +203,7 @@ export default function Profile() {
               onSubmit={(e) => {
                 handleSignIn(e);
               }}
-              className="flex flex-col bg-stone-100 items-center p-10 shadow-gray-500 shadow-lg rounded-xl"
+              className="flex flex-col bg-stone-100 items-center py-10 px-5 shadow-gray-500 shadow-lg rounded-xl"
             >
               <AccountCircleIcon
                 sx={{
