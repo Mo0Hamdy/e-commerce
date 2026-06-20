@@ -35,7 +35,7 @@ const cards = data.map((element) => {
   return (
     <div
       key={element.index}
-      className="rounded-2xl flex flex-col items-center lg:items-start lg:flex-row text-gray-700 p-7 mx-5 md:mx-0 lg:px-3"
+      className="rounded-2xl flex flex-col items-center lg:items-start lg:flex-row text-gray-700 p-4 lg:p-7 mx-5 md:mx-0 lg:px-3"
       style={{
         backgroundColor: element.color,
         border: `1px solid ${element.border}`,
