@@ -84,6 +84,6 @@ Deploying a real production app
 
 Mohamed Hamdy
 
-Front-End Developer
+MERN Stack Engineer
 
 LinkedIn : https://www.linkedin.com/in/m0hamedhamdy?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BlkA1IIX1RJ6ndsRuGIvtiQ%3D%3D
