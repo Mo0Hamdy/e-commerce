@@ -7,31 +7,33 @@ import { useAppDispatch } from "../lib/hooks";
 import { add } from "../lib/features/CartSlice";
 
 export default function AddToCart({ element }) {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState(null);
-  const [severity, setSeverity] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: null,
+    severity: null,
+  });
 
   const handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
-    setOpen(false);
+    setSnackbar((prev) => ({
+      ...prev,
+      open: false,
+    }));
   };
 
   const dispatch = useAppDispatch();
-
   const handleAddToCart = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        setMessage("Please register first");
-        setSeverity("warning")
-        setOpen(true);
+        setSnackbar({
+          open: true,
+          message: "Please register first",
+          severity: "warning",
+        });
       } else {
-        dispatch(add({ element }));
-        setMessage("Product Was added to cart successfully");
-        setSeverity("success")
-        setOpen(true);
         let res = await fetch(
           "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
           {
@@ -57,32 +59,41 @@ export default function AddToCart({ element }) {
         );
         const result = await res.json();
         if (!res.ok) {
-          console.log(result.message);
+          setSnackbar({
+            open: true,
+            message: result.message,
+            severity: "error",
+          });
+        } else {
+          dispatch(add({ element }));
+          setSnackbar({
+            open: true,
+            message: "Product Was added to cart successfully",
+            severity: "success",
+          });
         }
       }
     } catch (error) {
-      console.log("an error has occurred", error);
+      setSnackbar({ open: true, message: error, severity: "error" });
     }
   };
 
   return (
     <div>
       <button
-        onClick={() => {
-          handleAddToCart();
-        }}
+        onClick={handleAddToCart}
         className="cursor-pointer bg-primary-light text-white p-1.5 rounded-xl hover:scale-110 duration-300"
       >
         Add to cart
       </button>
       <Snackbar
-              open={open}
-              autoHideDuration={5000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert severity={severity}>{message} </Alert>
-            </Snackbar>
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity={snackbar.severity}>{snackbar.message} </Alert>
+      </Snackbar>
     </div>
   );
 }

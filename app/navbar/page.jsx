@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as React from "react";
+import Lottie from "lottie-react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import Menu from "@mui/material/Menu";
@@ -19,10 +20,9 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import sleepingCat from "../../animations/Sleeping Cat Breathing Loop.json";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import Lottie from "lottie-react";
-import sleepingCat from "../../animations/Sleeping Cat Breathing Loop.json";
 
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { restore, increase, decrease } from "../../lib/features/CartSlice";
@@ -155,6 +155,7 @@ export default function Navbar() {
     let response = await data.json();
     return [...new Set(response.products.map((element) => element.category))];
   };
+
   /**
    * main menu event handlers and state controls
    */

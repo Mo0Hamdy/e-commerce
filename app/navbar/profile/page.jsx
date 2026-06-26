@@ -237,7 +237,7 @@ export default function Profile() {
         </div>
       ) : (
         <div className="flex flex-col bg-stone-100 py-10 px-5 shadow-gray-500 shadow-lg rounded-xl">
-          <Avatar sx={{ bgcolor: blue[300],margin:"auto" }}>{name[0]}</Avatar>
+          <Avatar sx={{ bgcolor: blue[300], margin: "auto" }}>{name[0]}</Avatar>
           <p className="text-xl mt-3 text-start">welcome back {name} 👋</p>
           <p className="text-lg mt-3 text-start text-gray-500">
             You're already signed in to your account.
@@ -245,7 +245,11 @@ export default function Profile() {
           <p className="text-lg mt-1 mb-3 text-start text-gray-500">
             What would you like to do?
           </p>
-          <Stack direction="column" spacing={3} sx={{width:"80%",margin:"auto"}} >
+          <Stack
+            direction="column"
+            spacing={3}
+            sx={{ width: "80%", margin: "auto" }}
+          >
             <Button
               variant="contained"
               color="warning"

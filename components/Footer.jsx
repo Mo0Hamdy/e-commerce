@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import {
   faFacebook,
   faGithub,
@@ -32,11 +33,14 @@ export default function Footer() {
             </button>
           </form>
         </div>
-        <img
-          className="w-1/2 md:w-1/3"
-          src="/images/Mail-rafiki.png"
-          alt="sdf"
-        />
+        <div className="w-1/2 md:w-1/3 aspect-square relative">
+          <Image
+            src="/images/Mail-rafiki.png"
+            alt="postman image"
+            className="rounded-t-4xl object-cover"
+            fill
+          />
+        </div>
         <div className="w-full md:w-1/3 mt-5 md:mt-0 flex flex-col items-center">
           <p className="text-gray-600 mb-5">or contact us via social media</p>
           <div className="contact relative grid grid-cols-2 gap-1 w-fit">
