@@ -9,10 +9,8 @@ export default function Popular() {
     <div className="container m-auto py-28 flex flex-col items-center">
       <ButtonGroup className="mb-10" aria-label="Basic button group">
         <Button
-          onClick={() => {
-            setType("best");
-          }}
-          style={{
+          onClick={() => setType("best")}
+          sx={{
             backgroundColor: type === "best" ? "#fb2c36" : "transparent",
             border: "none",
           }}
@@ -21,10 +19,8 @@ export default function Popular() {
           Best Selling
         </Button>
         <Button
-          onClick={() => {
-            setType("cheap");
-          }}
-          style={{
+          onClick={() => setType("cheap")}
+          sx={{
             backgroundColor: type === "cheap" ? "#fb2c36" : "transparent",
             border: "none",
           }}

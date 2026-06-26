@@ -1,34 +1,35 @@
 "use client";
-import { useState, useEffect } from "react";
 import Image from "next/image";
-
-import StarRateIcon from '@mui/icons-material/StarRate';
+import { useState, useEffect } from "react";
+import StarRateIcon from "@mui/icons-material/StarRate";
 
 export default function PopularAndCheap({ type }) {
-  const [selected, setSelected] = useState([]);
+  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
     async function fetchData() {
-      const data = await fetch("https://dummyjson.com/products");
-      if (!data.ok) {
-        throw new Error("couldn't find any element");
-      }
-      let response = (await data.json()).products;
-      setLoading(false);
-      if (type === "best") {
-        setSelected(response.filter((element) => element.rating >= 4.5));
-      } else if (type === "cheap") {
-        setSelected(
-          response.filter((element) => element.discountPercentage >= 10),
-        );
+      try {
+        const res = await fetch("https://dummyjson.com/products");
+        if (!res.ok) {
+          throw new Error("couldn't find any element");
+        }
+        const response = (await res.json()).products;
+        setProducts(response);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
-    fetchData().then(() => {
-      setLoading(false);
-    });
-  }, [type]);
+    fetchData();
+  }, []);
+
+  const selected =
+    type === "best"
+      ? products.filter((element) => element.rating >= 4.5)
+      : products.filter((element) => element.discountPercentage >= 10);
 
   const data = selected.map((element) => {
     return (
@@ -39,32 +40,38 @@ export default function PopularAndCheap({ type }) {
         <span
           className={`absolute top-0 ${type === "best" ? "left-0" : "right-0 bg-accent rounded-bl-xl"} p-1 text-black`}
         >
-          {type === "best"
-            ? <> {element.rating} < StarRateIcon sx={{color:"white",fontSize:"17px"}} /> </>
-            : "-" + Math.round(element.discountPercentage) + "% off"}
+          {type === "best" ? (
+            <>
+              {" "}
+              {element.rating}{" "}
+              <StarRateIcon sx={{ color: "white", fontSize: 17 }} />{" "}
+            </>
+          ) : (
+            "-" + Math.round(element.discountPercentage) + "% off"
+          )}
         </span>
-        <div className="relative h-60 flex items-center justify-center">
-          <Image
-            className="max-w-full max-h-full object-contain hover:scale-105 duration-300 overflow-hidden"
-            src={element.images[0]}
-            alt={element.title}
-            fill
-            sizes="full"
-            loading="eager"
-          />
-        </div>
+        <Image
+          className="hover:scale-105 duration-300 overflow-hidden"
+          src={element.images[0]}
+          alt={element.title}
+          width={264}
+          height={240}
+          loading="eager"
+        />
         <h1 className="text-md text-gray-700">{element.title}</h1>
-        <div className="flex justify-between items-center">
-          <h1 className="text-md text-red-500 font-bold">
-            ${element.price}{" "}
-            <span className="line-through ms-5 text-gray-500">
-              $
-              {Math.round(
-                (element.price * (element.discountPercentage + 100)) / 100,
-              )}
-            </span>{" "}
-          </h1>
-        </div>
+        {type === "cheap" && (
+          <div className="flex justify-between items-center">
+            <h1 className="text-md text-red-500 font-bold">
+              ${element.price}{" "}
+              <span className="line-through ms-5 text-gray-500">
+                $
+                {Math.round(
+                  (element.price * (element.discountPercentage + 100)) / 100,
+                )}
+              </span>{" "}
+            </h1>
+          </div>
+        ) }
       </div>
     );
   });
