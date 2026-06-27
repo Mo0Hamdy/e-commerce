@@ -71,7 +71,7 @@ export default function PopularAndCheap({ type }) {
               </span>{" "}
             </h1>
           </div>
-        ) }
+        )}
       </div>
     );
   });
