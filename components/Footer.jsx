@@ -9,26 +9,25 @@ import {
 import { faShareNodes } from "@fortawesome/free-solid-svg-icons";
 export default function Footer() {
   return (
-    <div className="bg-gray-200 pt-7">
+    <footer className="bg-gray-200 pt-7">
       <h1 className="text-center text-4xl md:text-6xl font-bold text-gray-500 tracking-wide">
         Contact us{" "}
         <span className="inline-block text-2xl md:text-4xl animate-bounce">
           ❤️
         </span>
       </h1>
-      <p className="text-center text-gray-400">as we are a family </p>
+      <p className="text-center text-gray-400">We are a family </p>
       <div className="container m-auto flex items-center flex-col md:flex-row md:justify-around pb-10 md:pb-0 px-2">
         <div className="mail w-full md:w-1/3 md:pb-0 items-center justify-center">
-          <p className="text-gray-600 w-full lg:w-4/5 my-5">
+          <p className="text-gray-600 w-full my-5">
             It will be a pleasure to receive your opinions
           </p>
-          <form className="flex" action="">
-            <input
+          <form className="flex items-center">
+            <textarea
               placeholder="keep your message descriptive"
-              type="text"
               className="outline-0 border border-cyan-700 py-1 px-3 bg-white rounded-lg placeholder:text-sm w-full me-4 md:me-1"
             />
-            <button className="rounded-xl cursor-pointer bg-black text-white text-sm px-2 py-1">
+            <button type="submit" className="rounded-xl cursor-pointer bg-black text-white text-sm px-2 py-1">
               Submit
             </button>
           </form>
@@ -59,6 +58,7 @@ export default function Footer() {
               }}
             />
             <a
+              target="_blank"
               href="https://www.facebook.com/share/17cGF5vxNK/"
               className="text-white origin-bottom-right rounded-tl-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#0866FF]"
             >
@@ -70,6 +70,7 @@ export default function Footer() {
               />
             </a>
             <a
+              target="_blank"
               href="https://wa.me/201152411228?text=Hello%20I%20want%20to%20ask%20about%20your%20service"
               className="text-white origin-bottom-left rounded-tr-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#25D366]"
             >
@@ -81,6 +82,7 @@ export default function Footer() {
               />
             </a>
             <a
+              target="_blank"
               href="https://github.com/Mo0Hamdy"
               className="text-white origin-top-right rounded-bl-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#181717] "
             >
@@ -92,6 +94,7 @@ export default function Footer() {
               />
             </a>
             <a
+              target="_blank"
               href="https://www.linkedin.com/in/m0hamedhamdy?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BlkA1IIX1RJ6ndsRuGIvtiQ%3D%3D"
               className="text-white origin-top-left rounded-br-[50%] hover:scale-110 duration-300 w-20 h-20 flex items-center justify-center bg-[#0A66C2]"
             >
@@ -109,6 +112,6 @@ export default function Footer() {
         all rights reserved &copy;{" "}
         <span className="text-lime-500">Mohamed Hamdy</span> 2026
       </div>
-    </div>
+    </footer>
   );
 }
