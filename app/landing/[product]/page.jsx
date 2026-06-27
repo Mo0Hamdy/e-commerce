@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
+import Link from "next/link";
 async function getProductsByCategory(category) {
   const data = await fetch("https://dummyjson.com/products", {
     next: {
@@ -19,16 +20,18 @@ export default async function DynamicProduct({ params }) {
     return (
       <div
         key={element.id}
-        className="rounded-xl w-72 h-80 md:h-94 p-3 mx-2 shadow-2xl bg-white flex flex-col justify-between shrink-0"
+        className="rounded-xl w-72 h-94 p-3 mx-2 shadow-2xl bg-white flex flex-col justify-between shrink-0"
       >
-        <Image
-          className="hover:scale-105 duration-300 overflow-hidden"
-          src={element.images[0]}
-          alt={element.title}
-          width={264}
-          height={240}
-          loading="eager"
-        />
+        <Link href={`/landing/Allproducts/${element.id}`}>
+          <Image
+            className="hover:scale-105 duration-300 overflow-hidden"
+            src={element.images[0]}
+            alt={element.title}
+            width={264}
+            height={240}
+            loading="eager"
+          />
+        </Link>
         <h2 className="text-md text-gray-700">{element.title}</h2>
         <div className="flex justify-between items-center">
           <p className="text-md text-red-500 font-bold">
