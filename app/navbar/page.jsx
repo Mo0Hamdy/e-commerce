@@ -1,10 +1,10 @@
 "use client";
+import DrawerList from "@/components/DrawerList";
+import CartMenu from "@/components/CartMenu";
+import CartMenuSm from "@/components/CartMenuSm";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as React from "react";
-import Lottie from "lottie-react";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
 import Fade from "@mui/material/Fade";
@@ -12,26 +12,64 @@ import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
-import RemoveIcon from "@mui/icons-material/Remove";
 import { styled, alpha } from "@mui/material/styles";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import sleepingCat from "../../animations/Sleeping Cat Breathing Loop.json";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
-import { restore, increase, decrease } from "../../lib/features/CartSlice";
+import { restore } from "../../lib/features/CartSlice";
+const StyledMenu = styled((props) => (
+  <Menu
+    elevation={0}
+    anchorOrigin={{
+      vertical: "top",
+      horizontal: "right",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "left",
+    }}
+    {...props}
+  />
+))(({ theme }) => ({
+  "& .MuiPaper-root": {
+    borderRadius: 6,
+    marginTop: theme.spacing(1),
+    minWidth: 180,
+    color: "rgb(55, 65, 81)",
+    boxShadow:
+      "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
+    },
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
+        fontSize: 18,
+        color: theme.palette.text.secondary,
+        marginRight: theme.spacing(1.5),
+        ...theme.applyStyles("dark", {
+          color: "inherit",
+        }),
+      },
+      "&:active": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          theme.palette.action.selectedOpacity,
+        ),
+      },
+    },
+    ...theme.applyStyles("dark", {
+      color: theme.palette.grey[300],
+    }),
+  },
+}));
+
 export default function Navbar() {
   const dispatch = useAppDispatch();
-  const { cartProducts, defaultProductsCounter, firstName, total } =
-    useAppSelector((state) => {
-      return state.cart;
-    });
+  const { defaultProductsCounter, firstName } = useAppSelector(
+    (state) => state.cart,
+  );
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token === null) return;
@@ -118,28 +156,6 @@ export default function Navbar() {
     catFetch();
   }, []);
 
-  async function handlePlusMinusClick(id, amount) {
-    const token = localStorage.getItem("token");
-    const product = await fetch(
-      "https://e-commerce-backend-nine-olive.vercel.app/api/cart",
-      {
-        method: "Put",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `bearer ${token}`,
-        },
-        body: JSON.stringify({
-          id: id,
-          amount: amount,
-        }),
-      },
-    );
-    if (product.ok) {
-      if (amount == 1) dispatch(increase({ id }));
-      else dispatch(decrease({ id }));
-    }
-  }
-
   const [visible, setVisible] = useState("none");
   const [CATS, setCATS] = useState([]);
 
@@ -190,169 +206,6 @@ export default function Navbar() {
     setAnchorEl2(null);
   };
 
-  let cartMenu = CATS.map((element, index) => {
-    return (
-      <ListItemButton
-        component={Link}
-        key={index}
-        href={`/landing/${element}`}
-        selected
-        aria-current="page"
-      >
-        <ListItemText primary={element} />
-      </ListItemButton>
-    );
-  });
-
-  let cartMenuSm = CATS.map((element, index) => {
-    return (
-      <Link key={index} href={`/landing/${element}`}>
-        <MenuItem disableRipple>{element}</MenuItem>
-      </Link>
-    );
-  });
-
-  const StyledMenu = styled((props) => (
-    <Menu
-      elevation={0}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "left",
-      }}
-      {...props}
-    />
-  ))(({ theme }) => ({
-    "& .MuiPaper-root": {
-      borderRadius: 6,
-      marginTop: theme.spacing(1),
-      minWidth: 180,
-      color: "rgb(55, 65, 81)",
-      boxShadow:
-        "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px",
-      "& .MuiMenu-list": {
-        padding: "4px 0",
-      },
-      "& .MuiMenuItem-root": {
-        "& .MuiSvgIcon-root": {
-          fontSize: 18,
-          color: theme.palette.text.secondary,
-          marginRight: theme.spacing(1.5),
-          ...theme.applyStyles("dark", {
-            color: "inherit",
-          }),
-        },
-        "&:active": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            theme.palette.action.selectedOpacity,
-          ),
-        },
-      },
-      ...theme.applyStyles("dark", {
-        color: theme.palette.grey[300],
-      }),
-    },
-  }));
-
-  const DrawerList = (
-    <Box className="w-full md:w-100" role="presentation">
-      <div className="flex justify-between items-center mb-5 px-5 pt-5">
-        <h3 className="text-gray-700 text-xl tracking-wide font-bold">
-          Shopping cart
-        </h3>
-        <Fab
-          sx={{ width: "40px", height: "40px" }}
-          color="warning"
-          onClick={(event) => {
-            event.stopPropagation();
-            setOpenDraw(false);
-          }}
-          aria-label="add"
-        >
-          <CloseIcon style={{ cursor: "pointer", fontSize: "25px" }} />
-        </Fab>
-      </div>
-      {cartProducts.length == 0 ? (
-        <div className="px-5">
-          <h3>
-            {" "}
-            {firstName == "Account"
-              ? "Please Register first to access your Cart"
-              : `${firstName}, Your Cart is empty!`}
-          </h3>
-          <Lottie
-            animationData={sleepingCat}
-            loop={true}
-            style={{ width: 270, height: 270, margin: "auto" }}
-          />
-        </div>
-      ) : (
-        <div>
-          <List sx={{ padding: "20px" }}>
-            {cartProducts.map((item) => (
-              <div
-                className="h-24 mb-4 flex bg-emerald-500 rounded-xl gap-3"
-                key={item.id}
-              >
-                <img
-                  className="w-24 h-24 bg-gray-300 rounded-l-lg"
-                  src={item.image}
-                  alt=""
-                />
-                <div className="info flex flex-col items-start justify-between w-full">
-                  <h2 className="text-white font-bold">{item.title}</h2>
-                  <div className="flex justify-between w-full mb-2">
-                    <div className="count text-center flex items-center">
-                      <RemoveIcon
-                        onClick={() => {
-                          handlePlusMinusClick(item.id, -1);
-                        }}
-                        style={{
-                          fontSize: "18px",
-                          color: "white",
-                          cursor: "pointer",
-                          borderRadius: "2px",
-                          marginRight: "15px",
-                          backgroundColor: "teal",
-                        }}
-                      />
-                      <span className="text-white font-bold">
-                        {item.quantity}
-                      </span>
-                      <AddIcon
-                        onClick={() => {
-                          handlePlusMinusClick(item.id, 1);
-                        }}
-                        style={{
-                          fontSize: "18px",
-                          color: "white",
-                          cursor: "pointer",
-                          borderRadius: "2px",
-                          marginLeft: "15px",
-                          backgroundColor: "teal",
-                        }}
-                      />
-                    </div>
-                    <span className="mr-5 text-white">
-                      {(item.quantity * item.price).toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </List>
-          <footer className="bg-teal-50 p-5 flex justify-center w-full md:w-100 font-bold text-gray-500 border-teal-100 border fixed bottom-0 rigth-0">
-              Total : $<span>{total.toFixed(2)}</span>
-          </footer>
-        </div>
-      )}
-    </Box>
-  );
-
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-primary flex justify-between items-center rounded-full">
@@ -402,7 +255,7 @@ export default function Navbar() {
                 open={open2}
                 onClose={handleClose}
               >
-                {cartMenuSm}
+                <CartMenuSm cats={CATS} />
               </StyledMenu>
             </MenuItem>
 
@@ -451,7 +304,7 @@ export default function Navbar() {
                 }}
               >
                 <List component="nav" aria-label="mail folders" sx={{ py: 0 }}>
-                  {cartMenu}
+                  <CartMenu cats={CATS} />
                 </List>
               </Paper>
             </li>
@@ -531,7 +384,7 @@ export default function Navbar() {
                   },
                 }}
               >
-                {DrawerList}
+                <DrawerList setOpenDraw={setOpenDraw} />
               </Drawer>
             </div>
             <span
