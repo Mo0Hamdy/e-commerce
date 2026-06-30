@@ -1,6 +1,6 @@
+import Link from "next/link";
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
-import Link from "next/link";
 export default async function AllProducts() {
   const response = await fetch("https://dummyjson.com/products", {
     next: { revalidate: 60 },

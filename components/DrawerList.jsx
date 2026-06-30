@@ -75,7 +75,7 @@ export default function DrawerList({ setOpenDraw }) {
         </div>
       ) : (
         <div>
-          <List sx={{ padding: "20px" }}>
+          <List sx={{ padding: "20px",marginBottom:5 }}>
             {cartProducts.map((item) => (
               <div
                 className="h-24 mb-4 flex bg-emerald-500 rounded-xl gap-3"

@@ -1,8 +1,4 @@
 "use client";
-import DrawerList from "@/components/DrawerList";
-import CartMenu from "@/components/CartMenu";
-import CartMenuSm from "@/components/CartMenuSm";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
@@ -11,14 +7,19 @@ import Fade from "@mui/material/Fade";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
+import { useState, useEffect } from "react";
+import CartMenu from "@/components/CartMenu";
 import MenuItem from "@mui/material/MenuItem";
+import DrawerList from "@/components/DrawerList";
+import CartMenuSm from "@/components/CartMenuSm";
 import { styled, alpha } from "@mui/material/styles";
+import { restore } from "../../lib/features/CartSlice";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useAppSelector, useAppDispatch } from "../../lib/hooks";
-import { restore } from "../../lib/features/CartSlice";
+import CircularProgress from "@mui/material/CircularProgress";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -353,6 +354,7 @@ export default function Navbar() {
           </div>
           <Link href={"/navbar/profile"}>
             <div className="account py-3 md:py-4 px-3 flex cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
+              {/* <CircularProgress sx={{ color: "yellow", fontSize:5}}/> */}
               <PermIdentityOutlinedIcon className="text-accent-dark" />
               <h4 className="hidden md:block font-bold text-white">
                 {firstName}

@@ -3,23 +3,17 @@ import Image from "next/image";
 import Stack from "@mui/material/Stack";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 import { useRouter } from "next/navigation";
+import { blue } from "@mui/material/colors";
 import { useState, useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import Snackbar from "@mui/material/Snackbar";
 import { restore } from "@/lib/features/CartSlice";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import SwitchAccountIcon from "@mui/icons-material/SwitchAccount";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import Avatar from "@mui/material/Avatar";
-import {
-  deepPurple,
-  deepOrange,
-  teal,
-  yellow,
-  blue,
-} from "@mui/material/colors";
 export default function Profile() {
   const router = useRouter();
   const dispatch = useAppDispatch();
