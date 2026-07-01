@@ -31,8 +31,8 @@ export default async function AllProducts() {
             ${element.price}{" "}
             <span className="line-through ms-5 text-gray-500">
               $
-              {Math.round(
-                element.price * (1 + element.discountPercentage / 100),
+              {(element.price * (1 + element.discountPercentage / 100)).toFixed(
+                3,
               )}
             </span>{" "}
           </p>
