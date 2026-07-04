@@ -32,7 +32,7 @@ export default function Profile() {
     setSnackbar({ ...snackbar, open: false });
   };
   return (
-    <div className="flex lg:flex-row gap-20 lg:gap-0 flex-col justify-evenly items-center py-30 px-5 md:pt-60 pb-32 bg-gray-300">
+    <div className="flex lg:flex-row gap-20 lg:gap-0 flex-col justify-evenly items-center py-30 px-5 md:py-40  bg-gray-300">
       <Image
         src={!token ? "/images/Sign in-pana.png" : "/images/Welcome-cuate.png"}
         width={450}

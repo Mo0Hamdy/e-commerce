@@ -11,17 +11,12 @@ export default function SignUpForm({ setSignUp, setSnackbar }) {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await dispatch(fetchUserRegister({ data })).unwrap();
-      const result = await res.json();
-
-      if (!res.ok) {
-        setSnackbar({
-          message: result.message,
-          severity: "warning",
-          open: true,
-        });
-        return;
-      }
+      const result = await dispatch(fetchUserRegister({ data })).unwrap();
+      setSnackbar({
+        message: result.message,
+        severity: "warning",
+        open: true,
+      });
       localStorage.setItem("token", result.token);
       dispatch(restore({ firstName: result.firstName }));
       setSnackbar({

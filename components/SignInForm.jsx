@@ -1,5 +1,6 @@
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAppDispatch } from "@/lib/hooks";
+import { fetchUserLogin } from "@/lib/features/FormSlice";
 import { restore } from "@/lib/features/CartSlice";
 import { useRouter } from "next/navigation";
 export default function SignInForm({ setSnackbar }) {
@@ -10,28 +11,12 @@ export default function SignInForm({ setSnackbar }) {
     try {
       const formData = new FormData(e.currentTarget);
       const data = Object.fromEntries(formData.entries());
-      const res = await fetch(
-        "https://e-commerce-backend-nine-olive.vercel.app/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: data.userName,
-            password: data.password,
-          }),
-        },
-      );
-      const result = await res.json();
-      if (!res.ok) {
-        setSnackbar({
-          message: result.message,
-          severity: "warning",
-          open: true,
-        });
-        return;
-      }
+      const result = await dispatch(fetchUserLogin({ data })).unwrap();
+      setSnackbar({
+        message: result.message,
+        severity: "warning",
+        open: true,
+      });
       localStorage.setItem("token", result.token);
       dispatch(restore({ firstName: result.firstName }));
       setSnackbar({
@@ -41,7 +26,7 @@ export default function SignInForm({ setSnackbar }) {
       });
       setTimeout(() => {
         router.push("/landing");
-      }, 2000);
+      }, 3000);
     } catch (error) {
       setSnackbar({
         message: "Network Error",
