@@ -1,10 +1,13 @@
-import Landing from "./landing/page";
 import "./globals.css";
+import Card from "@/components/Card";
+import Hero from "@/components/Hero";
+import Gallery from "@/components/Gallery";
 export default function Home() {
   return (
     <>
-    
-      <Landing />
+      <Hero />
+      <Card />
+      <Gallery />
     </>
   );
 }

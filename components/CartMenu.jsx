@@ -6,7 +6,7 @@ export default function CartMenu({ cats }) {
     <ListItemButton
       component={Link}
       key={category}
-      href={`/landing/${category}`}
+      href={`/${category}`}
     >
       <ListItemText primary={category} />
     </ListItemButton>

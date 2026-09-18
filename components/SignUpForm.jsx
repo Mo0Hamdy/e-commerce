@@ -25,7 +25,7 @@ export default function SignUpForm({ setSignUp, setSnackbar }) {
         open: true,
       });
       setTimeout(() => {
-        router.push("/landing");
+        router.push("/");
       }, 3000);
     } catch (error) {
       setSnackbar({

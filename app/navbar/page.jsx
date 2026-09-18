@@ -19,6 +19,7 @@ import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import CircularProgress from "@mui/material/CircularProgress";
 const StyledMenu = styled((props) => (
   <Menu
@@ -235,7 +236,7 @@ export default function Navbar() {
           >
             <MenuItem
               component={Link}
-              href="/landing"
+              href="/"
               onClick={handleCloseAnchor}
               className="hover:text-red-500"
             >
@@ -265,14 +266,14 @@ export default function Navbar() {
 
             <MenuItem
               component={Link}
-              href="/landing/Allproducts"
+              href="/Allproducts"
               onClick={handleCloseAnchor}
             >
               Products
             </MenuItem>
             <MenuItem
               component={Link}
-              href="/landing/home"
+              href="/home"
               onClick={handleCloseAnchor}
             >
               Special
@@ -280,7 +281,7 @@ export default function Navbar() {
           </Menu>
         </div>
         <ul className="hidden md:flex items-center ms-2">
-          <Link href="/landing">
+          <Link href="/">
             <li className="me-3 hover:text-blue-500 transition-all duration-300 rounded-full bg-accent-light text-primary-dark px-4 py-2 font-bold tracking-widest ">
               PixelCraft
             </li>
@@ -313,12 +314,12 @@ export default function Navbar() {
               </Paper>
             </li>
           </ClickAwayListener>
-          <Link href="/landing/Allproducts">
+          <Link href="/Allproducts">
             <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
               Products
             </li>
           </Link>
-          <Link href="/landing/home">
+          <Link href="/home">
             <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
               Special
             </li>
@@ -351,6 +352,7 @@ export default function Navbar() {
               value={searchProduct}
               onChange={(e) => {
                 setSearchProduct(e.target.value);
+                console.log(e.target.value)
               }}
               className="placeholder:text-gray-400 outline-0 w-full"
             />
@@ -405,6 +407,43 @@ export default function Navbar() {
             >
               {defaultProductsCounter}
             </span>
+          </div>
+          <div
+            onClick={() => {
+              setOpenDraw(true);
+            }}
+            className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
+          >
+            <FavoriteBorderIcon className="text-accent-dark" />
+            <h4 className="hidden md:block font-bold text-white">Wishlist</h4>
+            {/* <div>
+              <Drawer
+                anchor="right"
+                open={openDraw}
+                onClose={(event) => {
+                  event.stopPropagation();
+                  setOpenDraw(false);
+                }}
+                sx={{
+                  "& .MuiDrawer-paper": {
+                    width: {
+                      xs: "100%",
+                      sm: "400px",
+                    },
+                  },
+                }}
+              >
+                <DrawerList setOpenDraw={setOpenDraw} />
+              </Drawer>
+            </div> */}
+            {/* <span
+              className={"rounded-md bg-accent-light text-primary mx-2 px-1"}
+              style={{
+                display: defaultProductsCounter <= 0 ? "none" : "block",
+              }}
+            >
+              {defaultProductsCounter}
+            </span> */}
           </div>
         </div>
       </div>

@@ -6,7 +6,7 @@ export default function Hero() {
       <h2 className="text-textColor text-3xl md:text-4xl font-semibold w-full md:w-150 text-center md:leading-14 pb-2">
         Sit back, relax, and let great products impress you
       </h2>
-      <Link href="/landing/Allproducts">
+      <Link href="/Allproducts">
         <button className="cursor-pointer bg-black text-white p-1.5 md:p-3 rounded-xl my-4 md:my-10 font-bold hover:scale-110 duration-300">
           Go to products
         </button>

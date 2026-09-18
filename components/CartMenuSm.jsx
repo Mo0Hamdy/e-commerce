@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function CartMenuSm({ cats }) {
   return cats.map((element) => {
     return (
-      <Link key={element} href={`/landing/${element}`}>
+      <Link key={element} href={`/${element}`}>
         <MenuItem disableRipple>{element}</MenuItem>
       </Link>
     );
