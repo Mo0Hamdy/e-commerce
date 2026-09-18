@@ -69,7 +69,7 @@ export default function AddToWishlist({ element }) {
         <FavoriteBorderIcon
           sx={{ color: "red" }}
           onClick={() => {
-            setWished(true);
+            setWished(false);
             setSnackbar({
               open: true,
               message: "Successfully added to wishlist",
@@ -81,7 +81,7 @@ export default function AddToWishlist({ element }) {
         <FavoriteIcon
           sx={{ color: "red" }}
           onClick={() => {
-            setWished(false);
+            setWished(true);
             setSnackbar({
               open: true,
               message: "Successfully removed from wishlist",
