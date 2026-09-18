@@ -65,7 +65,7 @@ export default function AddToWishlist({ element }) {
 
   return (
     <div>
-      {!wished ? (
+      {wished ? (
         <FavoriteBorderIcon
           sx={{ color: "red" }}
           onClick={() => {
