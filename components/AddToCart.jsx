@@ -8,6 +8,7 @@ import { add, addToCart } from "../lib/features/CartSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function AddToCart({ element }) {
+  
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: null,
@@ -28,6 +29,10 @@ export default function AddToCart({ element }) {
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
+      let products = JSON.parse(localStorage.getItem("products"))||[];
+      products.push(element);
+
+      localStorage.setItem("products", JSON.stringify(products));
       setSnackbar({
         open: true,
         message: "Please register first",

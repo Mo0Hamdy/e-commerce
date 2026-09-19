@@ -1,9 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import AddToCart from "@/components/AddToCart";
-import AddToWishlist from "@/components/AddToWishlist";
 import StarIcon from "@mui/icons-material/Star";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddToWishlist from "@/components/AddToWishlist";
 export default async function AllProducts() {
   const response = await fetch("https://dummyjson.com/products", {
     next: { revalidate: 60 },
@@ -16,7 +15,7 @@ export default async function AllProducts() {
     return (
       <div
         key={element.id}
-        className="rounded-xl w-72 h-96 p-3 mx-3 bg-background-white flex flex-col justify-between shrink-0"
+        className="rounded-xl w-72 h-100 p-3 mx-3 bg-background-white flex flex-col justify-between shrink-0"
       >
         <Link href={`/Allproducts/${element.id}`}>
           <Image
@@ -29,7 +28,7 @@ export default async function AllProducts() {
           />
         </Link>
         <h2 className="text-md text-gray-700">{element.title}</h2>
-        <div className="flex justify-between my-2">
+        <div className="flex justify-between">
           <div className="flex">
             <StarIcon style={{ color: "#F59E0B" }} />
             <p className="ms-2 text-gray-700 font-bold">{element.rating}</p>

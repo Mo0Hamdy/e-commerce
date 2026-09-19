@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Badge from "@mui/material/Badge";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
@@ -19,8 +20,9 @@ import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CircularProgress from "@mui/material/CircularProgress";
+import SearchBox from "@/components/SearchBox";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -72,7 +74,7 @@ export default function Navbar() {
   const { defaultProductsCounter, firstName } = useAppSelector(
     (state) => state.cart,
   );
-  const { isRegisterLoading ,isLoginLoading} = useAppSelector(
+  const { isRegisterLoading, isLoginLoading } = useAppSelector(
     (state) => state.user,
   );
   useEffect(() => {
@@ -145,7 +147,6 @@ export default function Navbar() {
         dispatch(restore({ firstName: "Account" }));
       }
     };
-
     getData();
   }, [dispatch, firstName]);
 
@@ -160,6 +161,32 @@ export default function Navbar() {
     };
     catFetch();
   }, []);
+  const [searchKey, setSearchKey] = useState("");
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  useEffect(() => {
+    if (!searchKey.trim()) {
+      setSearchedProducts([]);
+      return;
+    }
+    const getSearchedProducts = async (key) => {
+      const data = await fetch("https://dummyjson.com/products", {
+        next: {
+          revalidate: 60,
+        },
+      });
+      if (!data.ok) {
+        throw new Error("couldn't find any element");
+      }
+      const response = await data.json();
+      return response.products.filter((element) =>
+        element.title.toLowerCase().includes(key.toLowerCase()),
+      );
+    };
+    const search = async () => {
+      setSearchedProducts(await getSearchedProducts(searchKey));
+    };
+    search();
+  }, [searchKey]);
 
   const [visible, setVisible] = useState("none");
   const [CATS, setCATS] = useState([]);
@@ -195,7 +222,6 @@ export default function Navbar() {
   };
 
   const [openDraw, setOpenDraw] = useState(false);
-  const [searchProduct, setSearchProduct] = useState("");
 
   /**
    * nested menu event handlers and state controls
@@ -271,13 +297,9 @@ export default function Navbar() {
             >
               Products
             </MenuItem>
-            <MenuItem
-              component={Link}
-              href="/home"
-              onClick={handleCloseAnchor}
-            >
+            {/* <MenuItem component={Link} href="/home" onClick={handleCloseAnchor}>
               Special
-            </MenuItem>
+            </MenuItem> */}
           </Menu>
         </div>
         <ul className="hidden md:flex items-center ms-2">
@@ -319,54 +341,59 @@ export default function Navbar() {
               Products
             </li>
           </Link>
-          <Link href="/home">
+          {/* <Link href="/home">
             <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
               Special
             </li>
-          </Link>
+          </Link> */}
         </ul>
         <div className="flex items-center">
+          <div className="flex flex-col lg:flex-row bg-red-400">
+            <div
+              onBlur={handleClick}
+              className={` ${
+                open ? "flex " : "hidden"
+              } w-64 text-gray-600 bg-white rounded-xl px-3 py-3 border-gray-500 lg:flex`}
+            >
+              <button className="cursor-pointer">
+                <SearchOutlinedIcon style={{ color: "#99a1af" }} />
+              </button>
+              <input
+                placeholder="search for products"
+                type="text"
+                value={searchKey}
+                onChange={(e) => {
+                  e.target.value != "" && setSearchKey(e.target.value);
+                }}
+                className="placeholder:text-gray-400 outline-0 w-full"
+              />
+            </div>
+          </div>
           <Button
-            style={{
+            sx={{
               padding: "0",
               margin: "0 20px",
               borderRadius: "20px",
               border: "2px solid #D8DBE0",
+              display: { lg: "none" },
             }}
             onClick={handleClick}
           >
             <SearchOutlinedIcon className="text-accent-dark" />
           </Button>
-          <div
-            onBlur={handleClick}
-            className={` ${
-              open ? "flex" : "hidden"
-            } justify-start absolute left-1/2 -translate-x-1/2 top-16 w-80 sm:w-lg text-gray-600 bg-white rounded-xl px-3 py-3 border-gray-500`}
-          >
-            <button className="cursor-pointer">
-              <SearchOutlinedIcon style={{ color: "#99a1af" }} />
-            </button>
-            <input
-              placeholder="search for products"
-              type="text"
-              value={searchProduct}
-              onChange={(e) => {
-                setSearchProduct(e.target.value);
-                console.log(e.target.value)
-              }}
-              className="placeholder:text-gray-400 outline-0 w-full"
-            />
-          </div>
           <Link href={"/navbar/profile"}>
             <div className="account py-3 md:py-4 px-3 cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
-              {isRegisterLoading||isLoginLoading ? (
+              {isRegisterLoading || isLoginLoading ? (
                 <CircularProgress sx={{ color: "yellow" }} size={20} />
               ) : (
                 <div className="flex">
-                  <PermIdentityOutlinedIcon className="text-accent-dark" />
-                  <h4 className="hidden md:block font-bold text-white">
-                    {firstName}
-                  </h4>
+                  {firstName === "Account" ? (
+                    <PermIdentityOutlinedIcon className="text-accent-dark" />
+                  ) : (
+                    <h4 className="font-bold text-white bg-pink-500 rounded-full h-6.5 flex items-center justify-center aspect-square">
+                      {firstName.charAt(0)}
+                    </h4>
+                  )}
                 </div>
               )}
             </div>
@@ -375,10 +402,16 @@ export default function Navbar() {
             onClick={() => {
               setOpenDraw(true);
             }}
-            className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
+            className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all"
           >
-            <ShoppingCartOutlinedIcon className="text-accent-dark" />
-            <h4 className="hidden md:block font-bold text-white">Cart</h4>
+            {defaultProductsCounter <= 0 ? (
+              <ShoppingCartOutlinedIcon className="text-accent-dark" />
+            ) : (
+              <Badge badgeContent={defaultProductsCounter} color="secondary">
+                <ShoppingCartOutlinedIcon className="text-accent-dark" />
+              </Badge>
+            )}
+
             <div>
               <Drawer
                 anchor="right"
@@ -399,14 +432,6 @@ export default function Navbar() {
                 <DrawerList setOpenDraw={setOpenDraw} />
               </Drawer>
             </div>
-            <span
-              className={"rounded-md bg-accent-light text-primary mx-2 px-1"}
-              style={{
-                display: defaultProductsCounter <= 0 ? "none" : "block",
-              }}
-            >
-              {defaultProductsCounter}
-            </span>
           </div>
           <div
             onClick={() => {
@@ -415,7 +440,7 @@ export default function Navbar() {
             className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
           >
             <FavoriteBorderIcon className="text-accent-dark" />
-            <h4 className="hidden md:block font-bold text-white">Wishlist</h4>
+            {/* <h4 className="hidden md:block font-bold text-white">Wishlist</h4> */}
             {/* <div>
               <Drawer
                 anchor="right"
@@ -447,6 +472,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      <SearchBox searchedProducts={searchedProducts} />
     </div>
   );
 }

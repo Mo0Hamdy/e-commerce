@@ -22,7 +22,7 @@ export default async function DynamicProduct({ params }) {
         key={element.id}
         className="rounded-xl w-72 h-94 p-3 mx-2 shadow-2xl bg-white flex flex-col justify-between shrink-0"
       >
-        <Link href={`/landing/Allproducts/${element.id}`}>
+        <Link href={`/Allproducts/${element.id}`}>
           <Image
             className="hover:scale-105 duration-300 overflow-hidden"
             src={element.images[0]}
@@ -49,8 +49,8 @@ export default async function DynamicProduct({ params }) {
     );
   });
   return (
-    <div className="py-40 bg-blue-300 min-h-full">
-      <h1 className="text-center py-5 text-2xl capitalize">{product}</h1>
+    <div className="py-40 bg-[#F5F7FA] min-h-full">
+      <h1 className="text-3xl font-bold capitalize text-slate-700 m-5">{product}</h1>
       <div className="container m-auto gap-y-10 flex items-start justify-center flex-wrap">
         {cards}
       </div>
