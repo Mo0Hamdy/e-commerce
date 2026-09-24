@@ -1,13 +1,12 @@
 "use client";
 import Link from "next/link";
-import Badge from "@mui/material/Badge";
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import List from "@mui/material/List";
 import Fade from "@mui/material/Fade";
+import Badge from "@mui/material/Badge";
 import Paper from "@mui/material/Paper";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import CartMenu from "@/components/CartMenu";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,15 +14,13 @@ import DrawerList from "@/components/DrawerList";
 import CartMenuSm from "@/components/CartMenuSm";
 import { styled, alpha } from "@mui/material/styles";
 import { restore } from "../../lib/features/CartSlice";
+import SearchInputField from "@/components/SearchInputField";
+import CircularProgress from "@mui/material/CircularProgress";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import CircularProgress from "@mui/material/CircularProgress";
-import SearchBox from "@/components/SearchBox";
-import SearchInputField from "@/components/SearchInputField";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -163,7 +160,6 @@ export default function Navbar() {
     catFetch();
   }, []);
   const [openSearchBox, setOpenSearchBox] = useState(false);
-  // const [openInputField, setOpenInputField] = useState(false);
 
   const [visible, setVisible] = useState("none");
   const [CATS, setCATS] = useState([]);
@@ -320,23 +316,6 @@ export default function Navbar() {
             setOpenSearchBox={setOpenSearchBox}
             openSearchBox={openSearchBox}
           />
-
-          {/* <Button
-            sx={{
-              padding: "0",
-              margin: "0 20px",
-              borderRadius: "20px",
-              border: "2px solid #D8DBE0",
-              "@media (min-width:1024px)": {
-                display: "none",
-              },
-            }}
-            onClick={() => {
-              setOpenInputField(openInputField ? false : true);
-            }}
-          >
-            <SearchOutlinedIcon className="text-accent-dark" />
-          </Button> */}
           <Link href={"/navbar/profile"}>
             <div className="account py-3 md:py-4 px-3 cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
               {isRegisterLoading || isLoginLoading ? (
@@ -346,7 +325,7 @@ export default function Navbar() {
                   {firstName === "Account" ? (
                     <PermIdentityOutlinedIcon className="text-accent-dark" />
                   ) : (
-                    <h4 className="font-bold text-white bg-[#9c27b0] rounded-full h-6.5 flex items-center justify-center aspect-square">
+                    <h4 className="font-bold text-white bg-teal-400 rounded-full h-6.5 flex items-center justify-center aspect-square">
                       {firstName.charAt(0)}
                     </h4>
                   )}
@@ -363,7 +342,7 @@ export default function Navbar() {
             {defaultProductsCounter <= 0 ? (
               <ShoppingCartOutlinedIcon className="text-accent-dark" />
             ) : (
-              <Badge badgeContent={defaultProductsCounter} color="secondary">
+              <Badge badgeContent={defaultProductsCounter} className="text-teal-400">
                 <ShoppingCartOutlinedIcon className="text-accent-dark" />
               </Badge>
             )}
@@ -396,39 +375,9 @@ export default function Navbar() {
             className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all rounded-e-full"
           >
             <FavoriteBorderIcon className="text-accent-dark" />
-            {/* <h4 className="hidden md:block font-bold text-white">Wishlist</h4> */}
-            {/* <div>
-              <Drawer
-                anchor="right"
-                open={openDraw}
-                onClose={(event) => {
-                  event.stopPropagation();
-                  setOpenDraw(false);
-                }}
-                sx={{
-                  "& .MuiDrawer-paper": {
-                    width: {
-                      xs: "100%",
-                      sm: "400px",
-                    },
-                  },
-                }}
-              >
-                <DrawerList setOpenDraw={setOpenDraw} />
-              </Drawer>
-            </div> */}
-            {/* <span
-              className={"rounded-md bg-accent-light text-primary mx-2 px-1"}
-              style={{
-                display: defaultProductsCounter <= 0 ? "none" : "block",
-              }}
-            >
-              {defaultProductsCounter}
-            </span> */}
           </div>
         </div>
       </div>
-      {/* {openSearchBox && <SearchBox setOpenSearchBox={setOpenSearchBox} />} */}
     </div>
   );
 }

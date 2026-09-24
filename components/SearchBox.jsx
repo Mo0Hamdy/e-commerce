@@ -1,7 +1,7 @@
 import Link from "next/link";
-import SearchOffOutlinedIcon from "@mui/icons-material/SearchOffOutlined";
 import { useAppSelector } from "../lib/hooks";
 import Skeleton from '@mui/material/Skeleton';
+import SearchOffOutlinedIcon from "@mui/icons-material/SearchOffOutlined";
 export default function SearchBox({ setOpenSearchBox }) {
   const { isSearchLoading, searchProducts } = useAppSelector(
     (state) => state.search,
@@ -16,7 +16,7 @@ export default function SearchBox({ setOpenSearchBox }) {
         href={`/Allproducts/${element.id}`}
         className="items-center justify-between px-3 my-2 h-16 overflow-hidden bg-white mb-2 last:mb-0 rounded-lg flex cursor-pointer hover:bg-gray-100 transition"
       >
-        <h3 className="text-md">{element.title}</h3>
+        <h3 className="text-md text-gray-500">{element.title}</h3>
         <img className="w-16 h-16" src={element.images[0]} alt="" />
       </Link>
     );
