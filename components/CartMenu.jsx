@@ -7,6 +7,8 @@ export default function CartMenu({ cats }) {
       component={Link}
       key={category}
       href={`/${category}`}
+      sx={{
+        "&:hover":{backgroundColor:"#00d5be"}}}
     >
       <ListItemText primary={category} />
     </ListItemButton>

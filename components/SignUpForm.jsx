@@ -2,7 +2,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAppDispatch } from "@/lib/hooks";
 import { fetchUserRegister } from "@/lib/features/FormSlice";
 import { useRouter } from "next/navigation";
-import { restore } from "@/lib/features/CartSlice";
+import { restore, addToCart,add } from "@/lib/features/CartSlice";
 export default function SignUpForm({ setSignUp, setSnackbar }) {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -18,6 +18,26 @@ export default function SignUpForm({ setSignUp, setSnackbar }) {
         open: true,
       });
       localStorage.setItem("token", result.token);
+      const temporaryProducts =
+        JSON.parse(localStorage.getItem("temporaryProducts")) || [];
+      try {
+        for (const element of temporaryProducts) {
+          await dispatch(addToCart({ element, token: result.token })).unwrap();
+          dispatch(add({ element }));
+        }
+        setSnackbar({
+        open: true,
+        message: "Products added to cart successfully",
+        severity: "success",
+      });
+      localStorage.removeItem("temporaryProducts");
+      } catch (error) {
+          setSnackbar({
+            open: true,
+            message: "Network error",
+            severity: "error",
+          });
+        }
       dispatch(restore({ firstName: result.firstName }));
       setSnackbar({
         message: result.message,

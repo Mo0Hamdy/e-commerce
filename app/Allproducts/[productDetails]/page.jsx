@@ -15,7 +15,7 @@ export default async function ProductDetails({ params }) {
   let data = (await response.json()).products;
   let product = data.find((element) => element.id == Id);
   return (
-    <div className="container py-24 px-2 m-auto flex flex-col lg:flex-row gap-10 lg:gap-0">
+    <div className="container py-32 px-2 m-auto flex flex-col lg:flex-row gap-10 lg:gap-0">
       <aside className="bg-gray-300 lg:w-1/2 rounded-4xl p-14 lg:p-28 flex items-center">
         <img src={product.images[0]} alt={product.title} />
       </aside>

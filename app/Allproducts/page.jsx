@@ -11,6 +11,7 @@ export default async function AllProducts() {
     throw new Error("all products has an error!");
   }
   const data = (await response.json()).products;
+  console.log(data)
   const productCards = data.map((element) => {
     return (
       <div
@@ -45,7 +46,7 @@ export default async function AllProducts() {
         </div>
         <div className="flex justify-between items-center">
           <AddToCart element={element} />
-          <AddToWishlist/>
+          <AddToWishlist element={element} />
         </div>
       </div>
     );

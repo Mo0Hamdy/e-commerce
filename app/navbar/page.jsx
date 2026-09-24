@@ -23,6 +23,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CircularProgress from "@mui/material/CircularProgress";
 import SearchBox from "@/components/SearchBox";
+import SearchInputField from "@/components/SearchInputField";
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -161,32 +162,8 @@ export default function Navbar() {
     };
     catFetch();
   }, []);
-  const [searchKey, setSearchKey] = useState("");
-  const [searchedProducts, setSearchedProducts] = useState([]);
-  useEffect(() => {
-    if (!searchKey.trim()) {
-      setSearchedProducts([]);
-      return;
-    }
-    const getSearchedProducts = async (key) => {
-      const data = await fetch("https://dummyjson.com/products", {
-        next: {
-          revalidate: 60,
-        },
-      });
-      if (!data.ok) {
-        throw new Error("couldn't find any element");
-      }
-      const response = await data.json();
-      return response.products.filter((element) =>
-        element.title.toLowerCase().includes(key.toLowerCase()),
-      );
-    };
-    const search = async () => {
-      setSearchedProducts(await getSearchedProducts(searchKey));
-    };
-    search();
-  }, [searchKey]);
+  const [openSearchBox, setOpenSearchBox] = useState(false);
+  // const [openInputField, setOpenInputField] = useState(false);
 
   const [visible, setVisible] = useState("none");
   const [CATS, setCATS] = useState([]);
@@ -207,7 +184,7 @@ export default function Navbar() {
   /**
    * main menu event handlers and state controls
    */
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const openAnchor = Boolean(anchorEl);
   const handleClickAnchor = (event) => {
@@ -217,9 +194,9 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleClick = () => {
-    setOpen(open ? false : true);
-  };
+  // const handleClick = () => {
+  //   setOpen(open ? false : true);
+  // };
 
   const [openDraw, setOpenDraw] = useState(false);
 
@@ -236,7 +213,6 @@ export default function Navbar() {
   const handleClose = () => {
     setAnchorEl2(null);
   };
-
   return (
     <div className="fixed w-full navbar z-10">
       <div className="relative container m-auto bg-primary flex justify-between items-center rounded-full">
@@ -297,9 +273,6 @@ export default function Navbar() {
             >
               Products
             </MenuItem>
-            {/* <MenuItem component={Link} href="/home" onClick={handleCloseAnchor}>
-              Special
-            </MenuItem> */}
           </Menu>
         </div>
         <ul className="hidden md:flex items-center ms-2">
@@ -341,46 +314,29 @@ export default function Navbar() {
               Products
             </li>
           </Link>
-          {/* <Link href="/home">
-            <li className="me-3 font-bold text-white hover:text-teal-400 transition-all duration-300">
-              Special
-            </li>
-          </Link> */}
         </ul>
-        <div className="flex items-center">
-          <div className="flex flex-col lg:flex-row bg-red-400">
-            <div
-              onBlur={handleClick}
-              className={` ${
-                open ? "flex " : "hidden"
-              } w-64 text-gray-600 bg-white rounded-xl px-3 py-3 border-gray-500 lg:flex`}
-            >
-              <button className="cursor-pointer">
-                <SearchOutlinedIcon style={{ color: "#99a1af" }} />
-              </button>
-              <input
-                placeholder="search for products"
-                type="text"
-                value={searchKey}
-                onChange={(e) => {
-                  e.target.value != "" && setSearchKey(e.target.value);
-                }}
-                className="placeholder:text-gray-400 outline-0 w-full"
-              />
-            </div>
-          </div>
-          <Button
+        <div className="flex items-center relative">
+          <SearchInputField
+            setOpenSearchBox={setOpenSearchBox}
+            openSearchBox={openSearchBox}
+          />
+
+          {/* <Button
             sx={{
               padding: "0",
               margin: "0 20px",
               borderRadius: "20px",
               border: "2px solid #D8DBE0",
-              display: { lg: "none" },
+              "@media (min-width:1024px)": {
+                display: "none",
+              },
             }}
-            onClick={handleClick}
+            onClick={() => {
+              setOpenInputField(openInputField ? false : true);
+            }}
           >
             <SearchOutlinedIcon className="text-accent-dark" />
-          </Button>
+          </Button> */}
           <Link href={"/navbar/profile"}>
             <div className="account py-3 md:py-4 px-3 cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all">
               {isRegisterLoading || isLoginLoading ? (
@@ -390,7 +346,7 @@ export default function Navbar() {
                   {firstName === "Account" ? (
                     <PermIdentityOutlinedIcon className="text-accent-dark" />
                   ) : (
-                    <h4 className="font-bold text-white bg-pink-500 rounded-full h-6.5 flex items-center justify-center aspect-square">
+                    <h4 className="font-bold text-white bg-[#9c27b0] rounded-full h-6.5 flex items-center justify-center aspect-square">
                       {firstName.charAt(0)}
                     </h4>
                   )}
@@ -402,7 +358,7 @@ export default function Navbar() {
             onClick={() => {
               setOpenDraw(true);
             }}
-            className="cart py-3 md:py-4 px-3 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all"
+            className="cart py-3 md:py-4 ps-3 pe-4 flex items-center cursor-pointer border-s-2 border-gray-300 hover:bg-primary-light duration-300 transition-all"
           >
             {defaultProductsCounter <= 0 ? (
               <ShoppingCartOutlinedIcon className="text-accent-dark" />
@@ -472,7 +428,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <SearchBox searchedProducts={searchedProducts} />
+      {/* {openSearchBox && <SearchBox setOpenSearchBox={setOpenSearchBox} />} */}
     </div>
   );
 }

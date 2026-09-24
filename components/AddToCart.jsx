@@ -29,13 +29,24 @@ export default function AddToCart({ element }) {
   const handleAddToCart = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      let products = JSON.parse(localStorage.getItem("products"))||[];
-      products.push(element);
+      let temporaryProducts =
+        JSON.parse(localStorage.getItem("temporaryProducts")) || [];
+      let existItem = temporaryProducts.find(
+        (item) => item.title === element.title,
+      );
+      if (existItem) {
+        existItem.quantity++;
+      } else {
+        temporaryProducts.push({ ...element, quantity: 1 });
+      }
 
-      localStorage.setItem("products", JSON.stringify(products));
+      localStorage.setItem(
+        "temporaryProducts",
+        JSON.stringify(temporaryProducts),
+      );
       setSnackbar({
         open: true,
-        message: "Please register first",
+        message: "Added to temporary cart",
         severity: "warning",
       });
       return;

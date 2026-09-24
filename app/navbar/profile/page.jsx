@@ -68,7 +68,7 @@ export default function Profile() {
               variant="contained"
               color="warning"
               onClick={() => {
-                window.location.href = "/landing/Allproducts";
+                window.location.href = "/Allproducts";
               }}
               startIcon={<ShoppingBagOutlinedIcon />}
             >
@@ -91,7 +91,7 @@ export default function Profile() {
               onClick={() => {
                 localStorage.removeItem("token");
                 setTimeout(() => {
-                  window.location.href = "/landing";
+                  window.location.href = "/";
                 }, 2000);
               }}
               variant="outlined"
